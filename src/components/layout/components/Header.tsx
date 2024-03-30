@@ -13,8 +13,8 @@ export const Header = () => {
     <header>
       <Container>
         <div className="logo">K-</div>
-        <div>search</div>
-        <div>login</div>
+        {/* <div>search</div>
+        <div>login</div> */}
         <Flex gap={0.5}>
           <button onClick={() => handleLanguage("kr")}>KR</button>
           <button onClick={() => handleLanguage("en")}>EN</button>
@@ -34,7 +34,7 @@ const Container = styled.div`
 
   .logo {
     font-family: "Inter", sans-serif;
-    font-size: 1.75rem;
+    font-size: 1.35rem;
     font-weight: 700;
   }
 `;

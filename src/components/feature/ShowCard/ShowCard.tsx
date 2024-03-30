@@ -41,9 +41,12 @@ const Details = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 42px;
+  height: 40px;
 
   p {
-    height: 50%;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.125rem;
+    color: #222;
   }
 `;

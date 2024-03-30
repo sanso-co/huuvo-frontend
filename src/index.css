@@ -23,6 +23,14 @@ h3 {
   font-weight: 700;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  color: inherit;
+}
+
 /* typography */
 .caption {
   font-size: 0.875rem;
