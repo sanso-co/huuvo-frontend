@@ -1,3 +1,5 @@
+import { useGeneralStore } from "@/store/useStore";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
 import { Show } from "@/helpers/interface/show";
@@ -13,13 +15,21 @@ interface Props {
 }
 
 export const ShowCard = ({ show, url }: Props) => {
+  const [title, setTitle] = useState<string>(show.name);
+  const language = useGeneralStore((state) => state.language);
+
+  // kr or en
+  useEffect(() => {
+    setTitle(language === "kr" ? show.original_name || show.name : show.name);
+  }, [language, show]);
+
   return (
     <div>
       <a href={`${url}`}>
         <Card width="152px">
           <Card.Image src={getCroppedImageUrl(show.poster_path, true)} ratio={ratio.portrait_23} rounded="0.75rem" />
           <Details>
-            <p>{show.name}</p>
+            <p>{title}</p>
           </Details>
         </Card>
       </a>

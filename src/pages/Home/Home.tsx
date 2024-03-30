@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <Flex col gap={1.5}>
-      <CardSlider title="Trending Now" helper={nowTrending?.releaseDate}>
+      <CardSlider title="Trending Now" helper={`updated: ${nowTrending?.releaseDate}`}>
         {nowTrending?.shows.map((show) => (
           <ShowCard key={show.id} show={show} url={`/details/${show.id}`} />
         ))}

@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
+import { useGeneralStore } from "@/store/useStore";
+
 import { Flex } from "@/components/global/containers/Flex";
 
-
 export const Header = () => {
-
+  const store = useGeneralStore();
   const handleLanguage = (language: string) => {
-    console.log(language);
+    store.setLanguage(language);
   };
 
   return (
@@ -14,7 +15,7 @@ export const Header = () => {
         <div className="logo">K-</div>
         <div>search</div>
         <div>login</div>
-        <Flex gap="0.5rem">
+        <Flex gap={0.5}>
           <button onClick={() => handleLanguage("kr")}>KR</button>
           <button onClick={() => handleLanguage("en")}>EN</button>
         </Flex>
