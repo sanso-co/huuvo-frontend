@@ -25,7 +25,8 @@ const useGet = <T>(
       client
         .get(endpoint, { signal: controller.signal, ...requestConfig })
         .then((response) => {
-          setData(response.data);
+          const transformedData = responseType(response.data);
+          setData(transformedData);
           setLoading(false);
         })
         .catch((err) => {
