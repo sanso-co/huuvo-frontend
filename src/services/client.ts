@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const LOCALURL = "http://localhost:3500";
+const LOCALURL = import.meta.env.VITE_API_URL;
 
 const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
 const user = storedUser.state?.user;
