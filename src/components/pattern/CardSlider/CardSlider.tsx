@@ -9,23 +9,28 @@ interface Props {
 
 export const CardSlider = ({ helper, title, children }: Props) => {
   return (
-    <section>
+    <Section>
       {title && (
         <Header>
           <h3>{title}</h3>
-          {helper && <p className="caption">helper</p>}
+          {helper && <p className="caption">{helper}</p>}
         </Header>
       )}
       <Container>{children}</Container>
-    </section>
+    </Section>
   );
 };
+
+const Section = styled.section`
+  width: 100%;
+`;
 
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 var(--mobile-mx);
+  margin-bottom: 0.5rem;
 `;
 
 const Container = styled.div`
