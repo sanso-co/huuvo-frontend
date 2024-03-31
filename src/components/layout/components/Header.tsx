@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useGeneralStore } from "@/store/useStore";
 
 import { Flex } from "@/components/global/containers/Flex";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const Header = () => {
   const location = useLocation();
@@ -16,7 +16,9 @@ export const Header = () => {
   return (
     <header>
       <Container>
-        <div className="logo">K-</div>
+        <Link to="/" className="logo">
+          K-
+        </Link>
         {/* <div>search</div>
         <div>login</div> */}
         {!detailsPage && (

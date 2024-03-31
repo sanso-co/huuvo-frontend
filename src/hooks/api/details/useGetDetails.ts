@@ -5,6 +5,12 @@ import { Show, Video } from "@/helpers/interface/show";
 
 export const useGetDetails = (id: string) => useTMDBGet(`/tv/${id}`, (data) => data as Show);
 
+export const useGetProviders = (id: string) =>
+  useTMDBGet(`/tv/${id}/watch/providers`, (data) => ({
+    id: data.id,
+    results: data.results,
+  }));
+
 export const useGetKeywords = (id: string) =>
   useTMDBGet(`/tv/${id}/keywords`, (data) => ({
     id: data.id,

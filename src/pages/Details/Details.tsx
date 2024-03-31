@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useGetDetails, useGetKeywordList, useGetKeywords, useGetVideo } from "@/hooks/api/details/useGetDetails";
+import { useGetDetails, useGetKeywordList, useGetKeywords, useGetProviders, useGetVideo } from "@/hooks/api/details/useGetDetails";
 import styled from "@emotion/styled";
 import { ImageContainer } from "@/components/global/containers/ImageContainer";
 import { getCroppedImageUrl } from "@/services/image-url";
@@ -12,12 +12,16 @@ import { formatDate } from "@/helpers/date";
 const Details = () => {
   const { id } = useParams();
   const { data, error, loading } = useGetDetails(id as string);
+  const { data: providers } = useGetProviders(id as string);
   const { data: keywords } = useGetKeywords(id as string);
   const { data: keywordList } = useGetKeywordList();
   const filteredKeywords = keywords?.results.filter((keyword) =>
     keywordList?.results.some((customKeyword) => customKeyword.id === keyword.id && customKeyword.name === keyword.name)
   );
   const { data: video } = useGetVideo(id as string);
+
+  console.log(providers);
+  const providerPath = providers?.results?.US?.flatrate[0].logo_path;
 
   return (
     <div>
@@ -44,6 +48,12 @@ const Details = () => {
                   ))}
                 </ul>
               </Info>
+              {providers && Object.keys(providers.results).length !== 0 && (
+                <Network>
+                  <img src={`https://media.themoviedb.org/t/p/original/${providerPath}`} alt="" />
+                  <p>provided by JustWatch</p>
+                </Network>
+              )}
               <p>{data?.overview}</p>
             </DetailsContainer>
 
@@ -98,6 +108,20 @@ const Info = styled.div`
     &:not(:last-child)::after {
       content: ", ";
     }
+  }
+`;
+
+const Network = styled.div`
+  padding-bottom: 1rem;
+
+  img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+
+  p {
+    font-size: 0.75rem;
   }
 `;
 
