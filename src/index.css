@@ -3,6 +3,8 @@
 :root {
   /* spacing */
   --mobile-mx: 1rem;
+
+  --z-overlay: 1000;
 }
 
 * {

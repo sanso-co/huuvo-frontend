@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useGetDetails, useGetKeywordList, useGetKeywords } from "@/hooks/api/details/useGetDetails";
+import { useGetDetails, useGetKeywordList, useGetKeywords, useGetVideo } from "@/hooks/api/details/useGetDetails";
 import styled from "@emotion/styled";
 import { ImageContainer } from "@/components/global/containers/ImageContainer";
 import { getCroppedImageUrl } from "@/services/image-url";
@@ -17,6 +17,7 @@ const Details = () => {
   const filteredKeywords = keywords?.results.filter((keyword) =>
     keywordList?.results.some((customKeyword) => customKeyword.id === keyword.id && customKeyword.name === keyword.name)
   );
+  const { data: video } = useGetVideo(id as string);
 
   return (
     <div>
@@ -26,7 +27,7 @@ const Details = () => {
         <div>error</div>
       ) : (
         <div>
-          <ImageContainer src={getCroppedImageUrl(data?.poster_path, false)} ratio={ratio.portrait_23} />
+          <ImageContainer src={getCroppedImageUrl(data?.poster_path, false)} ratio={ratio.portrait_23} video={video?.results} />
           <div className="p-1">
             <DetailsContainer>
               <h1>{data?.name}</h1>
@@ -103,6 +104,7 @@ const Info = styled.div`
 const Keywords = styled.ul`
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
 `;
 
 export default Details;

@@ -12,3 +12,9 @@ export interface Show {
     }
   ];
 }
+
+export interface Video {
+  official: boolean;
+  site: string;
+  key: string;
+}
