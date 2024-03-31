@@ -51,7 +51,7 @@ const Details = () => {
                 <h3>Keywords</h3>
                 <Keywords>
                   {filteredKeywords?.map((keyword: Keyword) => (
-                    <Chips key={keyword.id} label={keyword.name} url={`/keywords/${keyword.id}`} />
+                    <Chips key={keyword.id} label={keyword.name} />
                   ))}
                 </Keywords>
               </Stack>
