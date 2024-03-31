@@ -2,8 +2,12 @@ import styled from "@emotion/styled";
 import { useGeneralStore } from "@/store/useStore";
 
 import { Flex } from "@/components/global/containers/Flex";
+import { useLocation } from "react-router-dom";
 
 export const Header = () => {
+  const location = useLocation();
+  const detailsPage = location.pathname.includes("details");
+
   const store = useGeneralStore();
   const handleLanguage = (language: string) => {
     store.setLanguage(language);
@@ -15,10 +19,12 @@ export const Header = () => {
         <div className="logo">K-</div>
         {/* <div>search</div>
         <div>login</div> */}
-        <Flex gap={0.5}>
-          <button onClick={() => handleLanguage("kr")}>KR</button>
-          <button onClick={() => handleLanguage("en")}>EN</button>
-        </Flex>
+        {!detailsPage && (
+          <Flex gap={0.5}>
+            <button onClick={() => handleLanguage("kr")}>KR</button>
+            <button onClick={() => handleLanguage("en")}>EN</button>
+          </Flex>
+        )}
       </Container>
     </header>
   );

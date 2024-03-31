@@ -16,14 +16,13 @@ body {
   font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.12px;
+  line-height: 22px;
 }
 
 a {
+  color: inherit;
   text-decoration: none;
 }
 
@@ -31,7 +30,30 @@ a:visited {
   color: inherit;
 }
 
+ul {
+  list-style-type: none;
+}
+
 /* typography */
+h1 {
+  font-size: 1.625rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
 .caption {
   font-size: 0.875rem;
+}
+
+/* container */
+.mx-container {
+  padding: 0 var(--mobile-mx);
+}
+
+/* spacing */
+.p-1 {
+  padding: 1rem;
 }
