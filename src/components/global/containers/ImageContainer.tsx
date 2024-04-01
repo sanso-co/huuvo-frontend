@@ -30,7 +30,13 @@ export const ImageContainer = ({ src, ratio, rounded, width, video }: Props) => 
       )}
       <Modal fullWidth hideButton open={overlayOpen} handleClose={handleModal}>
         <VideoPlayer>
-          <ReactPlayer className="react-player" url={`https://www.youtube.com/watch?v=${video?.[0]?.key}`} width="100%" height="100%" />
+          <ReactPlayer
+            controls
+            className="react-player"
+            url={`https://www.youtube.com/watch?v=${video?.[0]?.key}`}
+            width="100%"
+            height="100%"
+          />
         </VideoPlayer>
       </Modal>
     </Container>

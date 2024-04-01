@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
-import { useGetDetails, useGetKeywordList, useGetKeywords, useGetProviders, useGetVideo } from "@/hooks/api/details/useGetDetails";
+import { useGetDetails, useGetKeywords, useGetProviders, useGetVideo } from "@/hooks/api/details/useGetDetails";
+import { useGetKeywordList } from "@/hooks/api/keyword/useGetKeyword";
 import styled from "@emotion/styled";
 import { ImageContainer } from "@/components/global/containers/ImageContainer";
 import { getCroppedImageUrl } from "@/services/image-url";
@@ -20,7 +21,6 @@ const Details = () => {
   );
   const { data: video } = useGetVideo(id as string);
 
-  console.log(providers);
   const providerPath = providers?.results?.US?.flatrate[0].logo_path;
 
   return (
@@ -62,7 +62,7 @@ const Details = () => {
                 <h3>Keywords</h3>
                 <Keywords>
                   {filteredKeywords?.map((keyword: Keyword) => (
-                    <Chips key={keyword.id} label={keyword.name} />
+                    <Chips key={keyword.id} label={keyword.name} url={`/keywords/${keyword.id}`} />
                   ))}
                 </Keywords>
               </Stack>

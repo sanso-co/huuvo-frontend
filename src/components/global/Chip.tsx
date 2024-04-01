@@ -1,14 +1,18 @@
 import styled from "@emotion/styled";
 import { neutral } from "../token";
+import { Link } from "react-router-dom";
 
 interface Props {
   label: string;
+  url: string;
 }
 
-const Chips = ({ label }: Props) => {
+const Chips = ({ label, url }: Props) => {
   return (
     <Container>
-      <Flex>{label}</Flex>
+      <Flex>
+        <Link to={url}>{label}</Link>
+      </Flex>
     </Container>
   );
 };
