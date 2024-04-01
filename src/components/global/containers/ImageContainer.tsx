@@ -4,6 +4,7 @@ import { useState } from "react";
 import ReactPlayer from "react-player";
 import { Modal } from "@/components/global/Modal";
 import { Video } from "@/helpers/interface/show";
+import placeholder from "@/assets/icons/no-image.svg";
 
 interface Props {
   src: string;
@@ -14,6 +15,8 @@ interface Props {
 }
 
 export const ImageContainer = ({ src, ratio, rounded, width, video }: Props) => {
+  const noImage = src === "no-image";
+
   const [overlayOpen, setOverlayOpen] = useState(false);
 
   const handleModal = () => {
@@ -22,7 +25,7 @@ export const ImageContainer = ({ src, ratio, rounded, width, video }: Props) => 
 
   return (
     <Container ratio={ratio} rounded={rounded} width={width}>
-      <img src={src} alt="" />
+      {noImage ? <img src={placeholder} alt="placeholder" className="placeholder" /> : <img src={src} alt="" />}
       {video && video.length > 0 && (
         <PlayIcon onClick={handleModal}>
           <Play fill="#eee" />
@@ -54,6 +57,7 @@ const Container = styled.div<ImageProps>`
   flex: 1;
   width: ${({ width }) => width || "100%"};
   border-radius: ${({ rounded }) => rounded || "0"};
+  background-color: #f2f2f2;
   overflow: hidden;
 
   &:before {
@@ -70,6 +74,14 @@ const Container = styled.div<ImageProps>`
     width: ${({ width }) => width || "100%"};
     max-height: 100%;
     object-fit: cover;
+  }
+
+  .placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
   }
 `;
 
