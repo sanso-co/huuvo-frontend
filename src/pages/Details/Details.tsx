@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetDetails, useGetKeywords, useGetProviders, useGetVideo } from "@/hooks/api/details/useGetDetails";
 import { useGetKeywordList } from "@/hooks/api/keyword/useGetKeyword";
 import styled from "@emotion/styled";
@@ -43,7 +43,7 @@ const Details = () => {
                 <ul>
                   {data?.genres.map((genre) => (
                     <li key={genre.id} className="caption">
-                      {genre.name}
+                      <Link to={`/genres/${genre.id}`}>{genre.name}</Link>
                     </li>
                   ))}
                 </ul>

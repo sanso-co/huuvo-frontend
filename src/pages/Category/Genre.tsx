@@ -7,18 +7,20 @@ import { useGetCategory } from "@/hooks/api/category/useGetCategory";
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Grid } from "@/components/global/containers/Grid";
 import { Header } from "@/components/global/Header";
-import { useGetKeyword } from "@/hooks/api/keyword/useGetKeyword";
 import Pagination from "@/components/global/Pagination";
+import { useGetGenresList } from "@/hooks/api/genres/useGetGenre";
 
-export const Keyword = () => {
+export const Genre = () => {
   const { id } = useParams();
   const [page, setPage] = useState(1);
-  const { data, loading } = useGetCategory("keyword", id as string, page);
-  const { data: keyword } = useGetKeyword(id as string);
+  const { data, loading } = useGetCategory("genres", id as string, page);
+  const { data: genreList } = useGetGenresList();
+
+  const genre = genreList?.results.find((genre) => genre.id === parseInt(id as string));
 
   return (
     <div>
-      {keyword && <Header title={keyword?.name} description={`Shows with keyword ${keyword?.name}`} />}
+      {genre && <Header title={genre?.name} description={`Shows with Genre ${genre?.name}`} />}
 
       {loading ? (
         <div>loading</div>
