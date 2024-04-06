@@ -1,35 +1,44 @@
 import styled from "@emotion/styled";
+import { ReactNode } from "react";
 
 interface Item {
-  id: number;
-  key: string;
+  title?: string;
   value: string;
 }
 
 interface Props {
-  items: Item[];
+  children: ReactNode;
 }
 
-export const List = ({ items }: Props) => {
+export const Item = ({ title, value }: Item) => {
   return (
-    <ul>
-      {items.map((item, idx) => (
-        <Item key={idx}>
-          <span>{item.key}</span>
-          <span>{item.value}</span>
-        </Item>
-      ))}
-    </ul>
+    <ItemContainer>
+      {title && <Title>{title}</Title>}
+      <span>{value}</span>
+    </ItemContainer>
   );
 };
 
-const Item = styled.li`
+const ItemContainer = styled.li`
   display: flex;
   justify-content: space-between;
   font-size: 0.875rem;
   margin: 0.5rem 0;
 
-  span:first-of-type {
-    font-weight: 600;
+  a {
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 `;
+
+const Title = styled.span`
+  font-weight: 600;
+`;
+
+export const List = ({ children }: Props) => {
+  return <ul>{children}</ul>;
+};
+
+List.Item = Item;

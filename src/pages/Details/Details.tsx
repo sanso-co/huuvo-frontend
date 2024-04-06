@@ -72,15 +72,13 @@ const Details = () => {
             )}
             <Stack border gap={1} padding={2}>
               <h3>Credits</h3>
-              <List
-                items={
-                  credit?.results.map((crew: Crew) => ({
-                    id: crew.id,
-                    key: crew.jobs[0].job,
-                    value: crew.name,
-                  })) || []
-                }
-              />
+              <List>
+                {credit?.results.map((crew: Crew) => (
+                  <Link to={`/credit/${crew.id}`} key={crew.id}>
+                    <List.Item title={crew.jobs[0].job} value={crew.name} />
+                  </Link>
+                ))}
+              </List>
             </Stack>
           </div>
         </div>

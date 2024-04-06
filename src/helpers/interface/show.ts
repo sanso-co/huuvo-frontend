@@ -1,5 +1,5 @@
 export interface Show {
-  id: string;
+  id: number;
   name: string;
   original_name: string;
   poster_path: string;

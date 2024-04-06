@@ -6,6 +6,7 @@ import Home from "@/pages/Home";
 import Details from "@/pages/Details/Details";
 import { Keyword } from "@/pages/Category/Keyword";
 import { Genre } from "@/pages/Category/Genre";
+import { Credit } from "@/pages/Category/Credit";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
       { path: "details/:id", element: <Details /> },
       { path: "keywords/:id", element: <Keyword /> },
       { path: "genres/:id", element: <Genre /> },
+      { path: "credit/:id", element: <Credit /> },
     ],
   },
 ]);
