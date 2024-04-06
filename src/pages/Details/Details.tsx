@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useGetDetails, useGetKeywords, useGetProviders, useGetVideo } from "@/hooks/api/details/useGetDetails";
+import { useGetCrew } from "@/hooks/api/credit/useGetCredit";
 import { useGetKeywordList } from "@/hooks/api/keyword/useGetKeyword";
 import styled from "@emotion/styled";
 import { ImageContainer } from "@/components/global/containers/ImageContainer";
@@ -9,6 +10,8 @@ import Chips from "@/components/global/Chip";
 import { Keyword } from "@/helpers/interface/keyword";
 import { Stack } from "@/components/global/containers/Stack";
 import { formatDate } from "@/helpers/date";
+import { List } from "@/components/global/List";
+import { Crew } from "@/helpers/interface/credit";
 
 const Details = () => {
   const { id } = useParams();
@@ -20,7 +23,7 @@ const Details = () => {
     keywordList?.results.some((customKeyword) => customKeyword.id === keyword.id && customKeyword.name === keyword.name)
   );
   const { data: video } = useGetVideo(id as string);
-
+  const { data: credit } = useGetCrew(id as string);
   const providerPath = providers?.results?.US?.flatrate[0].logo_path;
 
   return (
@@ -67,6 +70,18 @@ const Details = () => {
                 </Keywords>
               </Stack>
             )}
+            <Stack border gap={1} padding={2}>
+              <h3>Credits</h3>
+              <List
+                items={
+                  credit?.results.map((crew: Crew) => ({
+                    id: crew.id,
+                    key: crew.jobs[0].job,
+                    value: crew.name,
+                  })) || []
+                }
+              />
+            </Stack>
           </div>
         </div>
       )}
