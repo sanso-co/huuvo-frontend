@@ -8,7 +8,20 @@ export interface Person {
   biography: string;
 }
 
-export interface Crew {
+export interface CastType {
+  id: number;
+  known_for_department: string;
+  name: string;
+  profile_path: string;
+  roles: [
+    {
+      character: string;
+      credit_id: string;
+    }
+  ];
+}
+
+export interface CrewType {
   credit_id: string;
   id: number;
   jobs: [
@@ -19,7 +32,17 @@ export interface Crew {
   name: string;
 }
 
-export interface CreditShow extends Show {
+export interface ShowAsCast extends Show {
+  character: string;
+  credit_id: string;
+}
+
+export interface ShowAsCrew extends Show {
   job: string;
   credit_id: string;
+}
+
+export interface PersonCreditsType {
+  cast: ShowAsCast[];
+  crew: ShowAsCrew[];
 }

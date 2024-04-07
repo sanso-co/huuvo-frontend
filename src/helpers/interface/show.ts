@@ -5,12 +5,13 @@ export interface Show {
   poster_path: string;
   first_air_date: string;
   overview: string;
-  genres: [
+  genres?: [
     {
       id: number;
       name: string;
     }
   ];
+  genre_ids?: [number];
 }
 
 export interface Video {

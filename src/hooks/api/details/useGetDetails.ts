@@ -1,4 +1,4 @@
-import { Keyword } from "@/helpers/interface/keyword";
+import { KeywordType } from "@/helpers/interface/keyword";
 import useTMDBGet from "../useTMDBData";
 import { Show, Video } from "@/helpers/interface/show";
 
@@ -13,7 +13,7 @@ export const useGetProviders = (id: string) =>
 export const useGetKeywords = (id: string) =>
   useTMDBGet(`/tv/${id}/keywords`, (data) => ({
     id: data.id,
-    results: data.results as Keyword[],
+    results: data.results as KeywordType[],
   }));
 
 export const useGetVideo = (id: string) =>

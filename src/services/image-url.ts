@@ -7,3 +7,11 @@ export const getCroppedImageUrl = (url?: string, small?: boolean) => {
 
   return base + "w1280" + url;
 };
+
+const imageBase = "https://media.themoviedb.org/t/p/w276_and_h350_face/";
+
+export const getProfileImage = (url?: string) => {
+  if (!url) return "no-image";
+
+  return imageBase + url;
+};
