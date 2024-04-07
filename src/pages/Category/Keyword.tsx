@@ -13,7 +13,7 @@ import Pagination from "@/components/global/Pagination";
 export const Keyword = () => {
   const { id } = useParams();
   const [page, setPage] = useState(1);
-  const { data, loading } = useGetCategory("keyword", id as string, page);
+  const { data, loading } = useGetCategory("keywords", id as string, page);
   const { data: keyword } = useGetKeyword(id as string);
 
   return (
