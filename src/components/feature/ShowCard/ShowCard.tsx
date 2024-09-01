@@ -2,7 +2,7 @@ import { useGeneralStore } from "@/store/useStore";
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
-import { Show } from "@/helpers/interface/show";
+import { Show } from "@/types/show";
 import { getCroppedImageUrl } from "@/services/image-url";
 import { ratio } from "@/components/token";
 

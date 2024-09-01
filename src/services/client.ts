@@ -14,3 +14,18 @@ export const customPrivateClient = axios.create({
   baseURL: LOCALURL,
   headers: { authorization: `Bearer ${TOKEN}` },
 });
+
+// new approach
+
+export const api = axios.create({
+  baseURL: LOCALURL,
+});
+
+export const getCollectionList = async (type: string) => {
+  try {
+    const response = await api.get(`collection-group/${type}`);
+    return response.data.results.collections;
+  } catch (error) {
+    console.error("Error fetching collection list", error);
+  }
+};
