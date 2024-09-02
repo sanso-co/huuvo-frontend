@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.customGap {
+    gap: var(--custom-gap);
+}
+
+.customPadding {
+    padding: var(--custom-padding);
+}
+
+.borderBottom {
+    border-bottom: 1px solid #e5e5e5;
+}

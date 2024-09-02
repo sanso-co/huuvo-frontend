@@ -1,5 +1,6 @@
 import React from "react";
-import styled from "@emotion/styled";
+
+import styles from "./cardslider.module.scss";
 
 interface Props {
   helper?: string;
@@ -9,38 +10,14 @@ interface Props {
 
 export const CardSlider = ({ helper, title, children }: Props) => {
   return (
-    <Section>
+    <section className={styles.section}>
       {title && (
-        <Header>
+        <div className={styles.header}>
           <h3>{title}</h3>
           {helper && <p className="caption">{helper}</p>}
-        </Header>
+        </div>
       )}
-      <Container>{children}</Container>
-    </Section>
+      <div className={styles.container}>{children}</div>
+    </section>
   );
 };
-
-const Section = styled.section`
-  width: 100%;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 var(--mobile-mx);
-  margin-bottom: 0.5rem;
-`;
-
-const Container = styled.div`
-  display: flex;
-  gap: 0.875rem;
-  width: 100%;
-  overflow-x: scroll;
-  padding: 0 var(--mobile-mx);
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;

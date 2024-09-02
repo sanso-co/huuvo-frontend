@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { getCollectionList } from "@/services/api";
+import { apiService } from "@/services/api";
 import { useShowStore } from "@/store/showStore";
 
 export const useShowCollection = (id: string) => {
@@ -16,7 +16,7 @@ export const useShowCollection = (id: string) => {
                     return;
                 }
 
-                const result = await getCollectionList(id);
+                const result = await apiService.getCollectionList(id);
                 setCollection(id, result);
                 setLoading(false);
             } catch (err) {

@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { useGeneralStore } from "@/store/useStore";
 
-import { Flex } from "@/components/global/containers/Flex";
 import { Link, useLocation } from "react-router-dom";
 
 export const Header = () => {
@@ -22,10 +21,10 @@ export const Header = () => {
         {/* <div>search</div>
         <div>login</div> */}
         {!detailsPage && (
-          <Flex gap={0.5}>
+          <div className="flex gap-05">
             <button onClick={() => handleLanguage("kr")}>KR</button>
             <button onClick={() => handleLanguage("en")}>EN</button>
-          </Flex>
+          </div>
         )}
       </Container>
     </header>
