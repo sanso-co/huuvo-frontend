@@ -11,12 +11,14 @@ import { useCast } from "@/hooks/api/credit/useCast";
 import { ImageContainer } from "@/components/global/ImageContainer";
 import { getCroppedImageUrl } from "@/services/image-url";
 import { ratio } from "@/components/token";
+import { filterKeywords } from "@/helpers/filterKeywords";
 
 import { Info } from "@/features/Details/Info";
 import { Cast } from "@/features/Details/Cast";
 import { Crew } from "@/features/Details/Crew";
 import { Keyword } from "@/features/Details/Keyword";
 import { Provider } from "@/features/Details/Provider";
+import { useMemo } from "react";
 
 const Details = () => {
     const { id } = useParams();
@@ -24,15 +26,16 @@ const Details = () => {
     const { trailer, loading: trailerLoading, error: trailerError } = useTrailerVideo(id as string);
     const { providers, loading: providerLoading, error: providerError } = useProviders(id as string);
 
-    const { keywords, loading: keywordLoading, error: keywordError } = useKeywords(id as string);
+    const { keywords } = useKeywords(id as string);
     const { keywordsList } = useKeywordList();
 
-    const filteredKeywords =
-        !keywordLoading && !keywordError && keywords && keywordsList
-            ? keywords.results.filter((keyword) =>
-                  keywordsList.some((customKeyword) => customKeyword.id === keyword.id && customKeyword.name === keyword.name)
-              )
-            : undefined;
+    const filteredKeywords = useMemo(() => {
+        if (keywordsList && keywords) {
+            return filterKeywords(keywordsList, keywords);
+        }
+
+        return null;
+    }, [keywordsList, keywords]);
 
     const { cast } = useCast(id as string);
     const { crew } = useCrew(id as string);
@@ -52,7 +55,7 @@ const Details = () => {
                     />
                     <Info data={currentShow} />
                     {!providerLoading && !providerError && <Provider data={providers} />}
-                    {filteredKeywords && filteredKeywords.length && <Keyword data={filteredKeywords} />}
+                    {filteredKeywords && filteredKeywords.length > 0 && <Keyword data={filteredKeywords} />}
                     {cast && cast.length && <Cast data={cast} />}
                     {crew && crew.length && <Crew data={crew} />}
                 </div>

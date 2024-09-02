@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { KeywordType } from "@/types/keyword";
+import { CustomKeywordType } from "@/types/keyword";
 
 interface KeywordProps {
-    keywordsList: KeywordType[] | null;
-    setKeywordsList: (keywords: KeywordType[]) => void;
+    keywordsList: CustomKeywordType[] | null;
+    setKeywordsList: (keywords: CustomKeywordType[]) => void;
 }
 
 export const useKeywordStore = create<KeywordProps>()(
