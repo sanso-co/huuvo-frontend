@@ -1,0 +1,15 @@
+.container {
+    display: inline-block;
+    border-radius: 2rem;
+    background-color: rgba(8, 10, 12, 0.1);
+    font-size: 0.75rem;
+    letter-spacing: 0.015rem;
+    text-transform: capitalize;
+    padding: 0.5rem 0.75rem;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

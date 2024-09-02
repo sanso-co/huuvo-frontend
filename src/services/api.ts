@@ -1,16 +1,33 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
-const LOCALURL = import.meta.env.VITE_API_URL;
+class ApiService {
+    private api: AxiosInstance;
 
-export const api = axios.create({
-    baseURL: LOCALURL,
-});
+    constructor() {
+        const LOCALURL = import.meta.env.VITE_API_URL;
 
-export const getCollectionList = async (type: string) => {
-    try {
-        const response = await api.get(`periodic-collection/${type}`);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching collection list", error);
+        this.api = axios.create({
+            baseURL: LOCALURL,
+        });
     }
-};
+
+    async getCollectionList(id: string) {
+        try {
+            const response = await this.api.get(`periodic-collection/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching collection list", error);
+        }
+    }
+
+    async getKeywordsList() {
+        try {
+            const response = await this.api.get("keywords");
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching keywords list", error);
+        }
+    }
+}
+
+export const apiService = new ApiService();
