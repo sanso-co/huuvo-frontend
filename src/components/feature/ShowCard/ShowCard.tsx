@@ -25,7 +25,7 @@ export const ShowCard = ({ show }: Props) => {
 
     return (
         <div>
-            <Card width="152px">
+            <Card>
                 <Card.Image src={getCroppedImageUrl(show.poster_path, true)} ratio={ratio.portrait_23} rounded="0.75rem" />
                 <div className={styles.details}>
                     <p>{title}</p>
