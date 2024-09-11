@@ -11,7 +11,8 @@ import styles from "./home.module.scss";
 
 const Home = () => {
     const { loading, error, latestCollection } = useShowCollection(collectionId.TRENDING_NOW || "");
-    const { permanentCollection: mostPopular } = useGetPermanentDetails(collectionId.MOST_POPULAR || "");
+    const { permanentCollection: mostPopular } = useGetPermanentDetails(collectionId.MOST_POPULAR || "", 1);
+    const { permanentCollection: highlyRated } = useGetPermanentDetails(collectionId.HIGHLY_RATED || "", 1);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
@@ -25,8 +26,15 @@ const Home = () => {
                     </Link>
                 ))}
             </CardSlider>
-            <CardSlider title="Most Popular">
+            <CardSlider title="Most Popular" linkLabel="View All" linkTo="/collection/most-popular">
                 {mostPopular?.shows?.result.map((show) => (
+                    <Link key={show.id} to={`/details/${show.id}`}>
+                        <ShowCard show={show} />
+                    </Link>
+                ))}
+            </CardSlider>
+            <CardSlider title="Highly Rated" linkLabel="View All" linkTo="/collection/highly-rated">
+                {highlyRated?.shows?.result.map((show) => (
                     <Link key={show.id} to={`/details/${show.id}`}>
                         <ShowCard show={show} />
                     </Link>

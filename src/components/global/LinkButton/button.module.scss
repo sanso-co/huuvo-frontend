@@ -1,0 +1,20 @@
+.button {
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    background-color: transparent;
+    color: var(--gray-100);
+    border: none;
+    cursor: pointer;
+
+    &:before {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background-color: var(--gray-40);
+    }
+}

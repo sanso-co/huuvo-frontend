@@ -1,20 +1,42 @@
 import { create } from "zustand";
 import { Permanent } from "@/types/permanent";
 
+interface PermanentCollections {
+    [id: string]: Permanent | null;
+}
+
 interface PermanentProps {
-    permanentCollection: Permanent | null;
-    setPermanentDetails: (details: Permanent | null) => void;
-    isLoading: boolean;
-    setIsLoading: (loading: boolean) => void;
-    error: Error | null;
-    setError: (error: Error | null) => void;
+    permanentCollections: PermanentCollections;
+    setPermanentDetails: (id: string, details: Permanent | null) => void;
+    isLoading: { [id: string]: boolean };
+    setIsLoading: (id: string, loading: boolean) => void;
+    errors: { [id: string]: Error | null };
+    setError: (id: string, error: Error | null) => void;
 }
 
 export const usePermanentStore = create<PermanentProps>((set) => ({
-    permanentCollection: null,
-    setPermanentDetails: (permanentCollection) => set({ permanentCollection }),
-    isLoading: false,
-    setIsLoading: (loading) => set({ isLoading: loading }),
-    error: null,
-    setError: (error) => set({ error }),
+    permanentCollections: {},
+    setPermanentDetails: (id, details) =>
+        set((state) => ({
+            permanentCollections: {
+                ...state.permanentCollections,
+                [id]: details,
+            },
+        })),
+    isLoading: {},
+    setIsLoading: (id, loading) =>
+        set((state) => ({
+            isLoading: {
+                ...state.isLoading,
+                [id]: loading,
+            },
+        })),
+    errors: {},
+    setError: (id, error) =>
+        set((state) => ({
+            errors: {
+                ...state.errors,
+                [id]: error,
+            },
+        })),
 }));

@@ -2,7 +2,7 @@ import { useState } from "react";
 import ReactPlayer from "react-player";
 import { Modal } from "@/components/global/Modal";
 import { Play } from "@/assets/icons/Play";
-import placeholder from "@/assets/icons/no-image.svg";
+import { MediaIcon } from "@/assets/icons/MediaIcon";
 import { TrailerType } from "@/types/showDetail";
 
 import styles from "./imagecontainer.module.scss";
@@ -40,7 +40,13 @@ export const ImageContainer = ({ src, ratio, rounded, width, video }: Props) => 
 
     return (
         <div className={containerClasses} style={containerStyle}>
-            {noImage ? <img src={placeholder} alt="placeholder" className="placeholder" /> : <img src={src} alt="" />}
+            {noImage ? (
+                <div className={styles.placeholder}>
+                    <MediaIcon />
+                </div>
+            ) : (
+                <img src={src} alt="" />
+            )}
             {video && (
                 <div className={styles.playIcon} onClick={handleModal}>
                     <Play fill="#eee" />
