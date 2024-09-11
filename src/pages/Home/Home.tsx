@@ -11,7 +11,7 @@ import styles from "./home.module.scss";
 
 const Home = () => {
     const { loading, error, latestCollection } = useShowCollection(collectionId.TRENDING_NOW || "");
-    const { permanentCollection: mostPopular, isLoading, error: popularError } = useGetPermanentDetails(collectionId.MOST_POPULAR || "");
+    const { permanentCollection: mostPopular } = useGetPermanentDetails(collectionId.MOST_POPULAR || "");
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
