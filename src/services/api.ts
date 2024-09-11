@@ -11,7 +11,7 @@ class ApiService {
         });
     }
 
-    async getCollectionList(id: string) {
+    async getPeriodicCollection(id: string) {
         try {
             const response = await this.api.get(`periodic-collection/${id}`);
             return response.data;
@@ -26,6 +26,15 @@ class ApiService {
             return response.data;
         } catch (error) {
             console.error("Error fetching keywords list", error);
+        }
+    }
+
+    async getPermanentCollectionDetails(payload: { id: string; page: number; limit: number }) {
+        try {
+            const response = await this.api.get(`permanent-collection/${payload.id}?page=${payload.page}&limit=${payload.limit}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching permanent collection details", error);
         }
     }
 }
