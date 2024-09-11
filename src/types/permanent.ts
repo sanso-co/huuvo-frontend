@@ -4,7 +4,9 @@ export interface Permanent {
     _id?: string;
     name: string;
     description?: string;
-    shows?: {
+    shows: {
         result: Show[];
+        page: number;
+        totalPages: number;
     };
 }

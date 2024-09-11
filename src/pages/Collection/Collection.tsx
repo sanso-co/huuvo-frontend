@@ -5,53 +5,57 @@ import { Show } from "@/types/show";
 
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
-import { useCategoryShowList } from "@/hooks/api/category/useCategoryShowList";
 
 import styles from "./list.module.scss";
 import { Spinner } from "@/components/global/Spinner";
+import { useGetPermanentDetails } from "@/hooks/api/collection/usePermanentCollection";
+import { collectionId } from "@/helpers/constants/collectionId";
+import { convertToConstant } from "@/helpers/convertToConstant";
 
-export const Category = () => {
-    const { categoryType, categoryName, categoryId } = useParams();
+const isValidCollectionId = (key: string): key is keyof typeof collectionId => {
+    return key in collectionId;
+};
+
+const Collection = () => {
+    const { collectionName } = useParams();
+    const collectionConstant = convertToConstant(collectionName || "");
     const [page, setPage] = useState(1);
     const [shows, setShows] = useState<Show[]>([]);
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { categoryShowList, loading, error } = useCategoryShowList(categoryType as string, categoryId as string, page);
+    let collectionIdValue = "";
+    if (isValidCollectionId(collectionConstant)) {
+        collectionIdValue = collectionId[collectionConstant];
+    }
 
-    console.log("category", categoryShowList);
+    const { permanentCollection, isLoading: collectionLoading } = useGetPermanentDetails(collectionIdValue, page);
 
     useEffect(() => {
-        if (categoryShowList?.results) {
+        if (permanentCollection?.shows?.result) {
             setShows((prevShows) => {
-                const newShows = categoryShowList.results.filter(
+                const newShows = permanentCollection.shows.result.filter(
                     (newShow) => !prevShows.some((existingShow) => existingShow.id === newShow.id)
                 );
                 return [...prevShows, ...newShows];
             });
-            setHasMore(categoryShowList.page < categoryShowList.total_pages);
+            setHasMore(permanentCollection.shows.page < permanentCollection.shows.totalPages);
             setIsLoading(false);
         }
-    }, [categoryShowList]);
+    }, [permanentCollection]);
 
     const fetchMoreData = useCallback(() => {
-        if (!loading && !isLoading) {
+        if (!collectionLoading && !isLoading) {
             setIsLoading(true);
             setTimeout(() => {
                 setPage((prevPage) => prevPage + 1);
             }, 800);
         }
-    }, [loading, isLoading]);
-
-    //TODO: fetch category details and update header
-    //TODO: add filter and sort
-    // const [sort, setSort] = useState("first_air_date.desc");
-
-    if (error) return <div>Error: {error.message}</div>;
+    }, [collectionLoading, isLoading]);
 
     return (
         <div>
-            {categoryName && <Header title={categoryName} description={`Shows with ${categoryType} ${categoryName}`} />}
+            {permanentCollection && <Header title={permanentCollection.name} description={permanentCollection.description ?? ""} />}
 
             <InfiniteScroll
                 dataLength={shows.length}
@@ -75,3 +79,5 @@ export const Category = () => {
         </div>
     );
 };
+
+export default Collection;
