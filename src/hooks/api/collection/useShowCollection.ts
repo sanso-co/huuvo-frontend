@@ -16,7 +16,7 @@ export const useShowCollection = (id: string) => {
                     return;
                 }
 
-                const result = await apiService.getCollectionList(id);
+                const result = await apiService.getPeriodicCollection(id);
                 setCollection(id, result);
                 setLoading(false);
             } catch (err) {
