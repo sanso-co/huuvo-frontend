@@ -8,5 +8,6 @@ export interface Permanent {
         result: Show[];
         page: number;
         totalPages: number;
+        totalDocs: number;
     };
 }
