@@ -11,6 +11,7 @@ import { Spinner } from "@/components/global/Spinner";
 import { useGetPermanentDetails } from "@/hooks/api/collection/usePermanentCollection";
 import { collectionId } from "@/helpers/constants/collectionId";
 import { convertToConstant } from "@/helpers/convertToConstant";
+import { useCollectionStore } from "@/store/collectionStore";
 
 const isValidCollectionId = (key: string): key is keyof typeof collectionId => {
     return key in collectionId;
@@ -19,8 +20,11 @@ const isValidCollectionId = (key: string): key is keyof typeof collectionId => {
 const Collection = () => {
     const { collectionName } = useParams();
     const collectionConstant = convertToConstant(collectionName || "");
-    const [page, setPage] = useState(1);
-    const [shows, setShows] = useState<Show[]>([]);
+    const [localPage, setLocalPage] = useState(1);
+
+    const { page, setPage, shows, setShows, collection, setCollection, resetCollection } =
+        useCollectionStore();
+
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -29,33 +33,56 @@ const Collection = () => {
         collectionIdValue = collectionId[collectionConstant];
     }
 
-    const { permanentCollection, isLoading: collectionLoading } = useGetPermanentDetails(collectionIdValue, page);
+    useEffect(() => {
+        if (collectionName && collectionName !== collection) {
+            resetCollection();
+            setCollection(collectionName);
+            setLocalPage(1);
+        } else if (!collection && collectionName) {
+            setCollection(collectionName);
+        }
+    }, [collectionName, resetCollection, collection, setCollection, setPage, page]);
+
+    useEffect(() => {
+        setLocalPage(page);
+    }, [page]);
+
+    const { permanentCollection, isLoading: collectionLoading } = useGetPermanentDetails(
+        collectionIdValue,
+        localPage
+    );
 
     useEffect(() => {
         if (permanentCollection?.shows?.result) {
-            setShows((prevShows) => {
+            setShows((existingShows) => {
                 const newShows = permanentCollection.shows.result.filter(
-                    (newShow) => !prevShows.some((existingShow) => existingShow.id === newShow.id)
+                    (newShow) =>
+                        !existingShows.some((existingShow) => existingShow.id === newShow.id)
                 );
-                return [...prevShows, ...newShows];
+                return [...existingShows, ...newShows];
             });
             setHasMore(permanentCollection.shows.page < permanentCollection.shows.totalPages);
             setIsLoading(false);
         }
-    }, [permanentCollection]);
+    }, [permanentCollection, setShows]);
 
     const fetchMoreData = useCallback(() => {
-        if (!collectionLoading && !isLoading) {
+        if (!collectionLoading && !isLoading && hasMore) {
             setIsLoading(true);
             setTimeout(() => {
                 setPage((prevPage) => prevPage + 1);
             }, 800);
         }
-    }, [collectionLoading, isLoading]);
+    }, [collectionLoading, isLoading, hasMore, setPage]);
 
     return (
         <div>
-            {permanentCollection && <Header title={permanentCollection.name} description={permanentCollection.description ?? ""} />}
+            {permanentCollection && (
+                <Header
+                    title={permanentCollection.name}
+                    description={permanentCollection.description ?? ""}
+                />
+            )}
 
             <InfiniteScroll
                 dataLength={shows.length}
