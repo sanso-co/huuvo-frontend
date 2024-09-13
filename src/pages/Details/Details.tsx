@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 import { useDetails } from "@/hooks/api/details/useDetails";
@@ -56,6 +56,10 @@ const Details = () => {
         return similar?.results.filter((show) => show.id.toString() !== id);
     }, [similar, id]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [id]);
+
     return (
         <div>
             {loading ? (
@@ -74,9 +78,9 @@ const Details = () => {
                     {filteredKeywords && filteredKeywords.length > 0 && (
                         <Keyword data={filteredKeywords} />
                     )}
-                    {cast && cast.length && <Cast data={cast} />}
-                    {crew && crew.length && <Crew data={crew} />}
-                    {filteredSimilar && filteredSimilar.length && (
+                    {cast && cast.length > 9 && <Cast data={cast} />}
+                    {crew && crew.length > 0 && <Crew data={crew} />}
+                    {filteredSimilar && filteredSimilar.length > 0 && (
                         <Similar data={filteredSimilar} />
                     )}
                 </div>
