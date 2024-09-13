@@ -6,7 +6,10 @@ interface Keywords {
     results: KeywordType[];
 }
 
-export function filterKeywords(keywordsList: CustomKeywordType[], keywords: Keywords): KeywordType[] {
-    const keywordsListIds = new Set(keywordsList.map((item) => item.id));
-    return keywords.results.filter((keyword) => keywordsListIds.has(keyword.id));
+export function filterKeywords(
+    keywordsList: CustomKeywordType[],
+    keywords: Keywords
+): CustomKeywordType[] {
+    const keywordsResultIds = new Set(keywords.results.map((keyword) => keyword.id));
+    return keywordsList.filter((keyword) => keywordsResultIds.has(keyword.id));
 }

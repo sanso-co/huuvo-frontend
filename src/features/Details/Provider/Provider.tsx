@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const Provider = ({ data }: Props) => {
-    const providerPath = data?.results?.KR?.flatrate[0].logo_path;
+    const providerPath = data?.results?.US?.flatrate[0].logo_path;
 
     return (
         <Stack border gap="1rem" padding="2rem 1rem">

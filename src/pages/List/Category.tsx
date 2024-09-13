@@ -17,9 +17,11 @@ export const Category = () => {
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { categoryShowList, loading, error } = useCategoryShowList(categoryType as string, categoryId as string, page);
-
-    console.log("category", categoryShowList);
+    const { categoryShowList, loading, error } = useCategoryShowList(
+        categoryType as string,
+        categoryId as string,
+        page
+    );
 
     useEffect(() => {
         if (categoryShowList?.results) {
@@ -51,7 +53,12 @@ export const Category = () => {
 
     return (
         <div>
-            {categoryName && <Header title={categoryName} description={`Shows with ${categoryType} ${categoryName}`} />}
+            {categoryName && (
+                <Header
+                    title={categoryName}
+                    description={`Shows with ${categoryType} ${categoryName}`}
+                />
+            )}
 
             <InfiniteScroll
                 dataLength={shows.length}
