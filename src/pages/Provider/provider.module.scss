@@ -1,0 +1,28 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1.5rem;
+    width: 100%;
+    padding: 0 var(--mobile-mx);
+
+    @media (min-width: 431px) {
+        padding: 0 var(--tablet-mx);
+    }
+
+    @media (min-width: 744px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 2rem;
+    }
+}
+
+.endMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.875rem;
+    margin: 2rem 0;
+}

@@ -1,5 +1,5 @@
 export interface Show {
-    _id: string;
+    _id?: string;
     id: string;
     name: string;
     original_name: string;
