@@ -52,7 +52,7 @@ export const ImageContainer = ({ src, ratio, rounded, width, video }: Props) => 
                     <Play fill="#eee" />
                 </div>
             )}
-            <Modal fullWidth hideButton open={overlayOpen} handleClose={handleModal}>
+            <Modal hideButton open={overlayOpen} handleClose={handleModal}>
                 <div className={styles.videoplayer}>
                     <ReactPlayer
                         controls

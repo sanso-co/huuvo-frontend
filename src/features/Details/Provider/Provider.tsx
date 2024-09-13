@@ -9,6 +9,7 @@ interface Props {
 
 export const Provider = ({ data }: Props) => {
     const providerPath = data?.results?.US?.flatrate[0].logo_path;
+    const providerName = data?.results?.US?.flatrate[0].provider_name;
 
     return (
         <Stack border gap="1rem" padding="2rem 1rem">
@@ -22,6 +23,7 @@ export const Provider = ({ data }: Props) => {
                 ) : (
                     <div className="footnote">Not available in the US yet</div>
                 )}
+                {providerName && <p>{providerName}</p>}
             </div>
         </Stack>
     );
