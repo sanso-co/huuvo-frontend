@@ -1,4 +1,3 @@
-import { Show } from "@/types/show";
 import axios, { AxiosInstance } from "axios";
 
 class ApiService {
