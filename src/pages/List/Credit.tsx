@@ -21,7 +21,11 @@ export const Credit = () => {
     const { creditType, creditId = "" } = useParams();
     const [name, setName] = useState("");
     const { creditShowList, loading, error } = useCreditShowList(creditId as string);
-    const { person, loading: personLoading, error: personError } = usePersonDetails(creditId as string);
+    const {
+        person,
+        loading: personLoading,
+        error: personError,
+    } = usePersonDetails(creditId as string);
     const language = useGeneralStore((state) => state.language);
 
     const sortedShows = useMemo(() => {
@@ -31,12 +35,23 @@ export const Credit = () => {
             (show: Show) => !excludeShows.some((id) => show.genre_ids.includes(id))
         );
 
-        return _.orderBy(filteredShows, ["first_air_date"], ["desc"]);
+        const uniqueShows = filteredShows?.reduce((acc: Show[], show: Show) => {
+            if (!acc.some((existingShow) => existingShow.id === show.id)) {
+                acc.push(show);
+            }
+            return acc;
+        }, []);
+
+        return _.orderBy(uniqueShows, ["first_air_date"], ["desc"]);
     }, [creditType, creditShowList]);
 
     // kr or en
     useEffect(() => {
-        setName(person ? (language === "kr" ? person.also_known_as?.[0] : null) || person.name || "" : "");
+        setName(
+            person
+                ? (language === "kr" ? person.also_known_as?.[0] : null) || person.name || ""
+                : ""
+        );
     }, [language, person]);
 
     if (loading) return <div>Loading...</div>;
@@ -44,7 +59,9 @@ export const Credit = () => {
 
     return (
         <div>
-            {!personLoading && !personError && person && <Header title={name || ""} description={person.known_for_department} />}
+            {!personLoading && !personError && person && (
+                <Header title={name || ""} description={person.known_for_department} />
+            )}
 
             {loading ? (
                 <div>loading</div>

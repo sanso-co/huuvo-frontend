@@ -10,6 +10,7 @@ export interface CrewType {
             job: string;
         }
     ];
+    known_for_department: string;
 }
 
 export interface CastType {

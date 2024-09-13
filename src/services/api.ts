@@ -31,7 +31,9 @@ class ApiService {
 
     async getPermanentCollectionDetails(payload: { id: string; page: number; limit: number }) {
         try {
-            const response = await this.api.get(`permanent-collection/${payload.id}?page=${payload.page}&limit=${payload.limit}`);
+            const response = await this.api.get(
+                `permanent-collection/${payload.id}?page=${payload.page}&limit=${payload.limit}`
+            );
             return response.data;
         } catch (error) {
             console.error("Error fetching permanent collection details", error);

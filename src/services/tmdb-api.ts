@@ -65,7 +65,12 @@ class ApiService {
         }
     }
 
-    async getCategoryShowList(section: string, id: string, page: number, sort?: string | "first_air_date.desc") {
+    async getCategoryShowList(
+        section: string,
+        id: string,
+        page: number,
+        sort?: string | "first_air_date.desc"
+    ) {
         try {
             const response = await this.api.get(
                 `/discover/tv?page=${page}&with_origin_country=KR&with_${section}=${id}&sort_by=${sort}&with_type=2%7C4`
@@ -93,6 +98,32 @@ class ApiService {
             return response.data;
         } catch (error) {
             console.error("Error fetching person details", error);
+            throw error;
+        }
+    }
+
+    async getRecommendations(id: string, page: number) {
+        try {
+            const response = await this.api.get(`/tv/${id}/recommendations?page=${page}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching recommendations", error);
+            throw error;
+        }
+    }
+
+    async getSimilar(genres: string, keyword: string) {
+        try {
+            let url = `/discover/tv?page=1&with_origin_country=KR&with_genres=${genres}&sort_by=vote_count.desc&with_type=2%7C4`;
+
+            if (keyword && keyword.trim() !== "") {
+                url += `&with_keywords=${keyword}`;
+            }
+
+            const response = await this.api.get(url);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching similar shows", error);
             throw error;
         }
     }

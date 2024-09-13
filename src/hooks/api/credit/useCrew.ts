@@ -13,7 +13,8 @@ export const useCrew = (id: string) => {
                 const result = await apiService.getCredit(id);
                 const filteredResult = result.crew.filter(
                     (crew: CrewType) =>
-                        crew.jobs[0].job === "Director" || crew.jobs[0].job === "Writer" || crew.jobs[0].job === "Screenplay"
+                        crew.known_for_department === "Directing" ||
+                        crew.known_for_department === "Writing"
                 );
                 setCrew(filteredResult);
             } catch (error) {

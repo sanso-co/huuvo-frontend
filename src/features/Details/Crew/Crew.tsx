@@ -12,11 +12,17 @@ export const Crew = ({ data }: Props) => {
         <Stack border gap="1rem" padding="2rem 1rem">
             <h3>Credits</h3>
             <List>
-                {data.map((crew: CrewType) => (
-                    <Link to={`/credit/crew/${crew.id}`} key={crew.id}>
-                        <List.Item title={crew.jobs[0].job} value={crew.name} />
-                    </Link>
-                ))}
+                {data.map((crew: CrewType) => {
+                    const job =
+                        crew.jobs.find((job) => job.job === "Director" || job.job === "Screenplay")
+                            ?.job || crew.jobs[0].job;
+
+                    return (
+                        <Link to={`/credit/crew/${crew.id}`} key={crew.id}>
+                            <List.Item title={job} value={crew.name} />
+                        </Link>
+                    );
+                })}
             </List>
         </Stack>
     );
