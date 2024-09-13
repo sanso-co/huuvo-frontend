@@ -7,6 +7,7 @@ import Details from "@/pages/Details/Details";
 import { Category } from "@/pages/List/Category";
 import Collection from "@/pages/Collection";
 import { Credit } from "@/pages/List/Credit";
+import ProviderCollection from "@/pages/Provider";
 
 export const router = createBrowserRouter([
     {
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
             { path: "details/:id", element: <Details /> },
             { path: "/:categoryType/:categoryName/:categoryId", element: <Category /> },
             { path: "/collection/:collectionName", element: <Collection /> },
+            { path: "/provider/:providerName", element: <ProviderCollection /> },
             {
                 path: "credit",
                 children: [{ path: ":creditType/:creditId", element: <Credit /> }],

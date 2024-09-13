@@ -25,7 +25,7 @@ import { Similar } from "@/features/Details/Similar";
 import { getKeyword } from "@/helpers/getKeyword";
 
 const Details = () => {
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
     const { currentShow, error, loading } = useDetails(id as string);
     const { trailer, loading: trailerLoading, error: trailerError } = useTrailerVideo(id as string);
     const {

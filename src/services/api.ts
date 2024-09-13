@@ -1,3 +1,4 @@
+import { Show } from "@/types/show";
 import axios, { AxiosInstance } from "axios";
 
 class ApiService {
@@ -37,6 +38,17 @@ class ApiService {
             return response.data;
         } catch (error) {
             console.error("Error fetching permanent collection details", error);
+        }
+    }
+
+    async getProviderCollectionDetails(payload: { id: string; page: number; limit: number }) {
+        try {
+            const response = await this.api.get(
+                `provider-collection/${payload.id}?page=${payload.page}&limit=${payload.limit}`
+            );
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching provider collection details", error);
         }
     }
 }
