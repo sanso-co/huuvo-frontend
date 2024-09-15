@@ -82,7 +82,7 @@ const Details = () => {
                     {filteredKeywords && filteredKeywords.length > 0 && (
                         <Keyword data={filteredKeywords} />
                     )}
-                    {cast && cast.length > 9 && <Cast data={cast} />}
+                    {cast && cast.length > 0 && <Cast data={cast} />}
                     {crew && crew.length > 0 && <Crew data={crew} />}
                     {filteredSimilar && filteredSimilar.length > 0 && (
                         <Similar data={filteredSimilar} />

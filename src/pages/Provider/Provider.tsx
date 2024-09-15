@@ -71,10 +71,12 @@ const ProviderCollection = () => {
     return (
         <div>
             {providerCollection && (
-                <Header
-                    title={providerCollection.name}
-                    description={providerCollection.description ?? ""}
-                />
+                <div className={styles.header}>
+                    <Header
+                        title={providerCollection.name}
+                        description={providerCollection.description ?? ""}
+                    />
+                </div>
             )}
 
             <InfiniteScroll

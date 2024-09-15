@@ -61,16 +61,18 @@ const Collection = () => {
             setIsLoading(true);
             setTimeout(() => {
                 setPage((prevPage) => prevPage + 1);
-            }, 800);
+            }, 500);
         }
     }, [collectionLoading, isLoading, hasMore, setPage]);
 
     return (
         <div>
-            <Header
-                title={categoryName || ""}
-                description={`Shows with ${categoryType} ${categoryName}`}
-            />
+            <div className={styles.header}>
+                <Header
+                    title={categoryName || ""}
+                    description={`Shows with ${categoryType} ${categoryName}`}
+                />
+            </div>
 
             <InfiniteScroll
                 dataLength={shows.length}
