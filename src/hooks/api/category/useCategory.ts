@@ -8,7 +8,6 @@ export const useCategory = (section: string, id: string, page: number) => {
         isLoading,
         errors,
         setCategoryCollection,
-        getCollection,
         setIsLoading,
         setError,
     } = useCategoryStore();
