@@ -10,3 +10,14 @@ export interface Periodic {
         shows: Show[];
     }[];
 }
+
+export interface LatestPeriodic {
+    _id: string;
+    name: string;
+    description: string;
+    frequency: string;
+    list: {
+        releaseDate: string;
+        shows: Show[];
+    };
+}

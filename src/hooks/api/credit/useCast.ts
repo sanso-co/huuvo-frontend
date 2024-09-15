@@ -4,7 +4,7 @@ import { CastType } from "@/types/credit";
 
 export const useCast = (id: string) => {
     const [cast, setCast] = useState<CastType[] | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
@@ -15,12 +15,12 @@ export const useCast = (id: string) => {
             } catch (error) {
                 setError(error as Error);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
 
         fetchDetails();
     }, [id]);
 
-    return { cast, loading, error };
+    return { cast, isLoading, error };
 };

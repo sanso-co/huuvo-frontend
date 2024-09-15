@@ -4,7 +4,7 @@ import { ResultsResponse } from "@/types/results";
 
 export const useSimilar = (genres: string, keyword: string) => {
     const [similar, setSimilar] = useState<ResultsResponse | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
@@ -16,12 +16,12 @@ export const useSimilar = (genres: string, keyword: string) => {
             } catch (error) {
                 setError(error as Error);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
 
         fetchDetails();
     }, [genres, keyword]);
 
-    return { similar, loading, error };
+    return { similar, isLoading, error };
 };

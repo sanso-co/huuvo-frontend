@@ -2,36 +2,53 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import _ from "lodash";
 
-import { useCreditShowList } from "@/hooks/api/credit/useCreditShowList";
+import { useCredit } from "@/hooks/api/credit/useCredit";
 import { usePersonDetails } from "@/hooks/api/credit/usePersonDetails";
 import { useGeneralStore } from "@/store/useStore";
+import { useCollectionStore } from "@/store/collectionStore";
 
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
 
-import { CreditShowListResponse } from "@/types/credit";
 import { Show } from "@/types/show";
 
-import styles from "./list.module.scss";
+import styles from "./credit.module.scss";
 
 //exclude reality, talk shows
 const excludeShows = [10764, 10767];
 
-export const Credit = () => {
-    const { creditType, creditId = "" } = useParams();
+const Credit = () => {
+    const { creditType, creditId } = useParams();
     const [name, setName] = useState("");
-    const { creditShowList, loading, error } = useCreditShowList(creditId as string);
+
+    const language = useGeneralStore((state) => state.language);
+
     const {
         person,
         loading: personLoading,
         error: personError,
     } = usePersonDetails(creditId as string);
-    const language = useGeneralStore((state) => state.language);
+
+    const { collection, setCollection, resetCollection } = useCollectionStore();
+
+    useEffect(() => {
+        if (creditId && creditId !== collection) {
+            resetCollection();
+            setCollection(creditId);
+        } else if (!collection && name) {
+            setCollection(name);
+        }
+    }, [resetCollection, collection, setCollection, creditId, name]);
+
+    const { creditCollection, isLoading: collectionLoading } = useCredit(
+        creditType as string,
+        creditId as string
+    );
 
     const sortedShows = useMemo(() => {
-        if (!creditType || !creditShowList) return [];
+        if (!creditType || !creditCollection) return [];
 
-        const filteredShows = creditShowList[creditType as keyof CreditShowListResponse]?.filter(
+        const filteredShows = creditCollection.filter(
             (show: Show) => !excludeShows.some((id) => show.genre_ids.includes(id))
         );
 
@@ -43,7 +60,7 @@ export const Credit = () => {
         }, []);
 
         return _.orderBy(uniqueShows, ["first_air_date"], ["desc"]);
-    }, [creditType, creditShowList]);
+    }, [creditType, creditCollection]);
 
     // kr or en
     useEffect(() => {
@@ -54,16 +71,13 @@ export const Credit = () => {
         );
     }, [language, person]);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
-
     return (
         <div>
             {!personLoading && !personError && person && (
                 <Header title={name || ""} description={person.known_for_department} />
             )}
 
-            {loading ? (
+            {collectionLoading ? (
                 <div>loading</div>
             ) : (
                 <div className={styles.grid}>
@@ -77,3 +91,5 @@ export const Credit = () => {
         </div>
     );
 };
+
+export default Credit;

@@ -4,23 +4,23 @@ import { TrailerResponse } from "@/types/showDetail";
 
 export const useTrailerVideo = (id: string) => {
     const [trailer, setTrailer] = useState<TrailerResponse | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
-        const fetchDetails = async () => {
+        const fetchDTrailer = async () => {
             try {
                 const result = await apiService.getTrailerVideo(id);
                 setTrailer(result);
             } catch (error) {
                 setError(error as Error);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
 
-        fetchDetails();
+        fetchDTrailer();
     }, [id]);
 
-    return { trailer, loading, error };
+    return { trailer, isLoading, error };
 };

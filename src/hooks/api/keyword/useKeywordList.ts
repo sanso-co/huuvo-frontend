@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { apiService } from "@/services/api";
-import { useKeywordStore } from "@/store/keywordStore";
 
 export const useKeywordList = () => {
-    const [loading, setLoading] = useState(true);
+    const [keywordsList, setKeywordsList] = useState();
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
-    const { setKeywordsList } = useKeywordStore();
 
     useEffect(() => {
         const fetchKeywordsList = async () => {
@@ -15,14 +14,12 @@ export const useKeywordList = () => {
             } catch (err) {
                 setError(err as Error);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
 
         fetchKeywordsList();
     }, [setKeywordsList]);
 
-    const keywordsList = useKeywordStore((state) => state.keywordsList);
-
-    return { keywordsList, loading, error };
+    return { keywordsList, isLoading, error };
 };

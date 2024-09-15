@@ -15,15 +15,6 @@ const Home = () => {
         collectionId.UPCOMING_RELEASE || ""
     );
 
-    const { permanentCollection: mostPopular } = useGetPermanentDetails(
-        collectionId.MOST_POPULAR || "",
-        1
-    );
-    const { permanentCollection: highlyRated } = useGetPermanentDetails(
-        collectionId.HIGHLY_RATED || "",
-        1
-    );
-
     return (
         <div className={styles.sliders}>
             <CardSlider
@@ -41,20 +32,6 @@ const Home = () => {
                 helper={`Upcoming: ${releaseQuarter(upcoming?.releaseDate || "")}`}
             >
                 {upcoming?.shows.map((show) => (
-                    <Link key={show.id} to={`/details/${show.id}`}>
-                        <ShowCard show={show} />
-                    </Link>
-                ))}
-            </CardSlider>
-            <CardSlider title="Most Popular" linkLabel="View All" linkTo="/collection/most-popular">
-                {mostPopular?.shows?.result.map((show) => (
-                    <Link key={show.id} to={`/details/${show.id}`}>
-                        <ShowCard show={show} />
-                    </Link>
-                ))}
-            </CardSlider>
-            <CardSlider title="Highly Rated" linkLabel="View All" linkTo="/collection/highly-rated">
-                {highlyRated?.shows?.result.map((show) => (
                     <Link key={show.id} to={`/details/${show.id}`}>
                         <ShowCard show={show} />
                     </Link>

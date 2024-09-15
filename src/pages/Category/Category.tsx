@@ -5,60 +5,72 @@ import { Show } from "@/types/show";
 
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
-import { useCategoryShowList } from "@/hooks/api/category/useCategoryShowList";
 
-import styles from "./list.module.scss";
 import { Spinner } from "@/components/global/Spinner";
+import { useCategory } from "@/hooks/api/category/useCategory";
+import { useCollectionStore } from "@/store/collectionStore";
 
-export const Category = () => {
+import styles from "./category.module.scss";
+
+const Collection = () => {
     const { categoryType, categoryName, categoryId } = useParams();
-    const [page, setPage] = useState(1);
-    const [shows, setShows] = useState<Show[]>([]);
+    const [localPage, setLocalPage] = useState(1);
+
+    const { page, setPage, shows, setShows, collection, setCollection, resetCollection } =
+        useCollectionStore();
+
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { categoryShowList, loading, error } = useCategoryShowList(
+    useEffect(() => {
+        if (categoryName && categoryName !== collection) {
+            resetCollection();
+            setCollection(categoryName);
+            setLocalPage(1);
+        } else if (!collection && categoryName) {
+            setCollection(categoryName);
+        }
+    }, [categoryName, resetCollection, collection, setCollection, setPage, page]);
+
+    useEffect(() => {
+        setLocalPage(page);
+    }, [page]);
+
+    const { categoryCollection, isLoading: collectionLoading } = useCategory(
         categoryType as string,
         categoryId as string,
-        page
+        localPage
     );
 
     useEffect(() => {
-        if (categoryShowList?.results) {
-            setShows((prevShows) => {
-                const newShows = categoryShowList.results.filter(
-                    (newShow) => !prevShows.some((existingShow) => existingShow.id === newShow.id)
+        if (categoryCollection?.results) {
+            setShows((existingShows) => {
+                const newShows = categoryCollection.results.filter(
+                    (newShow) =>
+                        !existingShows.some((existingShow) => existingShow.id === newShow.id)
                 );
-                return [...prevShows, ...newShows];
+                return [...existingShows, ...newShows];
             });
-            setHasMore(categoryShowList.page < categoryShowList.total_pages);
+            setHasMore(categoryCollection.page < categoryCollection.total_pages);
             setIsLoading(false);
         }
-    }, [categoryShowList]);
+    }, [categoryCollection, setShows]);
 
     const fetchMoreData = useCallback(() => {
-        if (!loading && !isLoading) {
+        if (!collectionLoading && !isLoading && hasMore) {
             setIsLoading(true);
             setTimeout(() => {
                 setPage((prevPage) => prevPage + 1);
             }, 800);
         }
-    }, [loading, isLoading]);
-
-    //TODO: fetch category details and update header
-    //TODO: add filter and sort
-    // const [sort, setSort] = useState("first_air_date.desc");
-
-    if (error) return <div>Error: {error.message}</div>;
+    }, [collectionLoading, isLoading, hasMore, setPage]);
 
     return (
         <div>
-            {categoryName && (
-                <Header
-                    title={categoryName}
-                    description={`Shows with ${categoryType} ${categoryName}`}
-                />
-            )}
+            <Header
+                title={categoryName || ""}
+                description={`Shows with ${categoryType} ${categoryName}`}
+            />
 
             <InfiniteScroll
                 dataLength={shows.length}
@@ -82,3 +94,5 @@ export const Category = () => {
         </div>
     );
 };
+
+export default Collection;

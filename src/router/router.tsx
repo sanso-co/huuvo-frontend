@@ -2,11 +2,11 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Layout from "@/components/layout";
 
-import Home from "@/pages/Home/Home";
-import Details from "@/pages/Details/Details";
-import { Category } from "@/pages/List/Category";
+import Home from "@/pages/Home";
+import Details from "@/pages/Details";
+import Category from "@/pages/Category";
 import Collection from "@/pages/Collection";
-import { Credit } from "@/pages/List/Credit";
+import Credit from "@/pages/Credit";
 import ProviderCollection from "@/pages/Provider";
 
 export const router = createBrowserRouter([
