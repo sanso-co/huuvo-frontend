@@ -1,5 +1,3 @@
-import { Show } from "./show";
-
 export interface CrewType {
     id: number;
     department: string;
@@ -33,9 +31,4 @@ export interface PersonType {
     biography: string;
     also_known_as: string[];
     known_for_department: string;
-}
-
-export interface CreditShowListResponse {
-    cast: Show[];
-    crew: Show[];
 }

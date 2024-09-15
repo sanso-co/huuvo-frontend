@@ -13,13 +13,9 @@ import { collectionId } from "@/helpers/constants/collectionId";
 import { convertToConstant } from "@/helpers/convertToConstant";
 import { useCollectionStore } from "@/store/collectionStore";
 
-const isValidCollectionId = (key: string): key is keyof typeof collectionId => {
-    return key in collectionId;
-};
-
 const ProviderCollection = () => {
     const { providerName } = useParams();
-    const collectionConstant = convertToConstant(providerName || "");
+    const collectionKey = convertToConstant(providerName || "");
     const [localPage, setLocalPage] = useState(1);
 
     const { page, setPage, shows, setShows, collection, setCollection, resetCollection } =
@@ -28,10 +24,7 @@ const ProviderCollection = () => {
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
-    let collectionIdValue = "";
-    if (isValidCollectionId(collectionConstant)) {
-        collectionIdValue = collectionId[collectionConstant];
-    }
+    const collectionIdValue = collectionId[collectionKey as keyof typeof collectionId];
 
     useEffect(() => {
         if (providerName && providerName !== collection) {

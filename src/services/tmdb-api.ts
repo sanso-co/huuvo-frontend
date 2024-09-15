@@ -65,15 +65,10 @@ class ApiService {
         }
     }
 
-    async getCategoryShowList(
-        section: string,
-        id: string,
-        page: number,
-        sort?: string | "first_air_date.desc"
-    ) {
+    async getCategoryShowList(section: string, id: string, page: number) {
         try {
             const response = await this.api.get(
-                `/discover/tv?page=${page}&with_origin_country=KR&with_${section}=${id}&sort_by=${sort}&with_type=2%7C4`
+                `/discover/tv?page=${page}&with_origin_country=KR&with_${section}=${id}&with_type=2%7C4`
             );
             return response.data;
         } catch (error) {

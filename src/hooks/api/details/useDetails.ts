@@ -1,28 +1,26 @@
-import { apiService } from "@/services/tmdb-api";
-import { useDetailStore } from "@/store/detailStore";
 import { useEffect, useState } from "react";
+import { apiService } from "@/services/tmdb-api";
+import { DetailResponse } from "@/types/showDetail";
 
 export const useDetails = (id: string) => {
-    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState<DetailResponse>();
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
-    const { setCurrentShow } = useDetailStore();
 
     useEffect(() => {
         const fetchDetails = async () => {
             try {
-                const result = await apiService.getShowDetails(id);
-                setCurrentShow(result);
+                const response = await apiService.getShowDetails(id);
+                setData(response);
             } catch (error) {
                 setError(error as Error);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
 
         fetchDetails();
-    }, [id, setCurrentShow]);
+    }, [id]);
 
-    const currentShow = useDetailStore((state) => state.currentShow);
-
-    return { currentShow, loading, error };
+    return { data, isLoading, error };
 };

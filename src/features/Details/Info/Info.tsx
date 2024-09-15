@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 
-import { ShowDetailsTaype } from "@/types/show";
+import { DetailResponse } from "@/types/showDetail";
 import { formatDate } from "@/helpers/date";
 
 import styles from "./info.module.scss";
 
 interface Props {
-    data: ShowDetailsTaype | null;
+    data: DetailResponse | undefined;
 }
 
 export const Info = ({ data }: Props) => {
@@ -21,7 +21,9 @@ export const Info = ({ data }: Props) => {
                 <ul>
                     {data?.genres?.map((genre) => (
                         <li key={genre.id} className="caption">
-                            <Link to={`/genres/${genre.name.toLocaleLowerCase()}/${genre.id}`}>{genre.name}</Link>
+                            <Link to={`/genres/${genre.name.toLocaleLowerCase()}/${genre.id}`}>
+                                {genre.name}
+                            </Link>
                         </li>
                     ))}
                 </ul>

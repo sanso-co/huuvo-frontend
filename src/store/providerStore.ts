@@ -7,7 +7,7 @@ interface ProviderCollections {
 
 interface ProviderProps {
     providerCollections: ProviderCollections;
-    setProviderDetails: (id: string, details: Provider | null) => void;
+    setProviderCollection: (id: string, data: Provider) => void;
     isLoading: { [id: string]: boolean };
     setIsLoading: (id: string, loading: boolean) => void;
     errors: { [id: string]: Error | null };
@@ -16,11 +16,11 @@ interface ProviderProps {
 
 export const useProviderStore = create<ProviderProps>((set) => ({
     providerCollections: {},
-    setProviderDetails: (id, details) =>
+    setProviderCollection: (id, data) =>
         set((state) => ({
             providerCollections: {
                 ...state.providerCollections,
-                [id]: details,
+                [id]: data,
             },
         })),
     isLoading: {},

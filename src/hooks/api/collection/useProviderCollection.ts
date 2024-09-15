@@ -3,20 +3,26 @@ import { useProviderStore } from "@/store/providerStore";
 import { apiService } from "@/services/api";
 
 export const useGetProviderDetails = (id: string, page: number) => {
-    const { setProviderDetails, setIsLoading, setError, isLoading, errors, providerCollections } =
-        useProviderStore();
+    const {
+        setProviderCollection,
+        setIsLoading,
+        setError,
+        isLoading,
+        errors,
+        providerCollections,
+    } = useProviderStore();
 
     const getPermanentDetails = useCallback(async () => {
         if (!id) return;
         setIsLoading(id, true);
         setError(id, null);
+
         try {
             const fetchedDetails = await apiService.getProviderCollectionDetails({
                 id,
                 page,
-                limit: 10,
             });
-            setProviderDetails(id, fetchedDetails);
+            setProviderCollection(id, fetchedDetails);
             return fetchedDetails;
         } catch (err) {
             setError(id, err instanceof Error ? err : new Error("An unknown error occurred"));
@@ -24,7 +30,7 @@ export const useGetProviderDetails = (id: string, page: number) => {
         } finally {
             setIsLoading(id, false);
         }
-    }, [id, setIsLoading, setError, page, setProviderDetails]);
+    }, [id, setIsLoading, setError, page, setProviderCollection]);
 
     useEffect(() => {
         getPermanentDetails();

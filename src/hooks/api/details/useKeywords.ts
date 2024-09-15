@@ -4,7 +4,7 @@ import { KeywordsResponse } from "@/types/showDetail";
 
 export const useKeywords = (id: string) => {
     const [keywords, setKeywords] = useState<KeywordsResponse | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
@@ -15,12 +15,12 @@ export const useKeywords = (id: string) => {
             } catch (error) {
                 setError(error as Error);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
 
         fetchDetails();
     }, [id]);
 
-    return { keywords, loading, error };
+    return { keywords, isLoading, error };
 };

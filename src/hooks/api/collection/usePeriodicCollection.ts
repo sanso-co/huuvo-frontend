@@ -12,13 +12,7 @@ export const usePeriodicCollection = (id: string) => {
         setError(id, null);
 
         try {
-            const cachedCollection = getCollection(id);
-            if (cachedCollection) {
-                setIsLoading(id, false);
-                return;
-            }
-
-            const result = await apiService.getPeriodicCollection(id);
+            const result = await apiService.getLatestPeriodicCollection(id);
             setPeriodicCollection(id, result);
         } catch (err) {
             setError(id, err instanceof Error ? err : new Error("An unknown error occurred"));
@@ -26,7 +20,7 @@ export const usePeriodicCollection = (id: string) => {
         } finally {
             setIsLoading(id, false);
         }
-    }, [getCollection, id, setPeriodicCollection, setError, setIsLoading]);
+    }, [id, setPeriodicCollection, setError, setIsLoading]);
 
     useEffect(() => {
         getPeriodicCollection();
@@ -34,11 +28,8 @@ export const usePeriodicCollection = (id: string) => {
 
     const collectionData = getCollection(id);
     const latestCollection = useMemo(() => {
-        if (collectionData && collectionData.lists.length > 0) {
-            return collectionData.lists[collectionData.lists.length - 1];
-        }
-        return null;
+        return collectionData?.list;
     }, [collectionData]);
 
-    return { isLoading, errors, collectionData, latestCollection };
+    return { isLoading, errors, latestCollection };
 };

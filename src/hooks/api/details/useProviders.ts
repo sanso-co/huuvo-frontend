@@ -4,7 +4,7 @@ import { ProviderResponse } from "@/types/showDetail";
 
 export const useProviders = (id: string) => {
     const [providers, setProviders] = useState<ProviderResponse | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
@@ -15,12 +15,12 @@ export const useProviders = (id: string) => {
             } catch (error) {
                 setError(error as Error);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
 
         fetchDetails();
     }, [id]);
 
-    return { providers, loading, error };
+    return { providers, isLoading, error };
 };

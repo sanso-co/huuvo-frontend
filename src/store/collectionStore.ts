@@ -1,6 +1,6 @@
 import { Show } from "@/types/show";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 
 interface StateProps {
     collection: string | null;
@@ -13,27 +13,29 @@ interface StateProps {
 }
 
 export const useCollectionStore = create<StateProps>()(
-    persist(
-        (set) => ({
-            collection: null,
-            page: 1,
-            shows: [],
-            setCollection: (collection) => set({ collection }),
-            setPage: (payload: number | ((prevPage: number) => number)) =>
-                set((state) => ({
-                    page: typeof payload === "function" ? payload(state.page) : payload,
-                })),
-            setShows: (newShows: Show[] | ((currentShows: Show[]) => Show[])) =>
-                set((state) => ({
-                    shows:
-                        typeof newShows === "function"
-                            ? newShows(state.shows)
-                            : [...state.shows, ...newShows],
-                })),
-            resetCollection: () => set({ page: 1, shows: [] }),
-        }),
-        {
-            name: "collection-store",
-        }
+    devtools(
+        persist(
+            (set) => ({
+                collection: null,
+                page: 1,
+                shows: [],
+                setCollection: (collection) => set({ collection }),
+                setPage: (payload: number | ((prevPage: number) => number)) =>
+                    set((state) => ({
+                        page: typeof payload === "function" ? payload(state.page) : payload,
+                    })),
+                setShows: (newShows: Show[] | ((currentShows: Show[]) => Show[])) =>
+                    set((state) => ({
+                        shows:
+                            typeof newShows === "function"
+                                ? newShows(state.shows)
+                                : [...state.shows, ...newShows],
+                    })),
+                resetCollection: () => set({ page: 1, shows: [] }),
+            }),
+            {
+                name: "collection",
+            }
+        )
     )
 );

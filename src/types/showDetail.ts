@@ -1,4 +1,4 @@
-export interface ShowDetail {
+export interface DetailResponse {
     id: number;
     name: string;
     original_name: string;

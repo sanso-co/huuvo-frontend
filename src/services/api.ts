@@ -11,9 +11,9 @@ class ApiService {
         });
     }
 
-    async getPeriodicCollection(id: string) {
+    async getLatestPeriodicCollection(id: string) {
         try {
-            const response = await this.api.get(`periodic-collection/${id}`);
+            const response = await this.api.get(`periodic-collection/${id}/latest`);
             return response.data;
         } catch (error) {
             console.error("Error fetching collection list", error);
@@ -40,10 +40,10 @@ class ApiService {
         }
     }
 
-    async getProviderCollectionDetails(payload: { id: string; page: number; limit: number }) {
+    async getProviderCollectionDetails(payload: { id: string; page: number }) {
         try {
             const response = await this.api.get(
-                `provider-collection/${payload.id}?page=${payload.page}&limit=${payload.limit}`
+                `provider-collection/${payload.id}?page=${payload.page}`
             );
             return response.data;
         } catch (error) {

@@ -4,7 +4,7 @@ import { CrewType } from "@/types/credit";
 
 export const useCrew = (id: string) => {
     const [crew, setCrew] = useState<CrewType[] | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
@@ -20,12 +20,12 @@ export const useCrew = (id: string) => {
             } catch (error) {
                 setError(error as Error);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
 
         fetchDetails();
     }, [id]);
 
-    return { crew, loading, error };
+    return { crew, isLoading, error };
 };

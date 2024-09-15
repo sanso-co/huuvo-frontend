@@ -26,11 +26,15 @@ import { getKeyword } from "@/helpers/getKeyword";
 
 const Details = () => {
     const { id } = useParams<{ id: string }>();
-    const { currentShow, error, loading } = useDetails(id as string);
-    const { trailer, loading: trailerLoading, error: trailerError } = useTrailerVideo(id as string);
+    const { data, error, isLoading } = useDetails(id as string);
+    const {
+        trailer,
+        isLoading: trailerLoading,
+        error: trailerError,
+    } = useTrailerVideo(id as string);
     const {
         providers,
-        loading: providerLoading,
+        isLoading: providerLoading,
         error: providerError,
     } = useProviders(id as string);
 
@@ -48,7 +52,7 @@ const Details = () => {
     const { cast } = useCast(id as string);
     const { crew } = useCrew(id as string);
 
-    const genreString = getGenres(currentShow?.genres);
+    const genreString = getGenres(data?.genres);
     const keywordString = getKeyword(filteredKeywords);
     const { similar } = useSimilar(genreString as string, keywordString as string);
 
@@ -62,18 +66,18 @@ const Details = () => {
 
     return (
         <div>
-            {loading ? (
+            {isLoading ? (
                 <div>loading</div>
             ) : error ? (
                 <div>error</div>
             ) : (
                 <div>
                     <ImageContainer
-                        src={getCroppedImageUrl(currentShow?.poster_path, false)}
+                        src={getCroppedImageUrl(data?.poster_path, false)}
                         ratio={ratio.portrait_23}
                         video={!trailerLoading && !trailerError ? trailer?.results : undefined}
                     />
-                    <Info data={currentShow} />
+                    <Info data={data} />
                     {!providerLoading && !providerError && <Provider data={providers} />}
                     {filteredKeywords && filteredKeywords.length > 0 && (
                         <Keyword data={filteredKeywords} />
