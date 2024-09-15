@@ -23,38 +23,42 @@ export const Provider = ({ data }: Props) => {
     const filteredProviders = usData.filter(
         (provider: Provider) => !excludeProviders.includes(provider.provider_id)
     );
-    console.log(filteredProviders);
-    return (
-        <Stack border gap="1rem" padding="2rem 1rem">
-            <div className={styles.header}>
-                <h3>Watch</h3>
-                <p>provided by JustWatch</p>
-            </div>
-            {filteredProviders &&
-                filteredProviders.length > 0 &&
-                filteredProviders.map((provider: Provider) => {
-                    const url = formatUrl(provider.provider_name ?? "");
-                    const providerPath = provider.logo_path;
-                    const providerName = provider.provider_name;
 
-                    return (
-                        <Link
-                            key={provider.provider_id}
-                            to={`/provider/${url}`}
-                            className={styles.container}
-                        >
-                            {providerPath ? (
-                                <img
-                                    src={`https://media.themoviedb.org/t/p/original/${providerPath}`}
-                                    alt=""
-                                />
-                            ) : (
-                                <div className="footnote">Not available in the US yet</div>
-                            )}
-                            {providerName && <p>{providerName}</p>}
-                        </Link>
-                    );
-                })}
-        </Stack>
+    return (
+        <>
+            {filteredProviders && filteredProviders.length > 0 && (
+                <Stack border gap="1rem" padding="2rem 1rem">
+                    <div className={styles.header}>
+                        <h3>Watch</h3>
+                        <p>provided by JustWatch</p>
+                    </div>
+                    {filteredProviders &&
+                        filteredProviders.length > 0 &&
+                        filteredProviders.map((provider: Provider) => {
+                            const url = formatUrl(provider.provider_name ?? "");
+                            const providerPath = provider.logo_path;
+                            const providerName = provider.provider_name;
+
+                            return (
+                                <Link
+                                    key={provider.provider_id}
+                                    to={`/provider/${url}`}
+                                    className={styles.container}
+                                >
+                                    {providerPath ? (
+                                        <img
+                                            src={`https://media.themoviedb.org/t/p/original/${providerPath}`}
+                                            alt=""
+                                        />
+                                    ) : (
+                                        <div className="footnote">Not available in the US yet</div>
+                                    )}
+                                    {providerName && <p>{providerName}</p>}
+                                </Link>
+                            );
+                        })}
+                </Stack>
+            )}
+        </>
     );
 };

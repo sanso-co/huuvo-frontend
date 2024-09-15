@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import styles from "./cardslider.module.scss";
 import { LinkButton } from "@/components/global/LinkButton";
@@ -12,6 +12,14 @@ interface Props {
 }
 
 export const CardSlider = ({ linkLabel, linkTo, helper, title, children }: Props) => {
+    const sliderRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (sliderRef.current) {
+            sliderRef.current.scrollLeft = 0;
+        }
+    }, [children]);
+
     return (
         <section className={styles.section}>
             {title && (
@@ -25,7 +33,9 @@ export const CardSlider = ({ linkLabel, linkTo, helper, title, children }: Props
                     )}
                 </div>
             )}
-            <div className={styles.container}>{children}</div>
+            <div ref={sliderRef} className={styles.container}>
+                {children}
+            </div>
         </section>
     );
 };

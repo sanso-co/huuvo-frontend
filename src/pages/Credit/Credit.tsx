@@ -13,6 +13,8 @@ import { Header } from "@/components/global/Header";
 import { Show } from "@/types/show";
 
 import styles from "./credit.module.scss";
+import { ProfileImage } from "@/components/global/ProfileImage";
+import { getProfileImage } from "@/services/image-url";
 
 //exclude reality, talk shows
 const excludeShows = [10764, 10767];
@@ -74,7 +76,10 @@ const Credit = () => {
     return (
         <div>
             {!personLoading && !personError && person && (
-                <Header title={name || ""} description={person.known_for_department} />
+                <div className={styles.header}>
+                    <ProfileImage url={getProfileImage(person.profile_path)} />
+                    <Header title={name || ""} description={person.known_for_department} />
+                </div>
             )}
 
             {collectionLoading ? (

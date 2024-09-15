@@ -71,17 +71,19 @@ const Collection = () => {
             setIsLoading(true);
             setTimeout(() => {
                 setPage((prevPage) => prevPage + 1);
-            }, 800);
+            }, 500);
         }
     }, [collectionLoading, isLoading, hasMore, setPage]);
 
     return (
         <div>
             {permanentCollection && (
-                <Header
-                    title={permanentCollection.name}
-                    description={permanentCollection.description ?? ""}
-                />
+                <div className={styles.header}>
+                    <Header
+                        title={permanentCollection.name}
+                        description={permanentCollection.description ?? ""}
+                    />
+                </div>
             )}
 
             <InfiniteScroll
