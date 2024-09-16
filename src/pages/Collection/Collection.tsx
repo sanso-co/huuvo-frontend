@@ -13,25 +13,16 @@ import { collectionId } from "@/helpers/constants/collectionId";
 import { convertToConstant } from "@/helpers/convertToConstant";
 import { useCollectionStore } from "@/store/collectionStore";
 
-const isValidCollectionId = (key: string): key is keyof typeof collectionId => {
-    return key in collectionId;
-};
-
 const Collection = () => {
     const { collectionName } = useParams();
     const collectionConstant = convertToConstant(collectionName || "");
+    const collectionIdValue = collectionId[collectionConstant as keyof typeof collectionId];
     const [localPage, setLocalPage] = useState(1);
 
     const { page, setPage, shows, setShows, collection, setCollection, resetCollection } =
         useCollectionStore();
 
-    const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
-
-    let collectionIdValue = "";
-    if (isValidCollectionId(collectionConstant)) {
-        collectionIdValue = collectionId[collectionConstant];
-    }
 
     useEffect(() => {
         if (collectionName && collectionName !== collection) {
@@ -61,19 +52,18 @@ const Collection = () => {
                 );
                 return [...existingShows, ...newShows];
             });
-            setHasMore(permanentCollection.shows.page < permanentCollection.shows.totalPages);
             setIsLoading(false);
         }
     }, [permanentCollection, setShows]);
 
     const fetchMoreData = useCallback(() => {
-        if (!collectionLoading && !isLoading && hasMore) {
+        if (!collectionLoading && !isLoading) {
             setIsLoading(true);
             setTimeout(() => {
                 setPage((prevPage) => prevPage + 1);
-            }, 500);
+            }, 300);
         }
-    }, [collectionLoading, isLoading, hasMore, setPage]);
+    }, [collectionLoading, isLoading, setPage]);
 
     return (
         <div>
@@ -89,7 +79,12 @@ const Collection = () => {
             <InfiniteScroll
                 dataLength={shows.length}
                 next={fetchMoreData}
-                hasMore={hasMore}
+                hasMore={
+                    !!permanentCollection?.shows &&
+                    !!permanentCollection?.shows.page &&
+                    !!permanentCollection?.shows.totalPages &&
+                    permanentCollection.shows.page < permanentCollection.shows.totalPages
+                }
                 loader={<Spinner />}
                 endMessage={
                     <div className={styles.endMessage}>
