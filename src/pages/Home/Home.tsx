@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { usePeriodicCollection } from "@/hooks/api/collection/usePeriodicCollection";
 import { useGetPermanentDetails } from "@/hooks/api/collection/usePermanentCollection";
 import { formatDate, releaseQuarter } from "@/helpers/date";
@@ -30,9 +29,7 @@ const Home = () => {
                 helper={`Updated: ${formatDate(trending?.releaseDate)}`}
             >
                 {trending?.shows.map((show) => (
-                    <Link key={show.id} to={`/details/${show.id}`}>
-                        <ShowCard show={show} />
-                    </Link>
+                    <ShowCard show={show} key={show.id} />
                 ))}
             </CardSlider>
             <CardSlider
@@ -40,23 +37,17 @@ const Home = () => {
                 helper={`Upcoming: ${releaseQuarter(upcoming?.releaseDate || "")}`}
             >
                 {upcoming?.shows.map((show) => (
-                    <Link key={show.id} to={`/details/${show.id}`}>
-                        <ShowCard show={show} />
-                    </Link>
+                    <ShowCard show={show} key={show.id} />
                 ))}
             </CardSlider>
             <CardSlider title="Most Popular" linkLabel="View All" linkTo="/collection/most-popular">
                 {mostPopular?.shows?.result.map((show) => (
-                    <Link key={show.id} to={`/details/${show.id}`}>
-                        <ShowCard show={show} />
-                    </Link>
+                    <ShowCard show={show} key={show.id} />
                 ))}
             </CardSlider>
             <CardSlider title="Highly Rated" linkLabel="View All" linkTo="/collection/highly-rated">
                 {highlyRated?.shows?.result.map((show) => (
-                    <Link key={show.id} to={`/details/${show.id}`}>
-                        <ShowCard show={show} />
-                    </Link>
+                    <ShowCard show={show} key={show.id} />
                 ))}
             </CardSlider>
         </div>

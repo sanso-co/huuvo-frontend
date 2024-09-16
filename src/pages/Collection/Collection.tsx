@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Show } from "@/types/show";
 
@@ -94,9 +94,7 @@ const Collection = () => {
             >
                 <div className={styles.grid}>
                     {shows.map((show: Show) => (
-                        <Link to={`/details/${show.id}`} key={show.id}>
-                            <ShowCard show={show} />
-                        </Link>
+                        <ShowCard show={show} key={show.id} />
                     ))}
                 </div>
             </InfiniteScroll>

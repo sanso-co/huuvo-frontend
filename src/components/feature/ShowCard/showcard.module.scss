@@ -1,13 +1,13 @@
 .details {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 0.5rem;
 
-  p {
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.125rem;
-    color: #222;
-  }
+    p {
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.125rem;
+        color: #222;
+    }
 }

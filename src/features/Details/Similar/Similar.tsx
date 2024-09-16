@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { ShowCard } from "@/components/feature/ShowCard";
 import { CardSlider } from "@/components/pattern/CardSlider";
 import { Show } from "@/types/show";
@@ -14,9 +13,7 @@ export const Similar = ({ data }: Props) => {
             <h3>You may also like</h3>
             <CardSlider>
                 {data.map((show) => (
-                    <Link key={show.id} to={`/details/${show.id}`}>
-                        <ShowCard show={show} />
-                    </Link>
+                    <ShowCard show={show} key={show.id} />
                 ))}
             </CardSlider>
         </div>

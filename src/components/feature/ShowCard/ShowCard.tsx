@@ -8,6 +8,7 @@ import { ratio } from "@/components/token";
 import { Card } from "@/components/global/cards";
 
 import styles from "./showcard.module.scss";
+import { Link } from "react-router-dom";
 
 interface Props {
     show: Show;
@@ -26,10 +27,16 @@ export const ShowCard = ({ show }: Props) => {
     return (
         <div>
             <Card>
-                <Card.Image src={getCroppedImageUrl(show.poster_path, true)} ratio={ratio.portrait_23} rounded="0.75rem" />
-                <div className={styles.details}>
-                    <p>{title}</p>
-                </div>
+                <Link to={`/details/${show.id}`}>
+                    <Card.Image
+                        src={getCroppedImageUrl(show.poster_path, true)}
+                        ratio={ratio.portrait_23}
+                        rounded="0.75rem"
+                    />
+                    <div className={styles.details}>
+                        <p>{title}</p>
+                    </div>
+                </Link>
             </Card>
         </div>
     );
