@@ -54,10 +54,14 @@ const Details = () => {
 
     const genreString = getGenres(data?.genres);
     const keywordString = getKeyword(filteredKeywords);
-    const { similar } = useSimilar(genreString as string, keywordString as string);
+    const { similar } = useSimilar(
+        data?.id as number,
+        genreString as string,
+        keywordString as string
+    );
 
     const filteredSimilar = useMemo(() => {
-        return similar?.results.filter((show) => show.id.toString() !== id);
+        return similar?.filter((show) => show.id.toString() !== id);
     }, [similar, id]);
 
     useEffect(() => {

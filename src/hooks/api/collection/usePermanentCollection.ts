@@ -1,30 +1,32 @@
-import { useCallback, useEffect } from "react";
-import { usePermanentStore } from "@/store/permanentStore";
+import { useCallback, useEffect, useState } from "react";
 import { apiService } from "@/services/api";
+import { Permanent } from "@/types/permanent";
 
 export const useGetPermanentDetails = (id: string, page: number) => {
-    const { setPermanentDetails, setIsLoading, setError, isLoading, errors, permanentCollections } =
-        usePermanentStore();
+    const [permanentCollection, setPermanentCollection] = useState<Permanent>();
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null);
 
     const getPermanentDetails = useCallback(async () => {
         if (!id) return;
-        setIsLoading(id, true);
-        setError(id, null);
+        setIsLoading(true);
+        setError(null);
+
         try {
             const fetchedDetails = await apiService.getPermanentCollectionDetails({
                 id,
                 page,
                 limit: 10,
             });
-            setPermanentDetails(id, fetchedDetails);
+            setPermanentCollection(fetchedDetails);
             return fetchedDetails;
         } catch (err) {
-            setError(id, err instanceof Error ? err : new Error("An unknown error occurred"));
+            setError(err instanceof Error ? err : new Error("An unknown error occurred"));
             throw err;
         } finally {
-            setIsLoading(id, false);
+            setIsLoading(false);
         }
-    }, [id, setIsLoading, setError, page, setPermanentDetails]);
+    }, [id, setIsLoading, setError, page, setPermanentCollection]);
 
     useEffect(() => {
         getPermanentDetails();
@@ -32,8 +34,8 @@ export const useGetPermanentDetails = (id: string, page: number) => {
 
     return {
         getPermanentDetails,
-        isLoading: isLoading[id] || false,
-        error: errors[id] || null,
-        permanentCollection: permanentCollections[id] || null,
+        isLoading,
+        error,
+        permanentCollection,
     };
 };

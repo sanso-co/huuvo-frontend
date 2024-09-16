@@ -50,6 +50,21 @@ class ApiService {
             console.error("Error fetching provider collection details", error);
         }
     }
+
+    //recommendations
+    async getRecommendationShows(payload: { id: number; genres: string; keyword: string }) {
+        try {
+            const response = await this.api.get(`recommendations/shows/${payload.id}`, {
+                params: {
+                    genres: payload.genres,
+                    keyword: payload.keyword,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching recommendations", error);
+        }
+    }
 }
 
 export const apiService = new ApiService();
