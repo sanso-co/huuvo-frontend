@@ -1,11 +1,11 @@
-import { Show } from "./show";
+import { Drama } from "./show";
 
 export interface Provider {
     _id?: string;
     name: string;
     description?: string;
     shows: {
-        result: Show[];
+        result: Drama[];
         page: number;
         totalPages: number;
         totalDocs: number;

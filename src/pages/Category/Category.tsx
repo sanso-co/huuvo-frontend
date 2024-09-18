@@ -8,7 +8,7 @@ import { Header } from "@/components/global/Header";
 
 import { Spinner } from "@/components/global/Spinner";
 import { useCategory } from "@/hooks/api/category/useCategory";
-import { useCollectionStore } from "@/store/collectionStore";
+import { useCategoryCollectionStore } from "@/store/categoryCollectionStore";
 
 import styles from "./category.module.scss";
 
@@ -17,7 +17,7 @@ const Collection = () => {
     const [localPage, setLocalPage] = useState(1);
 
     const { page, setPage, shows, setShows, collection, setCollection, resetCollection } =
-        useCollectionStore();
+        useCategoryCollectionStore();
 
     const [isLoading, setIsLoading] = useState(false);
 

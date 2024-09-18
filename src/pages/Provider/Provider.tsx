@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Show } from "@/types/show";
+import { Drama } from "@/types/show";
 
 import { Header } from "@/components/global/Header";
 import { DramaCard } from "@/components/feature/DramaCard";
@@ -21,7 +21,6 @@ const ProviderCollection = () => {
     const { page, setPage, shows, setShows, collection, setCollection, resetCollection } =
         useCollectionStore();
 
-    const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
     const collectionIdValue = collectionId[collectionKey as keyof typeof collectionId];
@@ -54,20 +53,19 @@ const ProviderCollection = () => {
                 );
                 return [...existingShows, ...newShows];
             });
-            setHasMore(providerCollection.shows.page < providerCollection.shows.totalPages);
             setIsLoading(false);
         }
     }, [providerCollection, setShows]);
 
     const fetchMoreData = useCallback(() => {
-        if (!collectionLoading && !isLoading && hasMore) {
+        if (!collectionLoading && !isLoading) {
             setIsLoading(true);
             setTimeout(() => {
                 setPage((prevPage) => prevPage + 1);
             }, 800);
         }
-    }, [collectionLoading, isLoading, hasMore, setPage]);
-    console.log(shows);
+    }, [collectionLoading, isLoading, setPage]);
+
     return (
         <div>
             {providerCollection && (
@@ -79,23 +77,32 @@ const ProviderCollection = () => {
                 </div>
             )}
 
-            <InfiniteScroll
-                dataLength={shows.length}
-                next={fetchMoreData}
-                hasMore={hasMore}
-                loader={<Spinner />}
-                endMessage={
-                    <div className={styles.endMessage}>
-                        <p>Yay! You have seen it all</p>
+            {shows && shows.length === 0 ? (
+                <div className={styles.container}>Not available yet :(</div>
+            ) : (
+                <InfiniteScroll
+                    dataLength={shows.length}
+                    next={fetchMoreData}
+                    hasMore={
+                        !!providerCollection &&
+                        !!providerCollection.shows.page &&
+                        !!providerCollection.shows.totalPages &&
+                        providerCollection.shows.page < providerCollection.shows.totalPages
+                    }
+                    loader={<Spinner />}
+                    endMessage={
+                        <div className={styles.endMessage}>
+                            <p>Yay! You have seen it all</p>
+                        </div>
+                    }
+                >
+                    <div className={styles.grid}>
+                        {shows.map((show: Drama) => (
+                            <DramaCard drama={show} key={show.id} />
+                        ))}
                     </div>
-                }
-            >
-                <div className={styles.grid}>
-                    {shows.map((show: Show) => (
-                        <DramaCard show={show} key={show.id} />
-                    ))}
-                </div>
-            </InfiniteScroll>
+                </InfiniteScroll>
+            )}
         </div>
     );
 };

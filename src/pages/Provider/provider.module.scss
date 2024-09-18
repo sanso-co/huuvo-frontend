@@ -2,6 +2,14 @@
     margin-bottom: 1.5rem;
 }
 
+.container {
+    padding: 0 var(--mobile-mx);
+
+    @media (min-width: 431px) {
+        padding: 0 var(--tablet-mx);
+    }
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

@@ -1,18 +1,18 @@
-import { Drama } from "@/types/show";
+import { Show } from "@/types/show";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 interface StateProps {
     collection: string | null;
     page: number;
-    shows: Drama[];
+    shows: Show[];
     setCollection: (collection: string) => void;
     setPage: (payload: number | ((prevPage: number) => number)) => void;
-    setShows: (newShows: Drama[] | ((currentShows: Drama[]) => Drama[])) => void;
+    setShows: (newShows: Show[] | ((currentShows: Show[]) => Show[])) => void;
     resetCollection: () => void;
 }
 
-export const useCollectionStore = create<StateProps>()(
+export const useCategoryCollectionStore = create<StateProps>()(
     devtools(
         persist(
             (set) => ({
@@ -24,7 +24,7 @@ export const useCollectionStore = create<StateProps>()(
                     set((state) => ({
                         page: typeof payload === "function" ? payload(state.page) : payload,
                     })),
-                setShows: (newShows: Drama[] | ((currentShows: Drama[]) => Drama[])) =>
+                setShows: (newShows: Show[] | ((currentShows: Show[]) => Show[])) =>
                     set((state) => ({
                         shows:
                             typeof newShows === "function"
@@ -34,7 +34,7 @@ export const useCollectionStore = create<StateProps>()(
                 resetCollection: () => set({ page: 1, shows: [] }),
             }),
             {
-                name: "collection",
+                name: "category-collection",
             }
         )
     )

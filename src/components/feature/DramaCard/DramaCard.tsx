@@ -11,26 +11,25 @@ import styles from "./dramacard.module.scss";
 import { Link } from "react-router-dom";
 
 interface Props {
-    show: Drama;
+    drama: Drama;
     liked?: boolean;
 }
 
-export const DramaCard = ({ show }: Props) => {
-    const [title, setTitle] = useState<string>(show.name);
-    const [posterPath, setPosterPath] = useState<string>(show.poster_path.US.path);
+export const DramaCard = ({ drama }: Props) => {
+    const [title, setTitle] = useState<string>("");
     const language = useGeneralStore((state) => state.language);
 
     // kr or en
     useEffect(() => {
-        setTitle(language === "kr" ? show.original_name || show.name : show.name);
-    }, [language, show]);
+        setTitle(language === "kr" ? drama.original_name || drama.name : drama.name);
+    }, [language, drama]);
 
     return (
         <div>
             <Card>
-                <Link to={`/details/${show.id}`}>
+                <Link to={`/details/${drama.id}`}>
                     <Card.Image
-                        src={getCroppedImageUrl(show.poster_path, true)}
+                        src={getCroppedImageUrl(drama.poster_path.US.path, true)}
                         ratio={ratio.portrait_23}
                         rounded="0.75rem"
                     />
