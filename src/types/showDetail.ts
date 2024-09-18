@@ -5,6 +5,7 @@ export interface DetailResponse {
     poster_path: string;
     first_air_date: string;
     overview: string;
+    number_of_episodes?: number;
     genres?: [
         {
             id: number;

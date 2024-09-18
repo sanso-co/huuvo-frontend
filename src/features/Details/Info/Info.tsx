@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { DetailResponse } from "@/types/showDetail";
-import { formatDate } from "@/helpers/date";
+import { formatYear } from "@/helpers/date";
 
 import styles from "./info.module.scss";
 
@@ -14,9 +14,12 @@ export const Info = ({ data }: Props) => {
         <div className={styles.container}>
             <h1>{data?.name}</h1>
             <div className={styles.content}>
+                <p className="caption">{data?.original_name}</p>
                 <div className={styles.top}>
-                    <p className="caption">{data?.original_name}</p>
-                    <p className="caption">{formatDate(data?.first_air_date)}</p>
+                    <Link to={`/air/year/${formatYear(data?.first_air_date)}`}>
+                        <p className="caption">{formatYear(data?.first_air_date)}</p>
+                    </Link>
+                    <p className="caption">{`${data?.number_of_episodes} episodes`}</p>
                 </div>
                 <ul>
                     {data?.genres?.map((genre) => (

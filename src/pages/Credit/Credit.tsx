@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import _ from "lodash";
 
 import { useCredit } from "@/hooks/api/credit/useCredit";
@@ -87,9 +87,7 @@ const Credit = () => {
             ) : (
                 <div className={styles.grid}>
                     {sortedShows?.map((show: Show) => (
-                        <Link to={`/details/${show.id}`} key={show.id}>
-                            <ShowCard show={show} />
-                        </Link>
+                        <ShowCard show={show} key={show.id} />
                     ))}
                 </div>
             )}

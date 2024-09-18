@@ -14,7 +14,11 @@ export const Keyword = ({ data }: Props) => {
             <h3>Keywords</h3>
             <div className={styles.content}>
                 {data?.map((keyword) => (
-                    <Chip key={keyword.id} label={keyword.name} url={`/keywords/${keyword.name.toLocaleLowerCase()}/${keyword.id}`} />
+                    <Chip
+                        key={keyword.id}
+                        label={keyword.name}
+                        url={`/keywords/${keyword.name.toLocaleLowerCase()}/${keyword.id}`}
+                    />
                 ))}
             </div>
         </Stack>

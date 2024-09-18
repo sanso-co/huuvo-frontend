@@ -25,7 +25,7 @@ class ApiService {
         }
     }
 
-    async getProviders(id: string) {
+    async getProviders(id: number) {
         try {
             const response = await this.api.get(`/tv/${id}/watch/providers`);
             return response.data;
@@ -55,7 +55,7 @@ class ApiService {
         }
     }
 
-    async getCredit(id: string) {
+    async getCredit(id: number) {
         try {
             const response = await this.api.get(`/tv/${id}/aggregate_credits?language=en-US`);
             return response.data;
@@ -68,7 +68,7 @@ class ApiService {
     async getCategoryShowList(section: string, id: string, page: number) {
         try {
             const response = await this.api.get(
-                `/discover/tv?page=${page}&with_origin_country=KR&with_${section}=${id}&with_type=2%7C4`
+                `/discover/tv?page=${page}&with_origin_country=KR&${section}=${id}&sort_by=popularity.desc&without_genres=16,10764&with_type=2%7C4`
             );
             return response.data;
         } catch (error) {

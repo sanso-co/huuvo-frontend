@@ -3,12 +3,8 @@ import { useParams } from "react-router-dom";
 
 import { useDetails } from "@/hooks/api/details/useDetails";
 import { useTrailerVideo } from "@/hooks/api/details/useTrailerVideo";
-import { useProviders } from "@/hooks/api/details/useProviders";
 import { useKeywords } from "@/hooks/api/details/useKeywords";
 import { useKeywordList } from "@/hooks/api/keyword/useKeywordList";
-import { useCrew } from "@/hooks/api/credit/useCrew";
-import { useCast } from "@/hooks/api/credit/useCast";
-import { useSimilar } from "@/hooks/api/similar/useSimilar";
 
 import { ImageContainer } from "@/components/global/ImageContainer";
 import { getCroppedImageUrl } from "@/services/image-url";
@@ -27,16 +23,12 @@ import { getKeyword } from "@/helpers/getKeyword";
 const Details = () => {
     const { id } = useParams<{ id: string }>();
     const { data, error, isLoading } = useDetails(id as string);
+
     const {
         trailer,
         isLoading: trailerLoading,
         error: trailerError,
     } = useTrailerVideo(id as string);
-    const {
-        providers,
-        isLoading: providerLoading,
-        error: providerError,
-    } = useProviders(id as string);
 
     const { keywords } = useKeywords(id as string);
     const { keywordsList } = useKeywordList();
@@ -49,20 +41,8 @@ const Details = () => {
         return null;
     }, [keywordsList, keywords]);
 
-    const { cast } = useCast(id as string);
-    const { crew } = useCrew(id as string);
-
     const genreString = getGenres(data?.genres);
     const keywordString = getKeyword(filteredKeywords);
-    const { similar } = useSimilar(
-        data?.id as number,
-        genreString as string,
-        keywordString as string
-    );
-
-    const filteredSimilar = useMemo(() => {
-        return similar?.filter((show) => show.id.toString() !== id);
-    }, [similar, id]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -82,14 +62,18 @@ const Details = () => {
                         video={!trailerLoading && !trailerError ? trailer?.results : undefined}
                     />
                     <Info data={data} />
-                    {!providerLoading && !providerError && <Provider data={providers} />}
+                    {data?.id && <Provider id={data.id} />}
                     {filteredKeywords && filteredKeywords.length > 0 && (
                         <Keyword data={filteredKeywords} />
                     )}
-                    {cast && cast.length > 0 && <Cast data={cast} />}
-                    {crew && crew.length > 0 && <Crew data={crew} />}
-                    {filteredSimilar && filteredSimilar.length > 0 && (
-                        <Similar data={filteredSimilar} />
+                    {data?.id && <Cast id={data.id} />}
+                    {data?.id && <Crew id={data.id} />}
+                    {data?.id && (
+                        <Similar
+                            id={data.id}
+                            genreString={genreString}
+                            keywordString={keywordString}
+                        />
                     )}
                 </div>
             )}

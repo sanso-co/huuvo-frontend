@@ -26,9 +26,15 @@
 
 .top {
     display: flex;
+    align-items: center;
 
+    a,
     p {
-        &:not(:last-child)::after {
+        margin: 0;
+    }
+
+    a {
+        p::after {
             content: "•";
             margin: 0 0.25rem;
         }
