@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Show } from "@/types/show";
 
-import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
+import { DramaCard } from "@/components/feature/DramaCard";
 
 import styles from "./provider.module.scss";
 import { Spinner } from "@/components/global/Spinner";
@@ -67,7 +67,7 @@ const ProviderCollection = () => {
             }, 800);
         }
     }, [collectionLoading, isLoading, hasMore, setPage]);
-
+    console.log(shows);
     return (
         <div>
             {providerCollection && (
@@ -92,9 +92,7 @@ const ProviderCollection = () => {
             >
                 <div className={styles.grid}>
                     {shows.map((show: Show) => (
-                        <Link to={`/details/${show.id}`} key={show.id}>
-                            <ShowCard show={show} />
-                        </Link>
+                        <DramaCard show={show} key={show.id} />
                     ))}
                 </div>
             </InfiniteScroll>
