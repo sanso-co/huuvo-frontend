@@ -22,6 +22,20 @@ export const formatDate = (dateString?: string): string => {
     return `${formattedDate.month} ${formattedDate.day}, ${formattedDate.year}`;
 };
 
+export const formatYear = (dateString?: string): string => {
+    const formattedDate: FormattedDate = {
+        month: "",
+        day: 0,
+        year: 0,
+    };
+
+    const date = moment(dateString);
+
+    formattedDate.year = parseInt(date.format("YYYY"));
+
+    return `${formattedDate.year}`;
+};
+
 export const releaseQuarter = (dateString: string) => {
     const date = new Date(dateString);
     const year = date.getUTCFullYear();

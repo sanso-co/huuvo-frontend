@@ -1,25 +1,34 @@
-import { Stack } from "@/components/global/Stack";
-import { List } from "@/components/global/List";
-import { CrewType } from "@/types/credit";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
+import { useCrew } from "@/hooks/api/credit/useCrew";
+
+import { List } from "@/components/global/List";
+import { CrewType } from "@/types/credit";
+
+import styles from "./crew.module.scss";
+
 interface Props {
-    data: CrewType[];
+    id: number;
 }
 
-export const Crew = ({ data }: Props) => {
-    const filteredCrew = data.filter(
-        (crew) =>
-            crew.jobs[0].job === "Director" ||
-            crew.jobs[0].job === "Screenplay" ||
-            crew.jobs[0].job === "Writer"
-    );
+export const Crew = ({ id }: Props) => {
+    const { crew } = useCrew(id);
+
+    const filteredCrew = useMemo(() => {
+        return crew?.filter(
+            (person) =>
+                person.jobs[0].job === "Director" ||
+                person.jobs[0].job === "Screenplay" ||
+                person.jobs[0].job === "Writer"
+        );
+    }, [crew]);
 
     return (
-        <Stack border gap="1rem" padding="2rem 1rem">
+        <div className={styles.container}>
             <h3>Credits</h3>
             <List>
-                {filteredCrew.map((crew: CrewType) => {
+                {filteredCrew?.map((crew: CrewType) => {
                     const job = crew.jobs[0].job;
 
                     return (
@@ -29,6 +38,6 @@ export const Crew = ({ data }: Props) => {
                     );
                 })}
             </List>
-        </Stack>
+        </div>
     );
 };

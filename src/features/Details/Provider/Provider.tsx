@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { Stack } from "@/components/global/Stack";
-import { ProviderResponse } from "@/types/showDetail";
+import { useProviders } from "@/hooks/api/details/useProviders";
 
-import styles from "./provider.module.scss";
 import { formatUrl } from "@/helpers/formatUrl";
 
+import styles from "./provider.module.scss";
+
 interface Props {
-    data: ProviderResponse | null;
+    id: number;
 }
 
 interface Provider {
@@ -18,47 +18,49 @@ interface Provider {
 
 const excludeProviders = [2100, 1796, 1968];
 
-export const Provider = ({ data }: Props) => {
-    const usData = data?.results?.US?.flatrate || [];
+export const Provider = ({ id }: Props) => {
+    const { providers, isLoading, error } = useProviders(id);
+
+    const usData = providers?.results?.US?.flatrate || [];
     const filteredProviders = usData.filter(
         (provider: Provider) => !excludeProviders.includes(provider.provider_id)
     );
 
-    return (
-        <>
-            {filteredProviders && filteredProviders.length > 0 && (
-                <Stack border gap="1rem" padding="2rem 1rem">
-                    <div className={styles.header}>
-                        <h3>Watch</h3>
-                        <p>provided by JustWatch</p>
-                    </div>
-                    {filteredProviders &&
-                        filteredProviders.length > 0 &&
-                        filteredProviders.map((provider: Provider) => {
-                            const url = formatUrl(provider.provider_name ?? "");
-                            const providerPath = provider.logo_path;
-                            const providerName = provider.provider_name;
+    if (isLoading) return <div>Loading providers...</div>;
+    if (error) return <div>Failed to load providers</div>;
+    if (!filteredProviders || filteredProviders.length === 0) return null;
 
-                            return (
-                                <Link
-                                    key={provider.provider_id}
-                                    to={`/provider/${url}`}
-                                    className={styles.container}
-                                >
-                                    {providerPath ? (
-                                        <img
-                                            src={`https://media.themoviedb.org/t/p/original/${providerPath}`}
-                                            alt=""
-                                        />
-                                    ) : (
-                                        <div className="footnote">Not available in the US yet</div>
-                                    )}
-                                    {providerName && <p>{providerName}</p>}
-                                </Link>
-                            );
-                        })}
-                </Stack>
-            )}
-        </>
+    return (
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h3>Watch</h3>
+                <p>provided by JustWatch</p>
+            </div>
+            <div className={styles.list}>
+                {filteredProviders.map((provider: Provider) => {
+                    const url = formatUrl(provider.provider_name ?? "");
+                    const providerPath = provider.logo_path;
+                    const providerName = provider.provider_name;
+
+                    return (
+                        <Link
+                            key={provider.provider_id}
+                            to={`/provider/${url}`}
+                            className={styles.link}
+                        >
+                            {providerPath ? (
+                                <img
+                                    src={`https://media.themoviedb.org/t/p/original/${providerPath}`}
+                                    alt=""
+                                />
+                            ) : (
+                                <div className="footnote">Not available in the US yet</div>
+                            )}
+                            {providerName && <p>{providerName}</p>}
+                        </Link>
+                    );
+                })}
+            </div>
+        </div>
     );
 };

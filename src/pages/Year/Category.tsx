@@ -34,12 +34,12 @@ const Collection = () => {
         }
     }, [
         categoryName,
+        categoryType,
         resetCollection,
         collection,
         setCollection,
         setPage,
         page,
-        categoryType,
         categoryId,
     ]);
 
@@ -48,10 +48,10 @@ const Collection = () => {
     }, [page]);
 
     const updatedCategoryType =
-        categoryType === "keywords"
-            ? "with_keywords"
-            : categoryType === "genres"
-            ? "with_genres"
+        categoryType === "keyword"
+            ? "with_keyword"
+            : categoryType === "genre"
+            ? "with_genre"
             : categoryType === "air"
             ? "first_air_date_year"
             : categoryType;

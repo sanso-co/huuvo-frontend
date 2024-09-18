@@ -1,26 +1,30 @@
 import { Link } from "react-router-dom";
 
-import { Stack } from "@/components/global/Stack";
+import { getProfileImage } from "@/services/image-url";
+import { useCast } from "@/hooks/api/credit/useCast";
+
 import { ProfileImage } from "@/components/global/ProfileImage";
 import { CardSlider } from "@/components/pattern/CardSlider";
-import { CastType } from "@/types/credit";
-import { getProfileImage } from "@/services/image-url";
+
+import styles from "./cast.module.scss";
 
 interface Props {
-    data: CastType[];
+    id: number;
 }
 
-export const Cast = ({ data }: Props) => {
+export const Cast = ({ id }: Props) => {
+    const { cast } = useCast(id);
+
     return (
-        <Stack border gap="1rem" padding="2rem 0">
+        <div className={styles.container}>
             <h3 className="pl-1">Cast</h3>
             <CardSlider>
-                {data.map((cast) => (
+                {cast?.map((cast) => (
                     <Link to={`/credit/cast/${cast.id}`} key={cast.id}>
                         <ProfileImage url={getProfileImage(cast.profile_path)} />
                     </Link>
                 ))}
             </CardSlider>
-        </Stack>
+        </div>
     );
 };

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { apiService } from "@/services/tmdb-api";
 import { ProviderResponse } from "@/types/showDetail";
 
-export const useProviders = (id: string) => {
+export const useProviders = (id: number) => {
     const [providers, setProviders] = useState<ProviderResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);

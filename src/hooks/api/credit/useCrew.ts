@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { apiService } from "@/services/tmdb-api";
 import { CrewType } from "@/types/credit";
 
-export const useCrew = (id: string) => {
+export const useCrew = (id: number) => {
     const [crew, setCrew] = useState<CrewType[] | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
