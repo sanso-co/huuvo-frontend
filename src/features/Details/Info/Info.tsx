@@ -16,7 +16,7 @@ export const Info = ({ data }: Props) => {
             <div className={styles.content}>
                 <p className="caption">{data?.original_name}</p>
                 <div className={styles.top}>
-                    <Link to={`/air/year/${formatYear(data?.first_air_date)}`}>
+                    <Link to={`/year/released/${formatYear(data?.first_air_date)}`}>
                         <p className="caption">{formatYear(data?.first_air_date)}</p>
                     </Link>
                     <p className="caption">{`${data?.number_of_episodes} episodes`}</p>
@@ -24,7 +24,7 @@ export const Info = ({ data }: Props) => {
                 <ul>
                     {data?.genres?.map((genre) => (
                         <li key={genre.id} className="caption">
-                            <Link to={`/genres/${genre.name.toLocaleLowerCase()}/${genre.id}`}>
+                            <Link to={`/genre/${genre.name.toLocaleLowerCase()}/${genre.id}`}>
                                 {genre.name}
                             </Link>
                         </li>

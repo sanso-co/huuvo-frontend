@@ -6,3 +6,21 @@
         margin-bottom: 1rem;
     }
 }
+
+.adminHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.adminAdd {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    input {
+        height: 20px;
+        width: 60px;
+    }
+}

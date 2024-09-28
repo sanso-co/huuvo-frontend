@@ -1,28 +1,27 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+import { useTMDBDetails } from "@/hooks/api/details/useTMDBDetails";
 import { useDetails } from "@/hooks/api/details/useDetails";
 import { useTrailerVideo } from "@/hooks/api/details/useTrailerVideo";
 import { useKeywords } from "@/hooks/api/details/useKeywords";
-import { useKeywordList } from "@/hooks/api/keyword/useKeywordList";
 
 import { ImageContainer } from "@/components/global/ImageContainer";
 import { getCroppedImageUrl } from "@/services/image-url";
 import { ratio } from "@/components/token";
-import { filterKeywords } from "@/helpers/filterKeywords";
-import { getGenres } from "@/helpers/getIds";
 
 import { Info } from "@/features/Details/Info";
 import { Cast } from "@/features/Details/Cast";
 import { Crew } from "@/features/Details/Crew";
 import { Keyword } from "@/features/Details/Keyword";
 import { Provider } from "@/features/Details/Provider";
-import { Similar } from "@/features/Details/Similar";
-import { getKeyword } from "@/helpers/getKeyword";
+import { OriginalStory } from "@/features/Details/OriginalStory";
+import { Recommendations } from "@/features/Details/Recommendations";
 
 const Details = () => {
     const { id } = useParams<{ id: string }>();
-    const { data, error, isLoading } = useDetails(id as string);
+    const { TMDBDetails } = useTMDBDetails(id as string);
+    const { details, error, isLoading } = useDetails(Number(id));
 
     const {
         trailer,
@@ -30,19 +29,7 @@ const Details = () => {
         error: trailerError,
     } = useTrailerVideo(id as string);
 
-    const { keywords } = useKeywords(id as string);
-    const { keywordsList } = useKeywordList();
-
-    const filteredKeywords = useMemo(() => {
-        if (keywordsList && keywords) {
-            return filterKeywords(keywordsList, keywords);
-        }
-
-        return null;
-    }, [keywordsList, keywords]);
-
-    const genreString = getGenres(data?.genres);
-    const keywordString = getKeyword(filteredKeywords);
+    const { keywords } = useKeywords(Number(id));
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -57,24 +44,17 @@ const Details = () => {
             ) : (
                 <div>
                     <ImageContainer
-                        src={getCroppedImageUrl(data?.poster_path, false)}
+                        src={getCroppedImageUrl(TMDBDetails?.poster_path, false)}
                         ratio={ratio.portrait_23}
                         video={!trailerLoading && !trailerError ? trailer?.results : undefined}
                     />
-                    <Info data={data} />
-                    {data?.id && <Provider id={data.id} />}
-                    {filteredKeywords && filteredKeywords.length > 0 && (
-                        <Keyword data={filteredKeywords} />
-                    )}
-                    {data?.id && <Cast id={data.id} />}
-                    {data?.id && <Crew id={data.id} />}
-                    {data?.id && (
-                        <Similar
-                            id={data.id}
-                            genreString={genreString}
-                            keywordString={keywordString}
-                        />
-                    )}
+                    <Info data={details} />
+                    {TMDBDetails?.id && <Provider id={TMDBDetails.id} />}
+                    {keywords && keywords.length > 0 && <Keyword data={keywords} />}
+                    {TMDBDetails?.id && <Cast id={TMDBDetails.id} />}
+                    {id && <Crew id={id} />}
+                    {details?.original_story && <OriginalStory data={details?.original_story} />}
+                    <Recommendations showId={Number(details?.id)} />
                 </div>
             )}
         </div>

@@ -1,15 +1,15 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { CategoryResponse } from "@/types/category";
+import { CategoryCollectionResponse } from "@/types/category";
 
 interface CategoryCollections {
-    [key: string]: CategoryResponse | null;
+    [key: string]: CategoryCollectionResponse | null;
 }
 
 interface CategoryProps {
     categoryCollections: CategoryCollections;
-    setCategoryCollection: (id: string, data: CategoryResponse) => void;
-    getCollection: (id: string) => CategoryResponse | null;
+    setCategoryCollection: (id: string, data: CategoryCollectionResponse) => void;
+    getCollection: (id: string) => CategoryCollectionResponse | null;
     isLoading: { [id: string]: boolean };
     setIsLoading: (id: string, loading: boolean) => void;
     errors: { [id: string]: Error | null };

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { apiService } from "@/services/tmdb-api";
+import { apiService } from "@/services/api";
 import { DetailResponse } from "@/types/showDetail";
 
-export const useDetails = (id: string) => {
-    const [data, setData] = useState<DetailResponse>();
+export const useDetails = (id: number) => {
+    const [details, setDetails] = useState<DetailResponse>();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
@@ -11,7 +11,7 @@ export const useDetails = (id: string) => {
         const fetchDetails = async () => {
             try {
                 const response = await apiService.getShowDetails(id);
-                setData(response);
+                setDetails(response);
             } catch (error) {
                 setError(error as Error);
             } finally {
@@ -22,5 +22,5 @@ export const useDetails = (id: string) => {
         fetchDetails();
     }, [id]);
 
-    return { data, isLoading, error };
+    return { details, isLoading, error };
 };

@@ -16,3 +16,18 @@
     font-size: 1.35rem;
     font-weight: 700;
 }
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin {
+    position: relative;
+    font-size: 0.875rem;
+}
+
+.dropdown {
+    position: absolute;
+}

@@ -1,11 +1,11 @@
-import { Show } from "./show";
+import { LeanShowType } from "./show";
 
 export interface Permanent {
     _id?: string;
     name: string;
     description?: string;
     shows: {
-        result: Show[];
+        result: LeanShowType[];
         page: number;
         totalPages: number;
         totalDocs: number;

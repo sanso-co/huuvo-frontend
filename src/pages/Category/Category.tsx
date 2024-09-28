@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Show } from "@/types/show";
+
+import { useCategoryData } from "@/hooks/api/useCategoryData";
+import { useCategoryCollectionStore } from "@/store/categoryCollectionStore";
 
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
-
 import { Spinner } from "@/components/global/Spinner";
-import { useCategory } from "@/hooks/api/category/useCategory";
-import { useCategoryCollectionStore } from "@/store/categoryCollectionStore";
+
+import { CategoryType } from "@/types/category";
+import { LeanShowType } from "@/types/show";
 
 import styles from "./category.module.scss";
 
@@ -47,25 +49,16 @@ const Collection = () => {
         setLocalPage(page);
     }, [page]);
 
-    const updatedCategoryType =
-        categoryType === "keywords"
-            ? "with_keywords"
-            : categoryType === "genres"
-            ? "with_genres"
-            : categoryType === "air"
-            ? "first_air_date_year"
-            : categoryType;
-
-    const { categoryCollection, isLoading: collectionLoading } = useCategory(
-        updatedCategoryType as string,
+    const { categoryCollection, isLoading: collectionLoading } = useCategoryData(
+        categoryType as CategoryType,
         categoryId as string,
         localPage
     );
 
     useEffect(() => {
-        if (categoryCollection?.results) {
+        if (categoryCollection?.shows?.results) {
             setShows((existingShows) => {
-                const newShows = categoryCollection.results.filter(
+                const newShows = categoryCollection.shows.results.filter(
                     (newShow) =>
                         !existingShows.some((existingShow) => existingShow.id === newShow.id)
                 );
@@ -99,9 +92,9 @@ const Collection = () => {
                 next={fetchMoreData}
                 hasMore={
                     !!categoryCollection &&
-                    !!categoryCollection.page &&
-                    !!categoryCollection.total_pages &&
-                    categoryCollection.page < categoryCollection.total_pages
+                    !!categoryCollection.shows &&
+                    !!categoryCollection.shows.totalPages &&
+                    categoryCollection.shows.page < categoryCollection.shows.totalPages
                 }
                 loader={<Spinner />}
                 endMessage={
@@ -111,7 +104,7 @@ const Collection = () => {
                 }
             >
                 <div className={styles.grid}>
-                    {shows.map((show: Show) => (
+                    {shows.map((show: LeanShowType) => (
                         <ShowCard show={show} key={show.id} />
                     ))}
                 </div>
