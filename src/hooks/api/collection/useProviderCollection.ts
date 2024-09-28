@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { apiService } from "@/services/api";
 import { useCategoryStore } from "@/store/categoryStore";
 
-export const useProvider = (category: string, id: string, page: number) => {
+export const useProvider = (_category: string, id: string, page: number) => {
     const {
         categoryCollections,
         isLoading,

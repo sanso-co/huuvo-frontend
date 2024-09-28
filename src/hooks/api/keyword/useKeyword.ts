@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 import { apiService } from "@/services/api";
 import { useCategoryStore } from "@/store/categoryStore";
 
-export const useKeyword = (category: string, id: string, page: number) => {
+export const useKeyword = (_category: string, id: string, page: number) => {
     const {
         categoryCollections,
         isLoading,
