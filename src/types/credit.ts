@@ -22,6 +22,7 @@ export interface CastType {
             character: string;
         }
     ];
+    order: number;
 }
 
 export interface PersonType {

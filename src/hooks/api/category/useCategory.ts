@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from "react";
-import { apiService } from "@/services/tmdb-api";
+import { apiService } from "@/services/api";
 import { useCategoryStore } from "@/store/categoryStore";
 
-export const useCategory = (section: string, id: string, page: number) => {
+export const useCategory = (category: string, id: string, page: number) => {
     const {
         categoryCollections,
         isLoading,
@@ -12,13 +12,13 @@ export const useCategory = (section: string, id: string, page: number) => {
         setError,
     } = useCategoryStore();
 
-    const getCategoryCollection = useCallback(async () => {
+    const getCollection = useCallback(async () => {
         if (!id) return;
         setIsLoading(id, true);
         setError(id, null);
 
         try {
-            const fetchedCategory = await apiService.getCategoryShowList(section, id, page);
+            const fetchedCategory = await apiService.getCategoryList(category, id, page);
             setCategoryCollection(id, fetchedCategory);
             return fetchedCategory;
         } catch (err) {
@@ -27,14 +27,14 @@ export const useCategory = (section: string, id: string, page: number) => {
         } finally {
             setIsLoading(id, false);
         }
-    }, [id, page, section, setCategoryCollection, setError, setIsLoading]);
+    }, [category, id, page, setCategoryCollection, setError, setIsLoading]);
 
     useEffect(() => {
-        getCategoryCollection();
-    }, [getCategoryCollection]);
+        getCollection();
+    }, [getCollection]);
 
     return {
-        getCategoryCollection,
+        getCollection,
         isLoading: isLoading[id] || false,
         error: errors[id] || null,
         categoryCollection: categoryCollections[id] || null,

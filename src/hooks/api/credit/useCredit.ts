@@ -1,36 +1,42 @@
 import { useCallback, useEffect } from "react";
-import { apiService } from "@/services/tmdb-api";
-import { useCreditStore } from "@/store/creditStore";
+import { apiService } from "@/services/api";
+import { useCategoryStore } from "@/store/categoryStore";
 
-export const useCredit = (type: string, id: string) => {
-    const { creditCollections, isLoading, errors, setCreditCollection, setIsLoading, setError } =
-        useCreditStore();
+export const useCredit = (category: string, id: string, page: number) => {
+    const {
+        categoryCollections,
+        isLoading,
+        errors,
+        setCategoryCollection,
+        setIsLoading,
+        setError,
+    } = useCategoryStore();
 
-    const getCreditCollection = useCallback(async () => {
+    const getCollection = useCallback(async () => {
         if (!id) return;
         setIsLoading(id, true);
         setError(id, null);
 
         try {
-            const fetchedResponse = await apiService.getPersonShowList(id);
-            setCreditCollection(id, fetchedResponse[type]);
-            return fetchedResponse;
+            const fetchedCreditCollection = await apiService.getCreditDetails(id, page);
+            setCategoryCollection(id, fetchedCreditCollection);
+            return fetchedCreditCollection;
         } catch (err) {
             setError(id, err instanceof Error ? err : new Error("An unknown error occurred"));
             throw err;
         } finally {
             setIsLoading(id, false);
         }
-    }, [id, setCreditCollection, setError, setIsLoading, type]);
+    }, [id, page, setCategoryCollection, setError, setIsLoading]);
 
     useEffect(() => {
-        getCreditCollection();
-    }, [getCreditCollection]);
+        getCollection();
+    }, [getCollection]);
 
     return {
-        getCreditCollection,
+        getCollection,
         isLoading: isLoading[id] || false,
         error: errors[id] || null,
-        creditCollection: creditCollections[id] || null,
+        categoryCollection: categoryCollections[id] || null,
     };
 };

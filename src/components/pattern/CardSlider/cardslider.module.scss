@@ -1,23 +1,23 @@
 .section {
-  width: 100%;
+    width: 100%;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 var(--mobile-mx);
-  margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--mobile-mx);
+    margin-bottom: 0.5rem;
 }
 
 .container {
-  display: flex;
-  gap: 0.875rem;
-  width: 100%;
-  overflow-x: scroll;
-  padding: 0 var(--mobile-mx);
+    display: flex;
+    gap: 0.875rem;
+    width: 100%;
+    overflow-x: scroll;
+    padding: 0 var(--mobile-mx);
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }

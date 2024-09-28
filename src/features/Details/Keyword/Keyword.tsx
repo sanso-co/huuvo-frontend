@@ -17,7 +17,7 @@ export const Keyword = ({ data }: Props) => {
                     <Chip
                         key={keyword.id}
                         label={keyword.name}
-                        url={`/keywords/${keyword.name.toLocaleLowerCase()}/${keyword.id}`}
+                        url={`/keyword/${keyword.name.toLocaleLowerCase()}/${keyword.id}`}
                     />
                 ))}
             </div>

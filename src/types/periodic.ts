@@ -1,4 +1,4 @@
-import { Show } from "./show";
+import { LeanShowType, Show } from "./show";
 
 export interface Periodic {
     _id: string;
@@ -18,6 +18,6 @@ export interface LatestPeriodic {
     frequency: string;
     list: {
         releaseDate: string;
-        shows: Show[];
+        shows: LeanShowType[];
     };
 }

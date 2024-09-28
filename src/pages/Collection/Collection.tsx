@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Show } from "@/types/show";
+import { LeanShowType } from "@/types/show";
 
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
@@ -93,7 +93,7 @@ const Collection = () => {
                 }
             >
                 <div className={styles.grid}>
-                    {shows.map((show: Show) => (
+                    {shows.map((show: LeanShowType) => (
                         <ShowCard show={show} key={show.id} />
                     ))}
                 </div>

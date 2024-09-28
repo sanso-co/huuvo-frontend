@@ -1,39 +1,28 @@
-import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
-import { useCrew } from "@/hooks/api/credit/useCrew";
+import { useCredits } from "@/hooks/api/details/useCredits";
+import { formatUrl } from "@/helpers/formatUrl";
 
 import { List } from "@/components/global/List";
-import { CrewType } from "@/types/credit";
 
 import styles from "./crew.module.scss";
 
 interface Props {
-    id: number;
+    id: string;
 }
 
 export const Crew = ({ id }: Props) => {
-    const { crew } = useCrew(id);
-
-    const filteredCrew = useMemo(() => {
-        return crew?.filter(
-            (person) =>
-                person.jobs[0].job === "Director" ||
-                person.jobs[0].job === "Screenplay" ||
-                person.jobs[0].job === "Writer"
-        );
-    }, [crew]);
+    const { credits } = useCredits(Number(id));
 
     return (
         <div className={styles.container}>
             <h3>Credits</h3>
             <List>
-                {filteredCrew?.map((crew: CrewType) => {
-                    const job = crew.jobs[0].job;
-
+                {credits?.map((crew) => {
+                    const name = formatUrl(crew.name ?? "");
                     return (
-                        <Link to={`/credit/crew/${crew.id}`} key={crew.id}>
-                            <List.Item title={job} value={crew.name} />
+                        <Link to={`/credit/${name}/${crew.id}`} key={crew.id}>
+                            <List.Item title={crew.job} value={crew.name} />
                         </Link>
                     );
                 })}

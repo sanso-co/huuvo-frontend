@@ -11,3 +11,10 @@ export interface Provider {
         totalDocs: number;
     };
 }
+
+export interface ProviderInfo {
+    provider_name: string;
+    provider_id: number;
+    logo_path: string;
+    display_priority: number;
+}

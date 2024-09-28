@@ -13,6 +13,29 @@ export interface DetailResponse {
         }
     ];
     genre_ids?: [number];
+    homepage?: string;
+    networks?: {
+        id: number;
+        name: string;
+        logo_path: string;
+        origin_country: string;
+    }[];
+    production_companies?: {
+        id: number;
+        name: string;
+        logo_path: string;
+        origin_country: string;
+    }[];
+    original_story?: {
+        title: {
+            title: string;
+            korean_title: string;
+        };
+        author: {
+            name: string;
+            korean_name: string;
+        };
+    };
 }
 
 export interface ProviderType {
@@ -37,11 +60,20 @@ export interface ProviderResponse {
 export interface KeywordType {
     id: number;
     name: string;
+    original_name: string;
+    rank?: number;
 }
 
 export interface KeywordsResponse {
     id: number;
     results: KeywordType[];
+}
+
+export interface Credit {
+    id: number;
+    name: string;
+    original_name: string;
+    job: string;
 }
 
 export interface TrailerType {

@@ -1,14 +1,16 @@
-import { Show } from "@/types/show";
+import { LeanShowType } from "@/types/show";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 interface StateProps {
     collection: string | null;
     page: number;
-    shows: Show[];
+    shows: LeanShowType[];
     setCollection: (collection: string) => void;
     setPage: (payload: number | ((prevPage: number) => number)) => void;
-    setShows: (newShows: Show[] | ((currentShows: Show[]) => Show[])) => void;
+    setShows: (
+        newShows: LeanShowType[] | ((currentShows: LeanShowType[]) => LeanShowType[])
+    ) => void;
     resetCollection: () => void;
 }
 
@@ -24,7 +26,9 @@ export const useCategoryCollectionStore = create<StateProps>()(
                     set((state) => ({
                         page: typeof payload === "function" ? payload(state.page) : payload,
                     })),
-                setShows: (newShows: Show[] | ((currentShows: Show[]) => Show[])) =>
+                setShows: (
+                    newShows: LeanShowType[] | ((currentShows: LeanShowType[]) => LeanShowType[])
+                ) =>
                     set((state) => ({
                         shows:
                             typeof newShows === "function"

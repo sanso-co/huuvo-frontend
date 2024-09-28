@@ -45,7 +45,7 @@ export const Provider = ({ id }: Props) => {
                     return (
                         <Link
                             key={provider.provider_id}
-                            to={`/provider/${url}`}
+                            to={`/provider/${url}/${provider.provider_id}`}
                             className={styles.link}
                         >
                             {providerPath ? (

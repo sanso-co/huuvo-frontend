@@ -1,0 +1,11 @@
+.header {
+    margin-bottom: 1.5rem;
+}
+
+.form {
+    padding: 0 var(--mobile-mx);
+
+    @media (min-width: 431px) {
+        padding: 0 var(--tablet-mx);
+    }
+}
