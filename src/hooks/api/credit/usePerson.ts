@@ -3,7 +3,7 @@ import { apiService } from "@/services/api";
 
 import { useCategoryStore } from "@/store/categoryStore";
 
-export const usePerson = (category: string, id: string, page: number) => {
+export const usePerson = (_category: string, id: string, page: number) => {
     const {
         categoryCollections,
         isLoading,
