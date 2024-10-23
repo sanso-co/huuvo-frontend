@@ -2,7 +2,14 @@ export interface DetailResponse {
     id: number;
     name: string;
     original_name: string;
-    poster_path: string;
+    poster_path: {
+        US: {
+            path: string;
+        };
+        KR?: {
+            path: string;
+        };
+    };
     first_air_date: string;
     overview: string;
     number_of_episodes?: number;

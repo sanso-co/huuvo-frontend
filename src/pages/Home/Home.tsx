@@ -1,3 +1,4 @@
+import { useGetHeroes } from "@/hooks/api/marketing/useHero";
 import { usePeriodicCollection } from "@/hooks/api/collection/usePeriodicCollection";
 import { useGetPermanentDetails } from "@/hooks/api/collection/usePermanentCollection";
 import { formatDate } from "@/helpers/date";
@@ -8,7 +9,11 @@ import { ShowCard } from "@/components/feature/ShowCard";
 
 import styles from "./home.module.scss";
 
+import { Hero } from "@/features/Home/Hero";
+
 const Home = () => {
+    const { heroes } = useGetHeroes();
+
     const { latestCollection: trending } = usePeriodicCollection(collectionId.TRENDING_NOW || "");
     const { permanentCollection: highlyRated } = useGetPermanentDetails(
         collectionId.HIGHLY_RATED || "",
@@ -17,6 +22,7 @@ const Home = () => {
 
     return (
         <div className={styles.sliders}>
+            <Hero heroes={heroes} />
             <CardSlider
                 title="Trending Now"
                 helper={`Updated: ${formatDate(trending?.releaseDate)}`}

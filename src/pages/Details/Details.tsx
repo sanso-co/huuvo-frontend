@@ -7,7 +7,7 @@ import { useTrailerVideo } from "@/hooks/api/details/useTrailerVideo";
 import { useKeywords } from "@/hooks/api/details/useKeywords";
 
 import { ImageContainer } from "@/components/global/ImageContainer";
-import { getCroppedImageUrl } from "@/services/image-url";
+import { getCroppedImageUrl, getKrImageUrl } from "@/services/image-url";
 import { ratio } from "@/components/token";
 
 import { Info } from "@/features/Details/Info";
@@ -35,6 +35,16 @@ const Details = () => {
         window.scrollTo(0, 0);
     }, [id]);
 
+    const getImageUrl = () => {
+        if (details?.poster_path?.US?.path ?? "" !== "") {
+            return getCroppedImageUrl(details?.poster_path.US.path);
+        } else if (details?.poster_path?.KR?.path ?? "" !== "") {
+            return getKrImageUrl(details?.poster_path?.KR?.path);
+        } else {
+            return "";
+        }
+    };
+
     return (
         <div>
             {isLoading ? (
@@ -44,7 +54,7 @@ const Details = () => {
             ) : (
                 <div>
                     <ImageContainer
-                        src={getCroppedImageUrl(TMDBDetails?.poster_path, false)}
+                        src={getImageUrl()}
                         ratio={ratio.portrait_23}
                         video={!trailerLoading && !trailerError ? trailer?.results : undefined}
                     />
