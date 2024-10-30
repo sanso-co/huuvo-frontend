@@ -13,7 +13,7 @@ export const formatDate = (dateString?: string): string => {
         year: 0,
     };
 
-    const date = moment(dateString);
+    const date = moment.utc(dateString);
 
     formattedDate.month = date.format("MMMM");
     formattedDate.day = parseInt(date.format("D"));
@@ -29,11 +29,19 @@ export const formatYear = (dateString?: string): string => {
         year: 0,
     };
 
-    const date = moment(dateString);
+    const date = moment.utc(dateString);
 
     formattedDate.year = parseInt(date.format("YYYY"));
 
     return `${formattedDate.year}`;
+};
+
+export const formatMonthYear = (dateString?: string): string => {
+    if (!dateString) return "";
+
+    const date = moment.utc(dateString);
+
+    return date.format("MMMM YYYY");
 };
 
 export const releaseQuarter = (dateString: string) => {

@@ -1,14 +1,8 @@
-import { LeanShowType, Show } from "./show";
+import { LeanShowType } from "./show";
 
-export interface Periodic {
-    _id: string;
-    name: string;
-    description: string;
-    frequency: string;
-    lists: {
-        releaseDate: string;
-        shows: Show[];
-    }[];
+export interface PeriodicType {
+    releaseDate: string;
+    shows: LeanShowType[];
 }
 
 export interface LatestPeriodic {

@@ -1,3 +1,5 @@
+import { MinimalShowType } from "./show";
+
 export interface DetailResponse {
     id: number;
     name: string;
@@ -13,6 +15,10 @@ export interface DetailResponse {
     first_air_date: string;
     overview: string;
     number_of_episodes?: number;
+    related_seasons: {
+        season: number;
+        show: MinimalShowType;
+    }[];
     genres?: [
         {
             id: number;

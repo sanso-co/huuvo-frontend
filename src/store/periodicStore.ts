@@ -1,15 +1,15 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { LatestPeriodic } from "@/types/periodic";
+import { PeriodicType } from "@/types/periodic";
 
 interface PeriodicCollections {
-    [key: string]: LatestPeriodic | null;
+    [key: string]: PeriodicType | null;
 }
 
 interface CollectionProps {
     periodicCollections: PeriodicCollections;
-    setPeriodicCollection: (id: string, data: LatestPeriodic) => void;
-    getCollection: (id: string) => LatestPeriodic | null;
+    setPeriodicCollection: (id: string, data: PeriodicType) => void;
+    getCollection: (id: string) => PeriodicType | null;
     isLoading: { [id: string]: boolean };
     setIsLoading: (id: string, loading: boolean) => void;
     errors: { [id: string]: Error | null };

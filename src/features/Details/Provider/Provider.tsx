@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
-import { useProviders } from "@/hooks/api/details/useProviders";
+import { useGetProvidersForShow } from "@/hooks/api/details/useProviders";
 
 import { formatUrl } from "@/helpers/formatUrl";
+
+import { ProviderItemResponse } from "@/types/provider";
 
 import styles from "./provider.module.scss";
 
 interface Props {
-    id: number;
+    id: string;
 }
 
 interface Provider {
@@ -16,47 +18,30 @@ interface Provider {
     display_priority: number;
 }
 
-const excludeProviders = [2100, 1796, 1968];
-
 export const Provider = ({ id }: Props) => {
-    const { providers, isLoading, error } = useProviders(id);
-
-    const usData = providers?.results?.US?.flatrate || [];
-    const filteredProviders = usData.filter(
-        (provider: Provider) => !excludeProviders.includes(provider.provider_id)
-    );
+    const { providers, isLoading, error } = useGetProvidersForShow(Number(id));
 
     if (isLoading) return <div>Loading providers...</div>;
     if (error) return <div>Failed to load providers</div>;
-    if (!filteredProviders || filteredProviders.length === 0) return null;
+    if (!providers || providers.length === 0) return null;
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h3>Watch</h3>
-                <p>provided by JustWatch</p>
+                <h3>Streaming on</h3>
             </div>
             <div className={styles.list}>
-                {filteredProviders.map((provider: Provider) => {
-                    const url = formatUrl(provider.provider_name ?? "");
-                    const providerPath = provider.logo_path;
-                    const providerName = provider.provider_name;
+                {providers.map((provider: ProviderItemResponse) => {
+                    const url = formatUrl(provider.name ?? "");
 
                     return (
                         <Link
-                            key={provider.provider_id}
-                            to={`/provider/${url}/${provider.provider_id}`}
+                            key={provider.id}
+                            to={`/provider/${url}/${provider.id}`}
                             className={styles.link}
                         >
-                            {providerPath ? (
-                                <img
-                                    src={`https://media.themoviedb.org/t/p/original/${providerPath}`}
-                                    alt=""
-                                />
-                            ) : (
-                                <div className="footnote">Not available in the US yet</div>
-                            )}
-                            {providerName && <p>{providerName}</p>}
+                            <img src={provider.logo_path} alt="" />
+                            <p>{provider.name}</p>
                         </Link>
                     );
                 })}

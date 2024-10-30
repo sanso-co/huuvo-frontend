@@ -36,6 +36,7 @@ export const useGetCast = (id: number) => {
         const fetchDetails = async () => {
             try {
                 const result = await apiService.getCastsForShow(id);
+                console.log(result);
                 setCast(result);
             } catch (error) {
                 setError(error as Error);

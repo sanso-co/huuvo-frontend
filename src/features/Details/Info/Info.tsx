@@ -18,31 +18,62 @@ export const Info = ({ data }: Props) => {
     };
 
     return (
-        <div className={styles.container}>
+        <section className={styles.container}>
             <h1>{data?.name}</h1>
             <div className={styles.content}>
-                <p className="caption">{data?.original_name}</p>
-                <div className={styles.top}>
-                    <Link to={`/year/released/${formatYear(data?.first_air_date)}`}>
-                        <p className="caption">{formatYear(data?.first_air_date)}</p>
-                    </Link>
-
-                    <p className="caption">{`${data?.number_of_episodes} episodes`}</p>
-                </div>
-                <ul>
-                    {data?.genres?.map((genre) => (
-                        <li key={genre.id} className="caption">
-                            <Link to={`/genre/${genre.name.toLocaleLowerCase()}/${genre.id}`}>
-                                {genre.name}
+                <div className={styles.part}>
+                    <div className={styles.top}>
+                        <span>{data?.original_name}</span>
+                        {!isFutureShow() && (
+                            <Link
+                                to={`/year/released/${formatYear(data?.first_air_date)}`}
+                                className={styles.year}
+                            >
+                                <p>{formatYear(data?.first_air_date)}</p>
                             </Link>
-                        </li>
-                    ))}
-                </ul>
-                {data?.overview && <p className={styles.overview}>{data.overview}</p>}
-                {isFutureShow() && (
-                    <p className={styles.date}>To be released {formatDate(data?.first_air_date)}</p>
+                        )}
+                    </div>
+
+                    {isFutureShow() && <p>Releasing on {formatDate(data?.first_air_date)}</p>}
+
+                    <ul className={styles.genres}>
+                        {data?.genres?.map((genre) => (
+                            <li key={genre.id}>
+                                <Link to={`/genre/${genre.name.toLocaleLowerCase()}/${genre.id}`}>
+                                    {genre.name}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {data?.overview && (
+                    <div className={styles.part}>
+                        <p className={styles.subHeader}>Overview</p>
+                        <p>{data.overview}</p>
+                    </div>
                 )}
+                <div className={styles.part}>
+                    <p className={styles.subHeader}>Details</p>
+
+                    <ul>
+                        <li className={styles.listItem}>
+                            <div className={styles.listTitle}>Episodes</div>
+                            <div className={styles.episodes}>{data?.number_of_episodes}</div>
+                        </li>
+                        {data?.related_seasons && (
+                            <li className={styles.listItem}>
+                                <div className={styles.listTitle}>OTHER SEASONS</div>
+                                {data.related_seasons.map((season) => (
+                                    <Link key={season.season} to={`/details/${season.show.id}`}>
+                                        <div>{season.show.name}</div>
+                                    </Link>
+                                ))}
+                            </li>
+                        )}
+                    </ul>
+                </div>
             </div>
-        </div>
+        </section>
     );
 };
