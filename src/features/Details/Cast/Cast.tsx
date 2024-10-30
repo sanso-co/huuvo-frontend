@@ -10,7 +10,7 @@ import { CardSlider } from "@/components/pattern/CardSlider";
 import styles from "./cast.module.scss";
 
 interface Props {
-    id: number;
+    id: string;
 }
 
 export const Cast = ({ id }: Props) => {

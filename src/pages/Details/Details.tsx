@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { useTMDBDetails } from "@/hooks/api/details/useTMDBDetails";
 import { useDetails } from "@/hooks/api/details/useDetails";
 import { useTrailerVideo } from "@/hooks/api/details/useTrailerVideo";
 import { useKeywords } from "@/hooks/api/details/useKeywords";
@@ -19,7 +18,6 @@ import { Recommendations } from "@/features/Details/Recommendations";
 
 const Details = () => {
     const { id } = useParams<{ id: string }>();
-    const { TMDBDetails } = useTMDBDetails(id as string);
     const { details, error, isLoading } = useDetails(Number(id));
 
     const {
@@ -59,7 +57,6 @@ const Details = () => {
                     <Info data={details} />
                     {id && <Provider id={id} />}
                     {keywords && keywords.length > 0 && <Keyword data={keywords} />}
-                    {/* {TMDBDetails?.id && <Cast id={TMDBDetails.id} />} */}
                     {id && <Cast id={id} />}
                     {id && <Crew id={id} />}
                     {details?.original_story && <OriginalStory data={details?.original_story} />}
