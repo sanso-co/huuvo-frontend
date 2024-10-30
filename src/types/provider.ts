@@ -18,3 +18,11 @@ export interface ProviderInfo {
     logo_path: string;
     display_priority: number;
 }
+
+export interface ProviderItemResponse {
+    _id: string;
+    id: number;
+    name: string;
+    logo_path: string;
+    display_priority: number;
+}

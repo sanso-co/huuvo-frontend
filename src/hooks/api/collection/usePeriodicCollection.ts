@@ -1,35 +1,39 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 import { apiService } from "@/services/api";
 import { usePeriodicStore } from "@/store/periodicStore";
 
-export const usePeriodicCollection = (id: string) => {
+export const usePeriodicCollection = (collectionId: string, listId: string, sort?: string) => {
     const { setPeriodicCollection, getCollection, setIsLoading, setError, isLoading, errors } =
         usePeriodicStore();
 
     const getPeriodicCollection = useCallback(async () => {
-        if (!id) return;
-        setIsLoading(id, true);
-        setError(id, null);
+        if (!collectionId) return;
+        setIsLoading(collectionId, true);
+        setError(collectionId, null);
 
         try {
-            const result = await apiService.getLatestPeriodicCollection(id);
-            setPeriodicCollection(id, result);
+            const result = await apiService.getSubPeriodicCollection({
+                collectionId,
+                listId,
+                sort,
+            });
+            setPeriodicCollection(collectionId, result);
         } catch (err) {
-            setError(id, err instanceof Error ? err : new Error("An unknown error occurred"));
+            setError(
+                collectionId,
+                err instanceof Error ? err : new Error("An unknown error occurred")
+            );
             throw err;
         } finally {
-            setIsLoading(id, false);
+            setIsLoading(collectionId, false);
         }
-    }, [id, setPeriodicCollection, setError, setIsLoading]);
+    }, [collectionId, listId, sort, setPeriodicCollection, setError, setIsLoading]);
 
     useEffect(() => {
         getPeriodicCollection();
     }, [getPeriodicCollection]);
 
-    const collectionData = getCollection(id);
-    const latestCollection = useMemo(() => {
-        return collectionData?.list;
-    }, [collectionData]);
+    const collectionData = getCollection(collectionId);
 
-    return { isLoading, errors, latestCollection };
+    return { isLoading, errors, collectionData };
 };

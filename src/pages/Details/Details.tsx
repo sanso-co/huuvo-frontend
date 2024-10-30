@@ -6,9 +6,8 @@ import { useDetails } from "@/hooks/api/details/useDetails";
 import { useTrailerVideo } from "@/hooks/api/details/useTrailerVideo";
 import { useKeywords } from "@/hooks/api/details/useKeywords";
 
-import { ImageContainer } from "@/components/global/ImageContainer";
+import { ImageContainer } from "@/components/global/ImageContainerNatural";
 import { getCroppedImageUrl, getKrImageUrl } from "@/services/image-url";
-import { ratio } from "@/components/token";
 
 import { Info } from "@/features/Details/Info";
 import { Cast } from "@/features/Details/Cast";
@@ -55,13 +54,13 @@ const Details = () => {
                 <div>
                     <ImageContainer
                         src={getImageUrl()}
-                        ratio={ratio.portrait_23}
                         video={!trailerLoading && !trailerError ? trailer?.results : undefined}
                     />
                     <Info data={details} />
-                    {TMDBDetails?.id && <Provider id={TMDBDetails.id} />}
+                    {id && <Provider id={id} />}
                     {keywords && keywords.length > 0 && <Keyword data={keywords} />}
-                    {TMDBDetails?.id && <Cast id={TMDBDetails.id} />}
+                    {/* {TMDBDetails?.id && <Cast id={TMDBDetails.id} />} */}
+                    {id && <Cast id={id} />}
                     {id && <Crew id={id} />}
                     {details?.original_story && <OriginalStory data={details?.original_story} />}
                     <Recommendations showId={Number(details?.id)} />

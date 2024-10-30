@@ -2,7 +2,7 @@ import { useGeneralStore } from "@/store/useStore";
 import { useEffect, useState } from "react";
 
 import { LeanShowType } from "@/types/show";
-import { getCroppedImageUrl } from "@/services/image-url";
+import { getCroppedImageUrl, getKrImageUrl } from "@/services/image-url";
 import { ratio } from "@/components/token";
 
 import { Card } from "@/components/global/cards";
@@ -24,16 +24,21 @@ export const ShowCard = ({ show }: Props) => {
         setTitle(language === "kr" ? show.original_name || show.name : show.name);
     }, [language, show]);
 
+    const getImageUrl = () => {
+        if (show?.poster_path?.US?.path ?? "" !== "") {
+            return getCroppedImageUrl(show?.poster_path.US.path);
+        } else if (show?.poster_path?.KR?.path ?? "" !== "") {
+            return getKrImageUrl(show?.poster_path?.KR?.path);
+        } else {
+            return "";
+        }
+    };
+
     return (
         <div>
             <Card>
                 <Link to={`/details/${show.id}`}>
-                    <Card.Image
-                        src={getCroppedImageUrl(show.poster_path.US.path, true)}
-                        ratio={ratio.portrait_23}
-                        rounded="0.75rem"
-                        // width="152px"
-                    />
+                    <Card.Image src={getImageUrl()} ratio={ratio.portrait_23} rounded="0.75rem" />
                     <div className={styles.details}>
                         <p>{title}</p>
                     </div>

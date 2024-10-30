@@ -59,3 +59,11 @@ export interface LeanShowType {
     first_air_date: string;
     popularity_score: number;
 }
+
+export interface MinimalShowType {
+    _id: string;
+    id: number;
+    name: string;
+    original_name: string;
+    season_number: number;
+}

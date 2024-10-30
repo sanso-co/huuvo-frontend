@@ -15,12 +15,25 @@ class ApiService {
     }
 
     //collections
-    async getLatestPeriodicCollection(id: string) {
+    async getSubPeriodicCollection({
+        collectionId,
+        listId,
+        sort,
+    }: {
+        collectionId: string;
+        listId: string;
+        sort?: string;
+    }) {
         try {
-            const response = await this.api.get(`periodic-collection/${id}/latest`);
+            let url = `periodic-collection/${collectionId}/sub/${listId}`;
+
+            if (sort) {
+                url += `?sort=${sort}`;
+            }
+            const response = await this.api.get(url);
             return response.data;
         } catch (error) {
-            console.error("Error fetching collection list", error);
+            console.error("Error fetching periodic collection details", error);
         }
     }
 
@@ -37,7 +50,7 @@ class ApiService {
 
     async getProviderCollectionDetails(id: string, page: number) {
         try {
-            const response = await this.api.get(`provider-collection/${id}?page=${page}`);
+            const response = await this.api.get(`provider/detail/${id}?page=${page}`);
             return response.data;
         } catch (error) {
             console.error("Error fetching provider collection details", error);
@@ -110,6 +123,16 @@ class ApiService {
         }
     }
 
+    //providers
+    async getProvidersForShow(showId: number) {
+        try {
+            const response = await this.api.get(`provider/show/${showId}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching providers", error);
+        }
+    }
+
     //cast
     async getCastsForShow(showId: number) {
         try {
@@ -155,27 +178,6 @@ class ApiService {
             return response.data;
         } catch (error) {
             console.error("Error adding a show", error);
-            throw error;
-        }
-    }
-
-    async addShowToProviderCollection({
-        providerId,
-        providerName,
-        showId,
-    }: {
-        providerId: number;
-        providerName: string;
-        showId: number;
-    }) {
-        try {
-            const response = await this.api.patch(`provider-collection/add/${providerId}`, {
-                providerName,
-                showId,
-            });
-            return response.data;
-        } catch (error) {
-            console.error("Error adding a show to provider collection", error);
             throw error;
         }
     }

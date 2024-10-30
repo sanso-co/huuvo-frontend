@@ -1,7 +1,7 @@
 import { useGetHeroes } from "@/hooks/api/marketing/useHero";
 import { usePeriodicCollection } from "@/hooks/api/collection/usePeriodicCollection";
 import { useGetPermanentDetails } from "@/hooks/api/collection/usePermanentCollection";
-import { formatDate } from "@/helpers/date";
+import { formatDate, formatMonthYear } from "@/helpers/date";
 import { collectionId } from "@/helpers/constants/collectionId";
 
 import { CardSlider } from "@/components/pattern/CardSlider";
@@ -14,7 +14,15 @@ import { Hero } from "@/features/Home/Hero";
 const Home = () => {
     const { heroes } = useGetHeroes();
 
-    const { latestCollection: trending } = usePeriodicCollection(collectionId.TRENDING_NOW || "");
+    const { collectionData: trending } = usePeriodicCollection(
+        collectionId.TRENDING_NOW || "",
+        "latest"
+    );
+    const { collectionData: upcoming } = usePeriodicCollection(
+        collectionId.NEW_UPCOMING || "",
+        "latest",
+        "ascending"
+    );
     const { permanentCollection: highlyRated } = useGetPermanentDetails(
         collectionId.HIGHLY_RATED || "",
         1
@@ -27,7 +35,12 @@ const Home = () => {
                 title="Trending Now"
                 helper={`Updated: ${formatDate(trending?.releaseDate)}`}
             >
-                {trending?.shows.map((show) => (
+                {trending?.shows?.map((show) => (
+                    <ShowCard show={show} key={show.id} />
+                ))}
+            </CardSlider>
+            <CardSlider title="New and Upcoming" helper={formatMonthYear(upcoming?.releaseDate)}>
+                {upcoming?.shows.map((show) => (
                     <ShowCard show={show} key={show.id} />
                 ))}
             </CardSlider>
