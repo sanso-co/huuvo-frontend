@@ -16,6 +16,10 @@ interface Props {
 export const Cast = ({ id }: Props) => {
     const { cast, isLoading, error } = useGetCast(Number(id));
 
+    if (!cast?.length) {
+        return null;
+    }
+
     if (isLoading) return <div>Loading cast...</div>;
     if (error) return <div>Failed to load cast</div>;
 

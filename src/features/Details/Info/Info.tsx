@@ -61,7 +61,7 @@ export const Info = ({ data }: Props) => {
                             <div className={styles.listTitle}>Episodes</div>
                             <div className={styles.episodes}>{data?.number_of_episodes}</div>
                         </li>
-                        {data?.related_seasons && (
+                        {data && data.related_seasons && data.related_seasons.length > 0 && (
                             <li className={styles.listItem}>
                                 <div className={styles.listTitle}>OTHER SEASONS</div>
                                 {data.related_seasons.map((season) => (

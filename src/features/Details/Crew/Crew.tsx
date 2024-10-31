@@ -14,6 +14,10 @@ interface Props {
 export const Crew = ({ id }: Props) => {
     const { credits } = useCredits(Number(id));
 
+    if (!credits?.length) {
+        return null;
+    }
+
     return (
         <div className={styles.container}>
             <h3>Credits</h3>
