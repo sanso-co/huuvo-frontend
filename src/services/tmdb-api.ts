@@ -50,7 +50,7 @@ class ApiService {
             const response = await this.api.get(`/tv/${id}/videos?language=en-US'`);
             return response.data;
         } catch (error) {
-            console.error("Error fetching keywords", error);
+            console.error("Error fetching trailer", error);
             throw error;
         }
     }
