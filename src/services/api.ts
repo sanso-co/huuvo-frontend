@@ -1,7 +1,11 @@
 import { AuthLogin } from "@/types/auth";
 import { Cast } from "@/types/cast";
 import { Drama } from "@/types/show";
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosError } from "axios";
+
+interface ErrorResponse {
+    message: string;
+}
 
 class ApiService {
     private api: AxiosInstance;
@@ -139,7 +143,24 @@ class ApiService {
             const response = await this.api.get(`cast/${showId}`);
             return response.data;
         } catch (error) {
-            console.error("Error fetching keywords", error);
+            if (error instanceof AxiosError) {
+                if (error.response) {
+                    if (error.response.status === 404) {
+                        console.error(
+                            (error.response.data as ErrorResponse).message || "Cast not found"
+                        );
+                    } else {
+                        console.error(
+                            (error.response.data as ErrorResponse).message ||
+                                "Failed to fetch cast information"
+                        );
+                    }
+                } else {
+                    console.error("Failed to connect to the server");
+                }
+            } else {
+                console.error("Error fetching cast", error);
+            }
         }
     }
 

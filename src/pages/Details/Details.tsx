@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 
 import { useDetails } from "@/hooks/api/details/useDetails";
 import { useTrailerVideo } from "@/hooks/api/details/useTrailerVideo";
-import { useKeywords } from "@/hooks/api/details/useKeywords";
 
 import { ImageContainer } from "@/components/global/ImageContainerNatural";
 import { getCroppedImageUrl, getKrImageUrl } from "@/services/image-url";
@@ -25,8 +24,6 @@ const Details = () => {
         isLoading: trailerLoading,
         error: trailerError,
     } = useTrailerVideo(id as string);
-
-    const { keywords } = useKeywords(Number(id));
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -56,7 +53,7 @@ const Details = () => {
                     />
                     <Info data={details} />
                     {id && <Provider id={id} />}
-                    {keywords && keywords.length > 0 && <Keyword data={keywords} />}
+                    {id && <Keyword id={id} />}
                     {id && <Cast id={id} />}
                     {id && <Crew id={id} />}
                     {details?.original_story && <OriginalStory data={details?.original_story} />}

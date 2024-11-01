@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { apiService } from "@/services/api";
 import { KeywordType } from "@/types/showDetail";
 
-export const useKeywords = (id: number) => {
+export const useGetKeywords = (id: number) => {
     const [keywords, setKeywords] = useState<KeywordType[] | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
