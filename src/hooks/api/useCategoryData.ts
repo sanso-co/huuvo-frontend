@@ -1,5 +1,4 @@
 import { useCategory } from "@/hooks/api/category/useCategory";
-import { useKeyword } from "./keyword/useKeyword";
 import { useCredit } from "./credit/useCredit";
 import { useProvider } from "./collection/useProviderCollection";
 import { CategoryCollectionResponse, CategoryType } from "@/types/category";
@@ -20,7 +19,7 @@ type HookTypes = {
 
 export const useCategoryData = (categoryType: CategoryType, id: string, page: number) => {
     const hooks: HookTypes = {
-        keyword: useKeyword,
+        keyword: useCategory,
         year: useCategory,
         genre: useCategory,
         credit: useCredit,

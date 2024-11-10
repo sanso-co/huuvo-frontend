@@ -53,7 +53,7 @@ const Details = () => {
                     />
                     <Info data={details} />
                     {id && <Provider id={id} />}
-                    {id && <Keyword id={id} />}
+                    {id && <Keyword keywords={details?.keywords} />}
                     {id && <Cast id={id} />}
                     {id && <Crew id={id} />}
                     {details?.original_story && <OriginalStory data={details?.original_story} />}

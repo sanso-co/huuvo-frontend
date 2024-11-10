@@ -25,6 +25,12 @@ export interface DetailResponse {
             name: string;
         }
     ];
+    keywords?: [
+        {
+            id: number;
+            name: string;
+        }
+    ];
     genre_ids?: [number];
     homepage?: string;
     networks?: {

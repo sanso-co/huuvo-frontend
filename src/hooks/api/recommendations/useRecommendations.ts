@@ -13,6 +13,7 @@ export const useGetsRecommendations = (showId: number) => {
         setError(null);
         try {
             const fetchedDetails = await apiService.getRecommendationDetails(showId);
+            console.log(fetchedDetails);
             setDetails(fetchedDetails);
             return fetchedDetails;
         } catch (err) {
