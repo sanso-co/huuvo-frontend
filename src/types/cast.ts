@@ -1,4 +1,4 @@
-export interface Cast {
+export interface CastType {
     id: number;
     name: string;
     original_name: string;

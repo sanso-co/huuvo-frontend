@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { apiService } from "@/services/api";
-import { HeroItem } from "@/types/marketing";
+import { HeroType } from "@/types/marketing";
 
 export const useGetHeroes = () => {
-    const [heroes, setHeroes] = useState<HeroItem[]>([]);
+    const [heroes, setHeroes] = useState<HeroType[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 

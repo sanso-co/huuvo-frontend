@@ -1,12 +1,6 @@
-import { LeanShowType, Show } from "./show";
+import { LeanShowType } from "./show";
 
 export type CategoryType = "keyword" | "year" | "genre" | "credit" | "provider" | "person";
-
-export interface CategoryResponse {
-    page: number;
-    total_pages: number;
-    results: Show[];
-}
 
 export interface CategoryCollectionResponse {
     id: number;

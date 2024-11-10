@@ -1,6 +1,6 @@
 import { LeanShowType } from "./show";
 
-export interface Permanent {
+export interface PermanentType {
     _id?: string;
     name: string;
     description?: string;

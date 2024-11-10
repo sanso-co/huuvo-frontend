@@ -1,4 +1,4 @@
-export interface HeroItem {
+export interface HeroType {
     order: number;
     title: string;
     tag?: {

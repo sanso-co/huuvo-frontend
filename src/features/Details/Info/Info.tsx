@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 
-import { DetailResponse } from "@/types/showDetail";
+import { ShowType } from "@/types/show";
 import { formatYear, formatDate } from "@/helpers/date";
 import { HomeIcon } from "@/assets/icons/HomeIcon";
 
 import styles from "./info.module.scss";
 
 interface Props {
-    data: DetailResponse | undefined;
+    data: ShowType | undefined;
 }
 
 export const Info = ({ data }: Props) => {
@@ -17,7 +17,7 @@ export const Info = ({ data }: Props) => {
         const today = new Date();
         return airDate > today;
     };
-    console.log("info", data);
+
     return (
         <section className={styles.container}>
             <h1>{data?.name}</h1>

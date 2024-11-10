@@ -2,10 +2,10 @@ import { Stack } from "@/components/global/Stack";
 import { Chip } from "@/components/global/Chip";
 
 import styles from "./keyword.module.scss";
-import { CustomKeywordType } from "@/types/keyword";
+import { KeywordType } from "@/types/showDetail";
 
 interface Props {
-    keywords: CustomKeywordType[];
+    keywords: KeywordType[];
 }
 
 export const Keyword = ({ keywords }: Props) => {

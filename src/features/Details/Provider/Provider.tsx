@@ -3,7 +3,7 @@ import { useGetProvidersForShow } from "@/hooks/api/details/useProviders";
 
 import { formatUrl } from "@/helpers/formatUrl";
 
-import { ProviderItemResponse } from "@/types/provider";
+import { ProviderType } from "@/types/provider";
 
 import styles from "./provider.module.scss";
 
@@ -31,7 +31,7 @@ export const Provider = ({ id }: Props) => {
             </div>
             {providers?.length ? (
                 <div className={styles.list}>
-                    {providers.map((provider: ProviderItemResponse) => {
+                    {providers.map((provider: ProviderType) => {
                         const url = formatUrl(provider.name ?? "");
 
                         return (

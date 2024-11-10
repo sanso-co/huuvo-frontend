@@ -39,27 +39,22 @@ const Details = () => {
         }
     };
 
+    if (isLoading || !details) return <div>Loading show details...</div>;
+    if (error) return <div>Failed to load show details</div>;
+
     return (
         <div>
-            {isLoading ? (
-                <div>loading</div>
-            ) : error ? (
-                <div>error</div>
-            ) : (
-                <div>
-                    <ImageContainer
-                        src={getImageUrl()}
-                        video={!trailerLoading && !trailerError ? trailer?.results : undefined}
-                    />
-                    <Info data={details} />
-                    {id && <Provider id={id} />}
-                    {id && <Keyword keywords={details?.keywords} />}
-                    {id && <Cast id={id} />}
-                    {id && <Crew id={id} />}
-                    {details?.original_story && <OriginalStory data={details?.original_story} />}
-                    <Recommendations showId={Number(details?.id)} />
-                </div>
-            )}
+            <ImageContainer
+                src={getImageUrl()}
+                video={!trailerLoading && !trailerError ? trailer?.results : undefined}
+            />
+            <Info data={details} />
+            {id && <Provider id={id} />}
+            <Keyword keywords={details?.keywords} />
+            {id && <Cast id={id} />}
+            {id && <Crew id={id} />}
+            {details?.original_story && <OriginalStory data={details?.original_story} />}
+            <Recommendations showId={Number(details?.id)} />
         </div>
     );
 };

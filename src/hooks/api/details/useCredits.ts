@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { apiService } from "@/services/api";
-import { Credit } from "@/types/showDetail";
+import { CreditType } from "@/types/showDetail";
 
 export const useCredits = (id: number) => {
-    const [credits, setCredits] = useState<Credit[] | null>(null);
+    const [credits, setCredits] = useState<CreditType[] | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 

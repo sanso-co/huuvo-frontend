@@ -1,13 +1,13 @@
 import { create } from "zustand";
-import { Provider } from "@/types/provider";
+import { ProviderType } from "@/types/provider";
 
 interface ProviderCollections {
-    [id: string]: Provider | null;
+    [id: string]: ProviderType | null;
 }
 
 interface ProviderProps {
     providerCollections: ProviderCollections;
-    setProviderCollection: (id: string, data: Provider) => void;
+    setProviderCollection: (id: string, data: ProviderType) => void;
     isLoading: { [id: string]: boolean };
     setIsLoading: (id: string, loading: boolean) => void;
     errors: { [id: string]: Error | null };

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { apiService } from "@/services/tmdb-api";
-import { TrailerResponse } from "@/types/showDetail";
+import { TrailerResponseTMDB } from "@/types/showDetail";
 
 export const useTrailerVideo = (id: string) => {
-    const [trailer, setTrailer] = useState<TrailerResponse | null>(null);
+    const [trailer, setTrailer] = useState<TrailerResponseTMDB | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
