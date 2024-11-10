@@ -1,101 +1,27 @@
-import { MinimalShowType } from "./show";
-
-export interface DetailResponse {
+export interface KeywordType {
+    _id: string;
     id: number;
     name: string;
     original_name: string;
-    poster_path: {
-        US: {
-            path: string;
-        };
-        KR?: {
-            path: string;
-        };
-    };
-    first_air_date: string;
-    overview: string;
-    number_of_episodes?: number;
-    related_seasons: {
-        season: number;
-        show: MinimalShowType;
-    }[];
-    genres?: [
-        {
-            id: number;
-            name: string;
-        }
-    ];
-    keywords?: [
-        {
-            id: number;
-            name: string;
-        }
-    ];
-    genre_ids?: [number];
-    homepage?: string;
-    networks?: {
-        id: number;
-        name: string;
-        logo_path: string;
-        origin_country: string;
-    }[];
-    production_companies?: {
-        id: number;
-        name: string;
-        logo_path: string;
-        origin_country: string;
-    }[];
-    original_story?: {
-        title: {
-            title: string;
-            korean_title: string;
-        };
-        author: {
-            name: string;
-            korean_name: string;
-        };
-    };
+    rank: number;
 }
 
-export interface ProviderType {
-    [key: string]: {
-        link: string;
-        flatrate: [
-            {
-                display_priority: number;
-                logo_path: string;
-                provider_id: number;
-                provider_name: string;
-            }
-        ];
-    };
-}
-
-export interface ProviderResponse {
-    id: number;
-    results: ProviderType;
-}
-
-export interface KeywordType {
+export interface GenreType {
     id: number;
     name: string;
     original_name: string;
     rank?: number;
 }
 
-export interface KeywordsResponse {
-    id: number;
-    results: KeywordType[];
-}
-
-export interface Credit {
+export interface ToneType {
+    _id: string;
     id: number;
     name: string;
     original_name: string;
-    job: string;
+    rank: number;
 }
 
-export interface TrailerType {
+export interface TrailerTypeTMDB {
     id: string;
     key: string;
     name: string;
@@ -104,7 +30,14 @@ export interface TrailerType {
     type: string;
 }
 
-export interface TrailerResponse {
+export interface TrailerResponseTMDB {
     id: number;
-    results: TrailerType[];
+    results: TrailerTypeTMDB[];
+}
+
+export interface CreditType {
+    id: number;
+    name: string;
+    original_name: string;
+    job: string;
 }

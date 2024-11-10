@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { apiService } from "@/services/api";
-import { Permanent } from "@/types/permanent";
+import { PermanentType } from "@/types/permanent";
 
 export const useGetPermanentDetails = (id: string, page: number) => {
-    const [permanentCollection, setPermanentCollection] = useState<Permanent>();
+    const [permanentCollection, setPermanentCollection] = useState<PermanentType>();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 

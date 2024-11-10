@@ -1,6 +1,5 @@
 import { AuthLogin } from "@/types/auth";
 import { Cast } from "@/types/cast";
-import { Drama } from "@/types/show";
 import axios, { AxiosInstance, AxiosError } from "axios";
 
 interface ErrorResponse {
@@ -193,16 +192,6 @@ class ApiService {
     }
 
     //admin
-    async addDrama({ drama }: { drama: Drama }) {
-        try {
-            const response = await this.api.post("drama", { drama });
-            return response.data;
-        } catch (error) {
-            console.error("Error adding a show", error);
-            throw error;
-        }
-    }
-
     async addCastToShow({ showId, mainCast }: { showId: number; mainCast: Cast[] }) {
         try {
             const response = await this.api.patch(`cast/add/${showId}`, {

@@ -3,7 +3,7 @@ import ReactPlayer from "react-player";
 import { Modal } from "@/components/global/Modal";
 import { Play } from "@/assets/icons/Play";
 import { MediaIcon } from "@/assets/icons/MediaIcon";
-import { TrailerType } from "@/types/showDetail";
+import { TrailerTypeTMDB } from "@/types/showDetail";
 
 import styles from "./imagecontainer.module.scss";
 
@@ -12,7 +12,7 @@ interface Props {
     ratio?: string;
     rounded?: string;
     width?: string;
-    video?: TrailerType[];
+    video?: TrailerTypeTMDB[];
 }
 
 export const ImageContainer = ({ src, ratio, rounded, width, video }: Props) => {

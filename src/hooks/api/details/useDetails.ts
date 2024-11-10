@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { apiService } from "@/services/api";
-import { DetailResponse } from "@/types/showDetail";
+import { ShowType } from "@/types/show";
 
 export const useDetails = (id: number) => {
-    const [details, setDetails] = useState<DetailResponse>();
+    const [details, setDetails] = useState<ShowType>();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
