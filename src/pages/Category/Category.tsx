@@ -13,6 +13,7 @@ import { CategoryType } from "@/types/category";
 import { LeanShowType } from "@/types/show";
 
 import styles from "./category.module.scss";
+import { formatName } from "@/helpers/formatName";
 
 const Collection = () => {
     const { categoryType, categoryName, categoryId } = useParams();
@@ -82,8 +83,12 @@ const Collection = () => {
         <div>
             <div className={styles.header}>
                 <Header
-                    title={categoryName || ""}
-                    description={`Shows with ${categoryType} ${categoryName}`}
+                    title={formatName(categoryName || "")}
+                    description={
+                        categoryType === "provider"
+                            ? `Shows streaming on ${formatName(categoryName || "")}`
+                            : `Shows with ${categoryType} ${formatName(categoryName || "")}`
+                    }
                 />
             </div>
 

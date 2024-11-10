@@ -23,29 +23,32 @@ export const Provider = ({ id }: Props) => {
 
     if (isLoading) return <div>Loading providers...</div>;
     if (error) return <div>Failed to load providers</div>;
-    if (!providers || providers.length === 0) return null;
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <h3>Streaming on</h3>
             </div>
-            <div className={styles.list}>
-                {providers.map((provider: ProviderItemResponse) => {
-                    const url = formatUrl(provider.name ?? "");
+            {providers?.length ? (
+                <div className={styles.list}>
+                    {providers.map((provider: ProviderItemResponse) => {
+                        const url = formatUrl(provider.name ?? "");
 
-                    return (
-                        <Link
-                            key={provider.id}
-                            to={`/provider/${url}/${provider.id}`}
-                            className={styles.link}
-                        >
-                            <img src={provider.logo_path} alt="" />
-                            <p>{provider.name}</p>
-                        </Link>
-                    );
-                })}
-            </div>
+                        return (
+                            <Link
+                                key={provider.id}
+                                to={`/provider/${url}/${provider.id}`}
+                                className={styles.link}
+                            >
+                                <img src={provider.logo_path} alt="" />
+                                <p>{provider.name}</p>
+                            </Link>
+                        );
+                    })}
+                </div>
+            ) : (
+                <div>US streaming details coming soon.</div>
+            )}
         </div>
     );
 };

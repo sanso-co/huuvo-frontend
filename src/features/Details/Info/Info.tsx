@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import { DetailResponse } from "@/types/showDetail";
 import { formatYear, formatDate } from "@/helpers/date";
+import { HomeIcon } from "@/assets/icons/HomeIcon";
 
 import styles from "./info.module.scss";
 
@@ -16,7 +17,7 @@ export const Info = ({ data }: Props) => {
         const today = new Date();
         return airDate > today;
     };
-
+    console.log("info", data);
     return (
         <section className={styles.container}>
             <h1>{data?.name}</h1>
@@ -69,6 +70,14 @@ export const Info = ({ data }: Props) => {
                                         <div>{season.show.name}</div>
                                     </Link>
                                 ))}
+                            </li>
+                        )}
+                        {data && data.homepage && (
+                            <li className={styles.listItem}>
+                                <div className={styles.listTitle}>Homepage</div>
+                                <Link to={data.homepage} target="_blank" className={styles.link}>
+                                    <HomeIcon width={20} height={20} />
+                                </Link>
                             </li>
                         )}
                     </ul>

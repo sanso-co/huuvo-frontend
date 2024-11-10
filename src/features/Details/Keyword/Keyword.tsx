@@ -1,23 +1,17 @@
-import { useGetKeywords } from "@/hooks/api/details/useKeywords";
-
 import { Stack } from "@/components/global/Stack";
 import { Chip } from "@/components/global/Chip";
 
 import styles from "./keyword.module.scss";
+import { CustomKeywordType } from "@/types/keyword";
 
 interface Props {
-    id: string;
+    keywords: CustomKeywordType[];
 }
 
-export const Keyword = ({ id }: Props) => {
-    const { keywords, isLoading, error } = useGetKeywords(Number(id));
-
+export const Keyword = ({ keywords }: Props) => {
     if (!keywords?.length) {
         return null;
     }
-
-    if (isLoading) return <div>Loading keywords...</div>;
-    if (error) return <div>Failed to load keywords</div>;
 
     return (
         <Stack border gap="1rem" padding="2rem 1rem">
