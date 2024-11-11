@@ -1,5 +1,5 @@
 import { AuthLogin } from "@/types/auth";
-import { Cast } from "@/types/cast";
+import { CastType } from "@/types/cast";
 import axios, { AxiosInstance, AxiosError } from "axios";
 
 interface ErrorResponse {
@@ -70,7 +70,7 @@ class ApiService {
         }
     }
 
-    //recommendations
+    // SIMILAR SHOWS
     async getRecommendationDetails(showId: number) {
         try {
             const response = await this.api.get(`recommendations/details/${showId}`);
@@ -85,6 +85,15 @@ class ApiService {
             } else {
                 console.error("An unexpected error occurred:", error);
             }
+        }
+    }
+
+    async getSimilarShows(showId: number) {
+        try {
+            const response = await this.api.get(`recommendations/similar/${showId}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching similar shows", error);
         }
     }
 
@@ -192,7 +201,7 @@ class ApiService {
     }
 
     //admin
-    async addCastToShow({ showId, mainCast }: { showId: number; mainCast: Cast[] }) {
+    async addCastToShow({ showId, mainCast }: { showId: number; mainCast: CastType[] }) {
         try {
             const response = await this.api.patch(`cast/add/${showId}`, {
                 mainCast,
