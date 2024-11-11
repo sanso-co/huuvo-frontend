@@ -1,4 +1,4 @@
-import { useGetsRecommendations } from "@/hooks/api/recommendations/useRecommendations";
+import { useGetSimilar } from "@/hooks/api/recommendations/useRecommendations";
 
 import { ShowCard } from "@/components/feature/ShowCard";
 import { CardSlider } from "@/components/pattern/CardSlider";
@@ -9,17 +9,17 @@ interface Props {
 }
 
 export const Recommendations = ({ showId }: Props) => {
-    const { details, isLoading, error } = useGetsRecommendations(showId);
+    const { similar, isLoading, error } = useGetSimilar(showId);
 
     if (isLoading) return <div>Loading similar shows...</div>;
     if (error) return <div>Failed to load similar shows</div>;
-    if (!details || details.shows.length === 0) return null;
+    if (!similar || similar.length === 0) return null;
 
     return (
         <div className={styles.container}>
             <h3>You may also like</h3>
             <CardSlider>
-                {details.shows.map((show) => (
+                {similar.map((show) => (
                     <ShowCard show={show} key={show.id} />
                 ))}
             </CardSlider>
