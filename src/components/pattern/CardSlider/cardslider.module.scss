@@ -11,7 +11,8 @@
 }
 
 .container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
     gap: 0.875rem;
     width: 100%;
     overflow-x: scroll;
