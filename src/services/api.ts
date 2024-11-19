@@ -126,15 +126,6 @@ class ApiService {
         }
     }
 
-    async getKeywordDetails(id: string, page: number) {
-        try {
-            const response = await this.api.get(`keyword/detail/${id}?page=${page}`);
-            return response.data;
-        } catch (error) {
-            console.error("Error fetching keywords details", error);
-        }
-    }
-
     //providers
     async getProvidersForShow(showId: number) {
         try {

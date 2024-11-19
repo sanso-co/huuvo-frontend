@@ -3,15 +3,17 @@ import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { LeanShowType } from "@/types/show";
 
-import { ShowCard } from "@/components/feature/ShowCard";
-import { Header } from "@/components/global/Header";
-
-import styles from "./list.module.scss";
-import { Spinner } from "@/components/global/Spinner";
 import { useGetPermanentDetails } from "@/hooks/api/collection/usePermanentCollection";
 import { collectionId } from "@/helpers/constants/collectionId";
 import { convertToConstant } from "@/helpers/convertToConstant";
 import { useCollectionStore } from "@/store/collectionStore";
+
+import { ShowCard } from "@/components/feature/ShowCard";
+import { Header } from "@/components/global/Header";
+import { SEO } from "@/components/global/SEO";
+import { Spinner } from "@/components/global/Spinner";
+
+import styles from "./list.module.scss";
 
 const Collection = () => {
     const { collectionName } = useParams();
@@ -66,39 +68,50 @@ const Collection = () => {
     }, [collectionLoading, isLoading, setPage]);
 
     return (
-        <div>
-            {permanentCollection && (
-                <div className={styles.header}>
-                    <Header
-                        title={permanentCollection.name}
-                        description={permanentCollection.description ?? ""}
-                    />
-                </div>
-            )}
-
-            <InfiniteScroll
-                dataLength={shows.length}
-                next={fetchMoreData}
-                hasMore={
-                    !!permanentCollection?.shows &&
-                    !!permanentCollection?.shows.page &&
-                    !!permanentCollection?.shows.totalPages &&
-                    permanentCollection.shows.page < permanentCollection.shows.totalPages
+        <>
+            <SEO
+                title={permanentCollection?.name || "Collection"}
+                description={
+                    permanentCollection?.description ||
+                    `Discover ${
+                        permanentCollection?.name || "our collection of"
+                    } Korean dramas on K-lama.`
                 }
-                loader={<Spinner />}
-                endMessage={
-                    <div className={styles.endMessage}>
-                        <p>Yay! You have seen it all</p>
+            />
+            <div>
+                {permanentCollection && (
+                    <div className={styles.header}>
+                        <Header
+                            title={permanentCollection.name}
+                            description={permanentCollection.description ?? ""}
+                        />
                     </div>
-                }
-            >
-                <div className={styles.grid}>
-                    {shows.map((show: LeanShowType) => (
-                        <ShowCard show={show} key={show.id} />
-                    ))}
-                </div>
-            </InfiniteScroll>
-        </div>
+                )}
+
+                <InfiniteScroll
+                    dataLength={shows.length}
+                    next={fetchMoreData}
+                    hasMore={
+                        !!permanentCollection?.shows &&
+                        !!permanentCollection?.shows.page &&
+                        !!permanentCollection?.shows.totalPages &&
+                        permanentCollection.shows.page < permanentCollection.shows.totalPages
+                    }
+                    loader={<Spinner />}
+                    endMessage={
+                        <div className={styles.endMessage}>
+                            <p>Yay! You have seen it all</p>
+                        </div>
+                    }
+                >
+                    <div className={styles.grid}>
+                        {shows.map((show: LeanShowType) => (
+                            <ShowCard show={show} key={show.id} />
+                        ))}
+                    </div>
+                </InfiniteScroll>
+            </div>
+        </>
     );
 };
 

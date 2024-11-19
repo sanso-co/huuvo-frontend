@@ -4,9 +4,10 @@ import { useParams } from "react-router-dom";
 import { useDetails } from "@/hooks/api/details/useDetails";
 import { useTrailerVideo } from "@/hooks/api/details/useTrailerVideo";
 
-import { ImageContainer } from "@/components/global/ImageContainerNatural";
 import { getCroppedImageUrl, getKrImageUrl } from "@/services/image-url";
 
+import { SEO } from "@/components/global/SEO";
+import { ImageContainer } from "@/components/global/ImageContainerNatural";
 import { Info } from "@/features/Details/Info";
 import { Cast } from "@/features/Details/Cast";
 import { Crew } from "@/features/Details/Crew";
@@ -43,19 +44,26 @@ const Details = () => {
     if (error) return <div>Failed to load show details</div>;
 
     return (
-        <div>
-            <ImageContainer
-                src={getImageUrl()}
-                video={!trailerLoading && !trailerError ? trailer?.results : undefined}
+        <>
+            <SEO
+                title={details?.name}
+                description={details?.overview}
+                keywords="korean drama, kdrama recommendations, korean series"
             />
-            <Info data={details} />
-            {id && <Provider id={id} />}
-            <Keyword keywords={details?.keywords} />
-            {id && <Cast id={id} />}
-            {id && <Crew id={id} />}
-            {details?.original_story && <OriginalStory data={details?.original_story} />}
-            <Recommendations showId={Number(details?.id)} />
-        </div>
+            <div>
+                <ImageContainer
+                    src={getImageUrl()}
+                    video={!trailerLoading && !trailerError ? trailer?.results : undefined}
+                />
+                <Info data={details} />
+                {id && <Provider id={id} />}
+                <Keyword keywords={details?.keywords} />
+                {id && <Cast id={id} />}
+                {id && <Crew id={id} />}
+                {details?.original_story && <OriginalStory data={details?.original_story} />}
+                <Recommendations showId={Number(details?.id)} />
+            </div>
+        </>
     );
 };
 
