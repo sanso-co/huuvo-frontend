@@ -80,7 +80,7 @@ const Collection = () => {
     }, [collectionLoading, isLoading, setPage]);
 
     return (
-        <div>
+        <div className={styles.container}>
             <div className={styles.header}>
                 <Header
                     title={formatName(categoryName || "")}
