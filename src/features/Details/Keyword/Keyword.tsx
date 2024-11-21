@@ -1,8 +1,9 @@
-import { Stack } from "@/components/global/Stack";
 import { Chip } from "@/components/global/Chip";
 
-import styles from "./keyword.module.scss";
 import { KeywordType } from "@/types/showDetail";
+
+import styles from "./keyword.module.scss";
+import details from "@/assets/styles/details.module.scss";
 
 interface Props {
     keywords: KeywordType[];
@@ -14,8 +15,10 @@ export const Keyword = ({ keywords }: Props) => {
     }
 
     return (
-        <Stack border gap="1rem" padding="2rem 1rem">
-            <h3>Keywords</h3>
+        <div className={details.section}>
+            <div className={details.header}>
+                <h3>Keywords</h3>
+            </div>
             <div className={styles.content}>
                 {keywords?.map((keyword) => (
                     <Chip
@@ -25,6 +28,6 @@ export const Keyword = ({ keywords }: Props) => {
                     />
                 ))}
             </div>
-        </Stack>
+        </div>
     );
 };

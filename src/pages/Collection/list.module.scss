@@ -7,18 +7,22 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1.5rem;
     width: 100%;
-    padding: 0 var(--mobile-mx);
 
-    @media (min-width: 431px) {
-        padding: 0 var(--tablet-mx);
-    }
-
-    @media (min-width: 744px) {
+    @media (min-width: 577px) {
         grid-template-columns: repeat(3, 1fr);
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: 768px) {
         grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: 2rem;
+    }
+
+    @media (min-width: 1280px) {
+        grid-template-columns: repeat(6, 1fr);
         grid-gap: 2rem;
     }
 }

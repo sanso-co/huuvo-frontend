@@ -4,16 +4,18 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import { useCategoryData } from "@/hooks/api/useCategoryData";
 import { useCategoryCollectionStore } from "@/store/categoryCollectionStore";
+import { formatName } from "@/helpers/formatName";
 
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
 import { Spinner } from "@/components/global/Spinner";
+import { SEO } from "@/components/global/SEO";
 
 import { CategoryType } from "@/types/category";
 import { LeanShowType } from "@/types/show";
 
 import styles from "./category.module.scss";
-import { formatName } from "@/helpers/formatName";
+import layout from "@/assets/styles/layout.module.scss";
 
 const Collection = () => {
     const { categoryType, categoryName, categoryId } = useParams();
@@ -80,41 +82,50 @@ const Collection = () => {
     }, [collectionLoading, isLoading, setPage]);
 
     return (
-        <div className={styles.container}>
-            <div className={styles.header}>
-                <Header
-                    title={formatName(categoryName || "")}
-                    description={
-                        categoryType === "provider"
-                            ? `Shows streaming on ${formatName(categoryName || "")}`
-                            : `Shows with ${categoryType} ${formatName(categoryName || "")}`
-                    }
-                />
-            </div>
-
-            <InfiniteScroll
-                dataLength={shows.length}
-                next={fetchMoreData}
-                hasMore={
-                    !!categoryCollection &&
-                    !!categoryCollection.shows &&
-                    !!categoryCollection.shows.totalPages &&
-                    categoryCollection.shows.page < categoryCollection.shows.totalPages
+        <>
+            <SEO
+                title={categoryName || "Collection"}
+                description={
+                    categoryName ||
+                    `Discover ${categoryName || "our collection of"} Korean dramas on K-lama.`
                 }
-                loader={<Spinner />}
-                endMessage={
-                    <div className={styles.endMessage}>
-                        <p>Yay! You have seen it all</p>
-                    </div>
-                }
-            >
-                <div className={styles.grid}>
-                    {shows.map((show: LeanShowType) => (
-                        <ShowCard show={show} key={show.id} />
-                    ))}
+            />
+            <div className={`${styles.container} ${layout.default} ${layout.max}`}>
+                <div className={styles.header}>
+                    <Header
+                        title={formatName(categoryName || "")}
+                        description={
+                            categoryType === "provider"
+                                ? `Shows streaming on ${formatName(categoryName || "")}`
+                                : `Shows with ${categoryType} ${formatName(categoryName || "")}`
+                        }
+                    />
                 </div>
-            </InfiniteScroll>
-        </div>
+
+                <InfiniteScroll
+                    dataLength={shows.length}
+                    next={fetchMoreData}
+                    hasMore={
+                        !!categoryCollection &&
+                        !!categoryCollection.shows &&
+                        !!categoryCollection.shows.totalPages &&
+                        categoryCollection.shows.page < categoryCollection.shows.totalPages
+                    }
+                    loader={<Spinner />}
+                    endMessage={
+                        <div className={styles.endMessage}>
+                            <p>Yay! You have seen it all</p>
+                        </div>
+                    }
+                >
+                    <div className={styles.grid}>
+                        {shows.map((show: LeanShowType) => (
+                            <ShowCard show={show} key={show.id} />
+                        ))}
+                    </div>
+                </InfiniteScroll>
+            </div>
+        </>
     );
 };
 

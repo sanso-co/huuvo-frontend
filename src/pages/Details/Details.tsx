@@ -16,6 +16,9 @@ import { Provider } from "@/features/Details/Provider";
 import { OriginalStory } from "@/features/Details/OriginalStory";
 import { Recommendations } from "@/features/Details/Recommendations";
 
+import styles from "./details.module.scss";
+import layout from "@/assets/styles/layout.module.scss";
+
 const Details = () => {
     const { id } = useParams<{ id: string }>();
     const { details, error, isLoading } = useDetails(Number(id));
@@ -51,13 +54,19 @@ const Details = () => {
                 keywords="korean drama, kdrama recommendations, korean series"
             />
             <div>
-                <ImageContainer
-                    src={getImageUrl()}
-                    video={!trailerLoading && !trailerError ? trailer?.results : undefined}
-                />
-                <Info data={details} />
-                {id && <Provider id={id} />}
-                <Keyword keywords={details?.keywords} />
+                <div className={`${styles.top} ${layout.max}`}>
+                    <div className={styles.image}>
+                        <ImageContainer
+                            src={getImageUrl()}
+                            video={!trailerLoading && !trailerError ? trailer?.results : undefined}
+                        />
+                    </div>
+                    <div className={styles.details}>
+                        <Info data={details} />
+                        {id && <Provider id={id} />}
+                        <Keyword keywords={details?.keywords} />
+                    </div>
+                </div>
                 {id && <Cast id={id} />}
                 {id && <Crew id={id} />}
                 {details?.original_story && <OriginalStory data={details?.original_story} />}

@@ -1,6 +1,4 @@
 .container {
-    padding: 0 var(--mobile-mx);
-
     h1 {
         font-size: 1.25rem;
         font-weight: 600;
@@ -13,8 +11,6 @@
     }
 
     @media (min-width: 431px) {
-        padding: 0 var(--tablet-mx);
-
         h1 {
             font-size: 1.5rem;
         }

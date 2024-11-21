@@ -5,8 +5,10 @@ import { useGetCast } from "@/hooks/api/credit/useCast";
 import { formatUrl } from "@/helpers/formatUrl";
 
 import { ProfileImage } from "@/components/global/ProfileImage";
-import { CardSlider } from "@/components/pattern/CardSlider";
+import { ContentSlider } from "@/components/pattern/ContentSlider";
 
+import details from "@/assets/styles/details.module.scss";
+import layout from "@/assets/styles/layout.module.scss";
 import styles from "./cast.module.scss";
 
 interface Props {
@@ -24,18 +26,27 @@ export const Cast = ({ id }: Props) => {
     if (error) return <div>Failed to load cast</div>;
 
     return (
-        <div className={styles.container}>
-            <h3 className="pl-1">Cast</h3>
-            <CardSlider>
-                {cast?.map((cast) => {
-                    const name = formatUrl(cast.name ?? "");
-                    return (
-                        <Link to={`/person/${name}/${cast.id}`} key={cast.id}>
-                            <ProfileImage url={getProfileImage(cast.profile_path)} />
-                        </Link>
-                    );
-                })}
-            </CardSlider>
-        </div>
+        <>
+            <div className={styles.container}>
+                <div className={`${details.header} ${layout.default} ${layout.max}`}>
+                    <h3>Cast</h3>
+                </div>
+                <div className={styles.cast}>
+                    <ContentSlider>
+                        {cast?.map((cast) => {
+                            const name = formatUrl(cast.name ?? "");
+                            return (
+                                <Link to={`/person/${name}/${cast.id}`} key={cast.id}>
+                                    <ProfileImage url={getProfileImage(cast.profile_path)} />
+                                </Link>
+                            );
+                        })}
+                    </ContentSlider>
+                </div>
+            </div>
+            <div className={`${layout.default} ${layout.max}`}>
+                <div className={details.border}></div>
+            </div>
+        </>
     );
 };

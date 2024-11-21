@@ -1,0 +1,26 @@
+.section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-bottom);
+}
+
+.border {
+    width: 100%;
+    border-bottom: 1px solid var(--border-bottom);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+    }
+
+    p {
+        font-size: 0.75rem;
+    }
+}

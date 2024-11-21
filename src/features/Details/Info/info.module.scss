@@ -1,15 +1,24 @@
 .container {
-    padding: 1rem 1rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 2rem 0;
+
+    h1 {
+        margin-bottom: 1rem;
+    }
+
+    @media (min-width: 1280px) {
+        padding-top: 0;
+    }
 }
 
 .content {
-    border-bottom: 1px solid #e5e5e5;
-    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .part {
     font-size: 0.875rem;
-    margin-bottom: 1rem;
 }
 
 .top {
@@ -46,7 +55,8 @@
 .subHeader {
     font-size: 0.875rem;
     color: var(--gray-50);
-    margin-bottom: 0.25rem;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
 }
 
 .listItem {

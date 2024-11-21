@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from "react";
 
-import styles from "./cardslider.module.scss";
 import { LinkButton } from "@/components/global/LinkButton";
+
+import styles from "./cardslider.module.scss";
+import layout from "@/assets/styles/layout.module.scss";
 
 interface Props {
     helper?: string;
@@ -23,9 +25,9 @@ export const CardSlider = ({ linkLabel, linkTo, helper, title, children }: Props
     return (
         <section className={styles.section}>
             {title && (
-                <div className={styles.header}>
+                <div className={`${styles.header} ${layout.default} ${layout.max}`}>
                     <h3>{title}</h3>
-                    {helper && <p className="caption">{helper}</p>}
+                    {helper && <p className={styles.helper}>{helper}</p>}
                     {linkTo && (
                         <LinkButton to={linkTo}>
                             <span>{linkLabel}</span>
