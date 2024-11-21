@@ -2,10 +2,29 @@ import { useCallback, useEffect, useState } from "react";
 import { apiService } from "@/services/api";
 import { PermanentType } from "@/types/permanent";
 
-export const useGetPermanentDetails = (id: string, page: number) => {
+interface UseGetPermanentDetailsOptions {
+    forceLimit?: number;
+}
+
+export const useGetPermanentDetails = (
+    id: string,
+    page: number,
+    options: UseGetPermanentDetailsOptions = {}
+) => {
     const [permanentCollection, setPermanentCollection] = useState<PermanentType>();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
+
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const getPermanentDetails = useCallback(async () => {
         if (!id) return;
@@ -16,7 +35,7 @@ export const useGetPermanentDetails = (id: string, page: number) => {
             const fetchedDetails = await apiService.getPermanentCollectionDetails({
                 id,
                 page,
-                limit: 10,
+                limit: options.forceLimit ?? (isMobile ? 10 : 30),
             });
             setPermanentCollection(fetchedDetails);
             return fetchedDetails;
@@ -26,7 +45,7 @@ export const useGetPermanentDetails = (id: string, page: number) => {
         } finally {
             setIsLoading(false);
         }
-    }, [id, setIsLoading, setError, page, setPermanentCollection]);
+    }, [id, setIsLoading, setError, page, setPermanentCollection, options.forceLimit, isMobile]);
 
     useEffect(() => {
         getPermanentDetails();
@@ -37,5 +56,6 @@ export const useGetPermanentDetails = (id: string, page: number) => {
         isLoading,
         error,
         permanentCollection,
+        isMobile,
     };
 };

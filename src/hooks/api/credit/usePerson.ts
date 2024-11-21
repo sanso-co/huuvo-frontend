@@ -11,10 +11,17 @@ export const usePerson = (_category: string, id: string, page: number) => {
         setCategoryCollection,
         setIsLoading,
         setError,
+        isCacheValid,
+        getCollection,
     } = useCategoryStore();
 
-    const getCollection = useCallback(async () => {
+    const getCollectionData = useCallback(async () => {
         if (!id) return;
+
+        if (isCacheValid(id)) {
+            return getCollection(id);
+        }
+
         setIsLoading(id, true);
         setError(id, null);
 
@@ -28,14 +35,14 @@ export const usePerson = (_category: string, id: string, page: number) => {
         } finally {
             setIsLoading(id, false);
         }
-    }, [id, page, setCategoryCollection, setError, setIsLoading]);
+    }, [getCollection, id, isCacheValid, page, setCategoryCollection, setError, setIsLoading]);
 
     useEffect(() => {
-        getCollection();
-    }, [getCollection]);
+        getCollectionData();
+    }, [getCollectionData]);
 
     return {
-        getCollection,
+        getCollection: getCollectionData,
         isLoading: isLoading[id] || false,
         error: errors[id] || null,
         categoryCollection: categoryCollections[id] || null,

@@ -19,12 +19,13 @@ import layout from "@/assets/styles/layout.module.scss";
 
 const Collection = () => {
     const { categoryType, categoryName, categoryId } = useParams();
-    const { collection, page, shows, setCollection, setPage, setShows, resetCollection } =
+    const [localPage, setLocalPage] = useState(1);
+
+    const { page, setPage, shows, setShows, collection, setCollection, resetCollection } =
         useCategoryCollectionStore();
 
-    const [localIsLoading, setLocalIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    // Handle collection reset and initialization
     useEffect(() => {
         if (
             (categoryName && categoryName !== collection) ||
@@ -32,21 +33,33 @@ const Collection = () => {
         ) {
             resetCollection();
             setCollection(categoryName as string);
+            setLocalPage(1);
         } else if (!collection && categoryName) {
             setCollection(categoryName);
         }
-    }, [categoryName, categoryType, categoryId, collection, resetCollection, setCollection]);
+    }, [
+        categoryName,
+        resetCollection,
+        collection,
+        setCollection,
+        setPage,
+        page,
+        categoryType,
+        categoryId,
+    ]);
 
-    // Fetch data using the hybrid method
-    const { categoryCollection, isLoading: dataLoading } = useCategoryData(
+    useEffect(() => {
+        setLocalPage(page);
+    }, [page]);
+
+    const { categoryCollection, isLoading: collectionLoading } = useCategoryData(
         categoryType as CategoryType,
         categoryId as string,
-        page
+        localPage
     );
 
     useEffect(() => {
         if (categoryCollection?.shows?.results) {
-            // Deduplicate shows before updating the store
             setShows((existingShows) => {
                 const newShows = categoryCollection.shows.results.filter(
                     (newShow) =>
@@ -54,19 +67,19 @@ const Collection = () => {
                 );
                 return [...existingShows, ...newShows];
             });
+
+            setIsLoading(false);
         }
     }, [categoryCollection, setShows]);
 
-    // Fetch more data when infinite scroll triggers
     const fetchMoreData = useCallback(() => {
-        if (!dataLoading && !localIsLoading) {
-            setLocalIsLoading(true);
+        if (!collectionLoading && !isLoading) {
+            setIsLoading(true);
             setTimeout(() => {
                 setPage((prevPage) => prevPage + 1);
-                setLocalIsLoading(false);
             }, 500);
         }
-    }, [dataLoading, localIsLoading, setPage]);
+    }, [collectionLoading, isLoading, setPage]);
 
     return (
         <>
