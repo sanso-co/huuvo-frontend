@@ -14,6 +14,7 @@ import { SEO } from "@/components/global/SEO";
 import { Spinner } from "@/components/global/Spinner";
 
 import styles from "./list.module.scss";
+import layout from "@/assets/styles/layout.module.scss";
 
 const Collection = () => {
     const { collectionName } = useParams();
@@ -78,7 +79,7 @@ const Collection = () => {
                     } Korean dramas on K-lama.`
                 }
             />
-            <div>
+            <div className={`${styles.container} ${layout.default} ${layout.max}`}>
                 {permanentCollection && (
                     <div className={styles.header}>
                         <Header

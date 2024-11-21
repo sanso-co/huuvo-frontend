@@ -5,12 +5,11 @@ import { formatDate, formatMonthYear } from "@/helpers/date";
 import { collectionId } from "@/helpers/constants/collectionId";
 
 import { SEO } from "@/components/global/SEO";
+import { Hero } from "@/features/Home/Hero";
 import { CardSlider } from "@/components/pattern/CardSlider";
 import { ShowCard } from "@/components/feature/ShowCard";
 
 import styles from "./home.module.scss";
-
-import { Hero } from "@/features/Home/Hero";
 
 const Home = () => {
     const { heroes } = useGetHeroes();
@@ -35,20 +34,14 @@ const Home = () => {
                 title="K-lama | Find Your Next Favorite Korean Drama"
                 description="Discover and track Korean dramas with K-lama. Get personalized recommendations based on your watching history and connect with other K-drama fans."
             />
-            <div className={styles.sliders}>
+            <div className={styles.home}>
                 <Hero heroes={heroes} />
-                <CardSlider
-                    title="Trending Now"
-                    helper={`Updated: ${formatDate(trending?.releaseDate)}`}
-                >
+                <CardSlider title="Trending" helper={formatDate(trending?.releaseDate)}>
                     {trending?.shows?.map((show) => (
                         <ShowCard show={show} key={show.id} />
                     ))}
                 </CardSlider>
-                <CardSlider
-                    title="New and Upcoming"
-                    helper={formatMonthYear(upcoming?.releaseDate)}
-                >
+                <CardSlider title="New and Upcoming">
                     {upcoming?.shows.map((show) => (
                         <ShowCard show={show} key={show.id} />
                     ))}

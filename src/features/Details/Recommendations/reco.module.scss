@@ -1,8 +1,43 @@
 .container {
     padding: 2rem 0;
+}
 
-    h3 {
-        padding: 0 1rem;
-        margin-bottom: 1rem;
+.slider {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 0.875rem;
+    width: 100%;
+    overflow-x: scroll;
+    padding-left: var(--mobile-mx);
+    padding-right: var(--mobile-mx);
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        padding-left: var(--tablet-mx);
+        padding-right: var(--tablet-mx);
+    }
+
+    @media (min-width: 1024px) {
+        padding-left: var(--tablet-lg-mx);
+        padding-right: var(--tablet-lg-mx);
+    }
+
+    @media (min-width: 1280px) {
+        padding-left: calc((100vw - 1176px) / 2);
+        padding-right: calc((100vw - 1176px) / 2);
+    }
+
+    @media (min-width: 1366px) {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2rem 1rem;
+        overflow-x: visible;
+        max-width: 1262px;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
     }
 }

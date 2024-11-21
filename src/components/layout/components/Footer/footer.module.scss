@@ -1,10 +1,11 @@
 .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     max-width: 1816px;
     height: 54px;
+    font-size: 0.75rem;
     padding: 0 var(--mobile-mx);
     margin: 0 auto;
 
@@ -29,25 +30,4 @@
     @media (min-width: 1366px) {
         max-width: 1262px;
     }
-}
-
-.logo {
-    font-family: "Inter", sans-serif;
-    font-size: 1.35rem;
-    font-weight: 700;
-}
-
-.right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.admin {
-    position: relative;
-    font-size: 0.875rem;
-}
-
-.dropdown {
-    position: absolute;
 }

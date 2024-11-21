@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { HeroType } from "@/types/marketing";
+
 import styles from "./hero.module.scss";
+import layout from "@/assets/styles/layout.module.scss";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -14,7 +16,7 @@ interface Props {
 
 export const Hero = ({ heroes }: Props) => {
     return (
-        <div className={styles.heroWrapper}>
+        <div className={`${styles.heroWrapper} ${layout.max}`}>
             <div className={styles.aspectRatioBox}>
                 <Swiper
                     modules={[Navigation, Pagination, Autoplay]}

@@ -1,7 +1,6 @@
 .heroWrapper {
     position: relative;
     width: 100%;
-    max-width: 100vw;
 }
 
 .aspectRatioBox {
@@ -40,6 +39,11 @@
         .swiper-slide {
             height: 100% !important; // Force slide to take full height
         }
+    }
+
+    @media (min-width: 1280px) {
+        border-radius: 1rem;
+        overflow: hidden;
     }
 }
 

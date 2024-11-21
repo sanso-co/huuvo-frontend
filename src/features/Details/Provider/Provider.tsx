@@ -6,6 +6,7 @@ import { formatUrl } from "@/helpers/formatUrl";
 import { ProviderType } from "@/types/provider";
 
 import styles from "./provider.module.scss";
+import details from "@/assets/styles/details.module.scss";
 
 interface Props {
     id: string;
@@ -25,8 +26,8 @@ export const Provider = ({ id }: Props) => {
     if (error) return <div>Failed to load providers</div>;
 
     return (
-        <div className={styles.container}>
-            <div className={styles.header}>
+        <div className={details.section}>
+            <div className={details.header}>
                 <h3>Streaming on</h3>
             </div>
             {providers?.length ? (
@@ -47,7 +48,7 @@ export const Provider = ({ id }: Props) => {
                     })}
                 </div>
             ) : (
-                <div>US streaming details coming soon.</div>
+                <div className={styles.unavailable}>US streaming details coming soon.</div>
             )}
         </div>
     );

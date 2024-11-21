@@ -2,7 +2,9 @@
 :root {
     /* spacing */
     --mobile-mx: 1rem;
-    --tablet-mx: 2.5rem;
+    --tablet-mx: 1.5rem;
+    --tablet-lg-mx: 2.5rem;
+    --desktop-mx: 3.25rem;
     --z-overlay: 1000;
     --gray-100: #0e0f12;
     --gray-90: #26272a;
@@ -16,7 +18,10 @@
     --gray-10: #e7e7e7;
     --gray-5: #f3f3f3;
     --gray-2: #f9f9f9;
+    --neutral-100: #0c0b08;
+    --neutral-2: #fdfdfd;
     --border-bottom: #e5e5e5;
+    --pink-melon: #fbc3bc;
 }
 
 * {
@@ -35,6 +40,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: 0.12px;
     line-height: 1.5;
+    background-color: var(--neutral-2);
     // font-size: 15px;
 }
 
@@ -54,12 +60,8 @@ ul {
 /* typography */
 
 h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-}
-
-.caption {
-    font-size: 0.875rem;
+    font-size: 1rem;
+    font-weight: 700;
 }
 
 .footnote {

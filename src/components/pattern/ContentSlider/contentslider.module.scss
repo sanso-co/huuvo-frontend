@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    gap: 0.875rem;
+    width: 100%;
+    overflow-x: scroll;
+    padding: 0 var(--mobile-mx);
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        padding: 0 var(--tablet-mx);
+    }
+
+    @media (min-width: 1024px) {
+        padding: 0 var(--tablet-lg-mx);
+    }
+
+    @media (min-width: 1280px) {
+        padding: 0 var(--desktop-mx);
+    }
+
+    @media (min-width: 1366px) {
+        padding: 0;
+    }
+}

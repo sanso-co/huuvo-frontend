@@ -15,7 +15,7 @@ export const formatDate = (dateString?: string): string => {
 
     const date = moment.utc(dateString);
 
-    formattedDate.month = date.format("MMMM");
+    formattedDate.month = date.format("MMM");
     formattedDate.day = parseInt(date.format("D"));
     formattedDate.year = parseInt(date.format("YYYY"));
 
@@ -41,7 +41,7 @@ export const formatMonthYear = (dateString?: string): string => {
 
     const date = moment.utc(dateString);
 
-    return date.format("MMMM YYYY");
+    return date.format("MMM YYYY");
 };
 
 export const releaseQuarter = (dateString: string) => {

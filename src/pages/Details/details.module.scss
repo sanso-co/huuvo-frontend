@@ -1,0 +1,54 @@
+.top {
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 1280px) {
+        flex-direction: row;
+        gap: 2rem;
+        width: 100%;
+    }
+}
+
+.image {
+    height: auto;
+
+    @media (min-width: 1280px) {
+        flex: none;
+        height: 680px;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+}
+
+.details {
+    padding: 0 var(--mobile-mx);
+
+    @media (min-width: 768px) {
+        padding: 0 var(--tablet-mx);
+    }
+
+    @media (min-width: 1024px) {
+        padding: 0 var(--tablet-lg-mx);
+    }
+
+    @media (min-width: 1280px) {
+        padding: 0;
+        overflow-y: auto;
+    }
+}
+
+.info {
+    background-color: #e0edc5;
+}
+
+.crew {
+    background-color: #2ba84a;
+}
+
+.original {
+    background-color: #c7ffda;
+}
+
+.reco {
+    background-color: #4d243d;
+}

@@ -5,7 +5,8 @@ import { formatUrl } from "@/helpers/formatUrl";
 
 import { List } from "@/components/global/List";
 
-import styles from "./crew.module.scss";
+import details from "@/assets/styles/details.module.scss";
+import layout from "@/assets/styles/layout.module.scss";
 
 interface Props {
     id: string;
@@ -19,8 +20,11 @@ export const Crew = ({ id }: Props) => {
     }
 
     return (
-        <div className={styles.container}>
-            <h3>Credits</h3>
+        <div className={`${details.section} ${layout.default} ${layout.max}`}>
+            <div className={details.header}>
+                <h3>Credits</h3>
+            </div>
+
             <List>
                 {credits?.map((crew) => {
                     const name = formatUrl(crew.name ?? "");
