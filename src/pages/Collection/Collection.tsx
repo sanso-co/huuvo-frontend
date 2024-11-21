@@ -41,10 +41,11 @@ const Collection = () => {
         setLocalPage(page);
     }, [page]);
 
-    const { permanentCollection, isLoading: collectionLoading } = useGetPermanentDetails(
-        collectionIdValue,
-        localPage
-    );
+    const {
+        permanentCollection,
+        isLoading: collectionLoading,
+        isMobile,
+    } = useGetPermanentDetails(collectionIdValue, localPage);
 
     useEffect(() => {
         if (permanentCollection?.shows?.result) {
@@ -62,11 +63,14 @@ const Collection = () => {
     const fetchMoreData = useCallback(() => {
         if (!collectionLoading && !isLoading) {
             setIsLoading(true);
-            setTimeout(() => {
-                setPage((prevPage) => prevPage + 1);
-            }, 300);
+            setTimeout(
+                () => {
+                    setPage((prevPage) => prevPage + 1);
+                },
+                isMobile ? 300 : 100
+            );
         }
-    }, [collectionLoading, isLoading, setPage]);
+    }, [collectionLoading, isLoading, setPage, isMobile]);
 
     return (
         <>

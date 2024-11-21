@@ -1,7 +1,7 @@
 import { useGetHeroes } from "@/hooks/api/marketing/useHero";
 import { usePeriodicCollection } from "@/hooks/api/collection/usePeriodicCollection";
 import { useGetPermanentDetails } from "@/hooks/api/collection/usePermanentCollection";
-import { formatDate, formatMonthYear } from "@/helpers/date";
+import { formatDate } from "@/helpers/date";
 import { collectionId } from "@/helpers/constants/collectionId";
 
 import { SEO } from "@/components/global/SEO";
@@ -25,7 +25,8 @@ const Home = () => {
     );
     const { permanentCollection: highlyRated } = useGetPermanentDetails(
         collectionId.HIGHLY_RATED || "",
-        1
+        1,
+        { forceLimit: 10 }
     );
 
     return (
