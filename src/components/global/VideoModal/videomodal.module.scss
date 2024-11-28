@@ -1,0 +1,46 @@
+@use "../../../assets/styles/animation.scss";
+
+.wrapper {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.1s ease-out;
+}
+
+.container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    right: auto;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    border-radius: 1rem;
+
+    @media (min-width: 1280px) {
+        width: 50%;
+    }
+}
+
+.noScroll {
+    overflow: hidden;
+}
+
+.videoplayer {
+    position: relative;
+    padding-top: 56.25%;
+}
+
+.reactPlayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

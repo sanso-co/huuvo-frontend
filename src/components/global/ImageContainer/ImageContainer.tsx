@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
-import { Modal } from "@/components/global/Modal";
-import { Play } from "@/assets/icons/Play";
 import { MediaIcon } from "@/assets/icons/MediaIcon";
 import { TrailerTypeTMDB } from "@/types/showDetail";
 
@@ -15,7 +12,7 @@ interface Props {
     video?: TrailerTypeTMDB[];
 }
 
-export const ImageContainer = ({ src, ratio, rounded, width, video }: Props) => {
+export const ImageContainer = ({ src, ratio, rounded, width }: Props) => {
     const [naturalRatio, setNaturalRatio] = useState<string | undefined>(ratio);
 
     useEffect(() => {
@@ -46,11 +43,6 @@ export const ImageContainer = ({ src, ratio, rounded, width, video }: Props) => 
     } as React.CSSProperties;
 
     const noImage = src === "no-image";
-    const [overlayOpen, setOverlayOpen] = useState(false);
-
-    const handleModal = () => {
-        setOverlayOpen(!overlayOpen);
-    };
 
     return (
         <div className={containerClasses} style={containerStyle}>
@@ -61,22 +53,6 @@ export const ImageContainer = ({ src, ratio, rounded, width, video }: Props) => 
             ) : (
                 <img src={src} alt="" />
             )}
-            {video && (
-                <div className={styles.playIcon} onClick={handleModal}>
-                    <Play fill="#eee" />
-                </div>
-            )}
-            <Modal hideButton open={overlayOpen} handleClose={handleModal}>
-                <div className={styles.videoplayer}>
-                    <ReactPlayer
-                        controls
-                        className={styles.reactPlayer}
-                        url={`https://www.youtube.com/watch?v=${video?.[0]?.key}`}
-                        width="100%"
-                        height="100%"
-                    />
-                </div>
-            </Modal>
         </div>
     );
 };

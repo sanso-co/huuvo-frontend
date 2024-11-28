@@ -1,11 +1,10 @@
 import { useState } from "react";
-import ReactPlayer from "react-player";
-import { Modal } from "@/components/global/Modal";
 import { Play } from "@/assets/icons/Play";
 import { MediaIcon } from "@/assets/icons/MediaIcon";
 import { TrailerTypeTMDB } from "@/types/showDetail";
 
 import styles from "./imagecontainer.module.scss";
+import { VideoModal } from "@/components/global/VideoModal";
 
 interface Props {
     src: string;
@@ -34,17 +33,7 @@ export const ImageContainer = ({ src, video }: Props) => {
                     <Play fill="#eee" />
                 </div>
             )}
-            <Modal hideButton open={overlayOpen} handleClose={handleModal}>
-                <div className={styles.videoplayer}>
-                    <ReactPlayer
-                        controls
-                        className={styles.reactPlayer}
-                        url={`https://www.youtube.com/watch?v=${video?.[0]?.key}`}
-                        width="100%"
-                        height="100%"
-                    />
-                </div>
-            </Modal>
+            <VideoModal url={video?.[0]?.key || ""} open={overlayOpen} handleClose={handleModal} />
         </div>
     );
 };
