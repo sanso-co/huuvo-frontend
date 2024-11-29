@@ -2,13 +2,21 @@
     display: inline-flex;
     gap: 0.5rem;
     border-radius: 2rem;
-    background-color: var(--gray-10);
+    background-color: var(--gray-5);
     font-size: 0.75rem;
     letter-spacing: 0.015rem;
     text-transform: capitalize;
     white-space: nowrap;
+    color: var(--gray-100);
     padding: 0.5rem 0.75rem;
     margin-right: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+        .dismiss {
+            background-color: var(--gray-30);
+        }
+    }
 }
 
 .flex {
@@ -22,14 +30,10 @@
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     border: none;
     border-radius: 100%;
-    background-color: var(--gray-30);
+    background-color: var(--gray-20);
     cursor: pointer;
-
-    &:hover {
-        background-color: var(--gray-20);
-    }
 }

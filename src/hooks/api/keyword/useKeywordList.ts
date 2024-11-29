@@ -1,25 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { apiService } from "@/services/api";
+import { KeywordType } from "@/types/showDetail";
 
-export const useKeywordList = () => {
-    const [keywordsList, setKeywordsList] = useState();
-    const [isLoading, setIsLoading] = useState(true);
+export const useGetAllKeywords = () => {
+    const [keywordList, setKeywordList] = useState<KeywordType[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
 
+    const getAllKeywords = useCallback(async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const fetchedTone = await apiService.getAllKeywords();
+            setKeywordList(fetchedTone);
+            return fetchedTone;
+        } catch (err) {
+            setError(err instanceof Error ? err : new Error("An unknown error occurred"));
+            throw err;
+        } finally {
+            setIsLoading(false);
+        }
+    }, [setKeywordList, setIsLoading, setError]);
+
     useEffect(() => {
-        const fetchKeywordsList = async () => {
-            try {
-                const result = await apiService.getKeywordsList();
-                setKeywordsList(result);
-            } catch (err) {
-                setError(err as Error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+        getAllKeywords();
+    }, [getAllKeywords]);
 
-        fetchKeywordsList();
-    }, [setKeywordsList]);
-
-    return { keywordsList, isLoading, error };
+    return { keywordList, refreshKeywords: getAllKeywords, isLoading, error };
 };

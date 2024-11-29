@@ -1,0 +1,39 @@
+.container {
+    width: 100%;
+}
+
+.filterContainer {
+    width: 100%;
+
+    @media (min-width: 740px) {
+        width: 300px;
+    }
+}
+
+.filterButtonSection {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.filterButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid var(--primary-purple-faint);
+    border-radius: 2rem;
+    padding: 0.25rem 0.75rem;
+
+    span {
+        margin-left: 0.25rem;
+        color: var(-100);
+        font-weight: 500;
+    }
+
+    &:hover {
+        background-color: var(--primary-purple-faint);
+        cursor: pointer;
+    }
+}

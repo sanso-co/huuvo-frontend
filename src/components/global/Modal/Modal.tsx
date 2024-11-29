@@ -1,8 +1,9 @@
 import { createPortal } from "react-dom";
 
-import styles from "./modal.module.scss";
 import { useEffect } from "react";
 import { DismissIcon } from "@/assets/icons/DismissIcon";
+
+import styles from "./modal.module.scss";
 
 interface Props {
     open: boolean;

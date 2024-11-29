@@ -41,6 +41,17 @@
     }
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    h2 {
+        font-size: 1.25rem;
+    }
+}
+
 .sm {
     @media (min-width: 768px) {
         width: 40%;
