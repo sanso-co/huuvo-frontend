@@ -10,17 +10,30 @@
     cursor: pointer;
 
     &:hover {
-        background-color: #f8f8f8;
+        background-color: #f6f4fa;
     }
 }
 
 .buttonSelected {
     font-weight: 600;
-    background-color: #e5f8e6;
-    color: #2c7500;
+    background-color: var(--primary-purple-faint);
+    color: var(--primary-purple);
     cursor: default;
 
     &:hover {
-        background-color: #e5f8e6;
+        background-color: var(--primary-purple-faint);
     }
+}
+
+.control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    background-color: transparent;
+    border: none;
+    color: var(--primary-purple);
+    font-weight: 600;
+    cursor: pointer;
 }
