@@ -1,5 +1,8 @@
 import React from "react";
 
+import { ChevronLeftIcon } from "@/assets/icons/ChevronLeftIcon";
+import { ChevronRightIcon } from "@/assets/icons/ChevronRightIcon";
+
 import styles from "./pagination.module.scss";
 
 interface PaginationProps {
@@ -76,13 +79,13 @@ export const Pagination: React.FC<PaginationProps> = ({
 
     return (
         <div className="flex items-center justify-center space-x-2">
-            {totalPages > 5 && (
+            {totalPages > 5 && currentPage !== 1 && (
                 <button
                     onClick={handlePrevClick}
                     disabled={currentPage === 1}
-                    className="p-2 rounded-full hover:bg-gray-200 disabled:opacity-50"
+                    className={styles.control}
                 >
-                    prev
+                    <ChevronLeftIcon width={18} height={18} color="#4828a5" />
                 </button>
             )}
             {pageNumbers.map((page, index) => (
@@ -98,9 +101,9 @@ export const Pagination: React.FC<PaginationProps> = ({
                 <button
                     onClick={handleNextClick}
                     disabled={currentPage === totalPages}
-                    className="p-2 rounded-full hover:bg-gray-200 disabled:opacity-50"
+                    className={styles.control}
                 >
-                    next
+                    <ChevronRightIcon width={18} height={18} color="#4828a5" />
                 </button>
             )}
         </div>

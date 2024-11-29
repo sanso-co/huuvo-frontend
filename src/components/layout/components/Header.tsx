@@ -46,8 +46,11 @@ export const Header = () => {
         <header>
             <div className={styles.container}>
                 <Link to="/" className={styles.logo}>
-                    K-
+                    K
                 </Link>
+                <div className={styles.nav}>
+                    <Link to="/discover">Discover</Link>
+                </div>
                 <div className={styles.right}>
                     {!detailsPage && (
                         <div className="flex gap-05">
