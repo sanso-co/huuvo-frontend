@@ -107,6 +107,26 @@ class ApiService {
         }
     }
 
+    // GENRE
+    async getAllGenres() {
+        try {
+            const response = await this.api.get("genre");
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching genres", error);
+        }
+    }
+
+    // TONE
+    async getAllTones() {
+        try {
+            const response = await this.api.get("tone");
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching tones", error);
+        }
+    }
+
     //keywords
     async getKeywordsForShow(showId: number) {
         try {
@@ -117,12 +137,12 @@ class ApiService {
         }
     }
 
-    async getKeywordsList() {
+    async getAllKeywords() {
         try {
-            const response = await this.api.get("keywords");
+            const response = await this.api.get("keyword");
             return response.data;
         } catch (error) {
-            console.error("Error fetching keywords list", error);
+            console.error("Error fetching keywords", error);
         }
     }
 
@@ -220,6 +240,30 @@ class ApiService {
             return response.data;
         } catch (error) {
             console.error("Error fetching heroes", error);
+        }
+    }
+
+    // DISCOVER
+    async discoverShows(page: number, keyword?: string, genre?: string, tone?: string) {
+        try {
+            const params = new URLSearchParams();
+
+            // Add query parameters conditionally
+            params.append("page", page.toString());
+            if (keyword) {
+                params.append("keyword", keyword);
+            }
+            if (genre) {
+                params.append("genre", genre);
+            }
+            if (tone) {
+                params.append("tone", tone);
+            }
+
+            const response = await this.api.get(`show?${params.toString()}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching shows", error);
         }
     }
 }

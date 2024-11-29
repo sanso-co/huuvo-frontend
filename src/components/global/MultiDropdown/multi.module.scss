@@ -47,7 +47,7 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        stroke: var(--primary-purple);
+        stroke: var(--primary-purple-100);
     }
 }
 
@@ -60,6 +60,6 @@
     cursor: pointer;
 
     &:hover {
-        color: var(--primary-purple);
+        color: var(--primary-purple-100);
     }
 }
