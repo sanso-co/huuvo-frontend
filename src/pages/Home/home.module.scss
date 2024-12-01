@@ -11,3 +11,9 @@
     color: white;
     z-index: 10;
 }
+
+.sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}

@@ -10,6 +10,7 @@ import { CardSlider } from "@/components/pattern/CardSlider";
 import { ShowCard } from "@/components/feature/ShowCard";
 
 import styles from "./home.module.scss";
+import layout from "@/assets/styles/layout.module.scss";
 
 const Home = () => {
     const { heroes } = useGetHeroes();
@@ -37,25 +38,27 @@ const Home = () => {
             />
             <div className={styles.home}>
                 <Hero heroes={heroes} />
-                <CardSlider title="Trending" helper={formatDate(trending?.releaseDate)}>
-                    {trending?.shows?.map((show) => (
-                        <ShowCard show={show} key={show.id} />
-                    ))}
-                </CardSlider>
-                <CardSlider title="New and Upcoming">
-                    {upcoming?.shows.map((show) => (
-                        <ShowCard show={show} key={show.id} />
-                    ))}
-                </CardSlider>
-                <CardSlider
-                    title="Highly Rated"
-                    linkLabel="View All"
-                    linkTo="/collection/highly-rated"
-                >
-                    {highlyRated?.shows?.result.map((show) => (
-                        <ShowCard show={show} key={show.id} />
-                    ))}
-                </CardSlider>
+                <div className={`${styles.sliders} ${layout.max}`}>
+                    <CardSlider title="Trending" helper={formatDate(trending?.releaseDate)}>
+                        {trending?.shows?.map((show) => (
+                            <ShowCard show={show} key={show.id} />
+                        ))}
+                    </CardSlider>
+                    <CardSlider title="New and Upcoming">
+                        {upcoming?.shows.map((show) => (
+                            <ShowCard show={show} key={show.id} />
+                        ))}
+                    </CardSlider>
+                    <CardSlider
+                        title="Highly Rated"
+                        linkLabel="View All"
+                        linkTo="/collection/highly-rated"
+                    >
+                        {highlyRated?.shows?.result.map((show) => (
+                            <ShowCard show={show} key={show.id} />
+                        ))}
+                    </CardSlider>
+                </div>
             </div>
         </>
     );
