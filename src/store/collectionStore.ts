@@ -3,14 +3,13 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 interface StateProps {
-    collection: string | null;
-    page: number;
+    collection: string;
     shows: LeanShowType[];
+    page: number;
+    setPage: (page: number) => void;
     setCollection: (collection: string) => void;
-    setPage: (payload: number | ((prevPage: number) => number)) => void;
-    setShows: (
-        newShows: LeanShowType[] | ((currentShows: LeanShowType[]) => LeanShowType[])
-    ) => void;
+    setShows: (shows: LeanShowType[]) => void;
+    appendShows: (newShows: LeanShowType[]) => void;
     resetCollection: () => void;
 }
 
@@ -18,24 +17,17 @@ export const useCollectionStore = create<StateProps>()(
     devtools(
         persist(
             (set) => ({
-                collection: null,
-                page: 1,
+                collection: "",
                 shows: [],
+                page: 1,
+                setPage: (page) => set({ page }),
                 setCollection: (collection) => set({ collection }),
-                setPage: (payload: number | ((prevPage: number) => number)) =>
+                setShows: (shows) => set({ shows }),
+                appendShows: (newShows) =>
                     set((state) => ({
-                        page: typeof payload === "function" ? payload(state.page) : payload,
+                        shows: [...state.shows, ...newShows],
                     })),
-                setShows: (
-                    newShows: LeanShowType[] | ((currentShows: LeanShowType[]) => LeanShowType[])
-                ) =>
-                    set((state) => ({
-                        shows:
-                            typeof newShows === "function"
-                                ? newShows(state.shows)
-                                : [...state.shows, ...newShows],
-                    })),
-                resetCollection: () => set({ page: 1, shows: [] }),
+                resetCollection: () => set({ collection: "", page: 1, shows: [] }),
             }),
             {
                 name: "collection",

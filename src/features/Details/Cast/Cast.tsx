@@ -36,7 +36,7 @@ export const Cast = ({ id }: Props) => {
                         {cast?.map((cast) => {
                             const name = formatUrl(cast.name ?? "");
                             return (
-                                <Link to={`/person/${name}/${cast.id}`} key={cast.id}>
+                                <Link to={`/cast/${name}/${cast.id}`} key={cast.id}>
                                     <ProfileImage url={getProfileImage(cast.profile_path)} />
                                 </Link>
                             );

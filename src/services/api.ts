@@ -40,20 +40,23 @@ class ApiService {
         }
     }
 
-    async getPermanentCollectionDetails(payload: { id: string; page: number; limit: number }) {
+    async getPermanentCollectionDetails(id: string, page: number, limit: number) {
         try {
             const response = await this.api.get(
-                `permanent-collection/${payload.id}?page=${payload.page}&limit=${payload.limit}`
+                `permanent-collection/${id}?page=${page}&limit=${limit}`
             );
+
             return response.data;
         } catch (error) {
             console.error("Error fetching permanent collection details", error);
         }
     }
 
-    async getProviderCollectionDetails(id: string, page: number) {
+    async getProviderCollectionDetails(id: string, page: number, limit: number) {
         try {
-            const response = await this.api.get(`provider/detail/${id}?page=${page}`);
+            const response = await this.api.get(
+                `provider/detail/${id}?page=${page}&limit=${limit}`
+            );
             return response.data;
         } catch (error) {
             console.error("Error fetching provider collection details", error);
@@ -61,9 +64,11 @@ class ApiService {
     }
 
     //categories
-    async getCategoryList(category: string, id: string, page: number) {
+    async getCategoryList(category: string, id: string, page: number, limit: number) {
         try {
-            const response = await this.api.get(`show/list/${category}/${id}?page=${page}`);
+            const response = await this.api.get(
+                `show/list/${category}/${id}?page=${page}&limit=${limit}`
+            );
             return response.data;
         } catch (error) {
             console.error("Error fetching category list", error);
@@ -183,9 +188,9 @@ class ApiService {
         }
     }
 
-    async getPersonDetails(personId: string, page: number) {
+    async getPersonDetails(personId: string, page: number, limit: number) {
         try {
-            const response = await this.api.get(`person/${personId}?page=${page}`);
+            const response = await this.api.get(`person/${personId}?page=${page}?limit=${limit}`);
             return response.data;
         } catch (error) {
             console.error("Error fetching provider collection details", error);
@@ -202,9 +207,9 @@ class ApiService {
         }
     }
 
-    async getCreditDetails(id: string, page: number) {
+    async getCreditDetails(id: string, page: number, limit: number) {
         try {
-            const response = await this.api.get(`credit/detail/${id}?page=${page}`);
+            const response = await this.api.get(`credit/detail/${id}?page=${page}?limit=${limit}`);
             return response.data;
         } catch (error) {
             console.error("Error fetching keywords details", error);
