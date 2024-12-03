@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { LeanShowType } from "@/types/show";
@@ -20,94 +20,85 @@ const Collection = () => {
     const { collectionName } = useParams();
     const collectionConstant = convertToConstant(collectionName || "");
     const collectionIdValue = collectionId[collectionConstant as keyof typeof collectionId];
-    const [localPage, setLocalPage] = useState(1);
-
-    const { page, setPage, shows, setShows, collection, setCollection, resetCollection } =
-        useCollectionStore();
-
-    const [isLoading, setIsLoading] = useState(false);
-
-    useEffect(() => {
-        if (collectionName && collectionName !== collection) {
-            resetCollection();
-            setCollection(collectionName);
-            setLocalPage(1);
-        } else if (!collection && collectionName) {
-            setCollection(collectionName);
-        }
-    }, [collectionName, resetCollection, collection, setCollection, setPage, page]);
-
-    useEffect(() => {
-        setLocalPage(page);
-    }, [page]);
 
     const {
-        permanentCollection,
-        isLoading: collectionLoading,
-        isMobile,
-    } = useGetPermanentDetails(collectionIdValue, localPage);
+        page,
+        shows,
+        collection,
+        setPage,
+        setCollection,
+        setShows,
+        appendShows,
+        resetCollection,
+    } = useCollectionStore();
+
+    const { data, isLoading, error } = useGetPermanentDetails(collectionIdValue, page);
+
+    const updateCollection = useCallback(() => {
+        if (!data) return;
+
+        if (!collection || collection !== collectionName) {
+            resetCollection();
+            setCollection(collectionName || "");
+            setShows(data.shows.results);
+            return;
+        }
+
+        if (page > 1) {
+            appendShows(data.shows.results);
+        }
+    }, [
+        data,
+        collection,
+        collectionName,
+        page,
+        resetCollection,
+        setCollection,
+        setShows,
+        appendShows,
+    ]);
 
     useEffect(() => {
-        if (permanentCollection?.shows?.result) {
-            setShows((existingShows) => {
-                const newShows = permanentCollection.shows.result.filter(
-                    (newShow) =>
-                        !existingShows.some((existingShow) => existingShow.id === newShow.id)
-                );
-                return [...existingShows, ...newShows];
-            });
-            setIsLoading(false);
-        }
-    }, [permanentCollection, setShows]);
+        updateCollection();
+    }, [updateCollection]);
 
-    const fetchMoreData = useCallback(() => {
-        if (!collectionLoading && !isLoading) {
-            setIsLoading(true);
-            setTimeout(
-                () => {
-                    setPage((prevPage) => prevPage + 1);
-                },
-                isMobile ? 300 : 100
-            );
+    const loadMore = useCallback(() => {
+        if (!isLoading && data?.shows.hasNextPage) {
+            const timer = setTimeout(() => {
+                setPage(page + 1);
+            }, 1000);
+
+            return () => clearTimeout(timer);
         }
-    }, [collectionLoading, isLoading, setPage, isMobile]);
+    }, [isLoading, data?.shows.hasNextPage, setPage, page]);
+
+    if (isLoading && page === 1) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
 
     return (
         <>
             <SEO
-                title={permanentCollection?.name || "Collection"}
+                title={data?.name || "Collection"}
                 description={
-                    permanentCollection?.description ||
-                    `Discover ${
-                        permanentCollection?.name || "our collection of"
-                    } Korean dramas on K-lama.`
+                    data?.description ||
+                    `Discover ${data?.name || "our collection of"} Korean dramas on K-lama.`
                 }
             />
             <div className={`${styles.container} ${layout.default} ${layout.max}`}>
-                {permanentCollection && (
+                {data && (
                     <div className={styles.header}>
-                        <Header
-                            title={permanentCollection.name}
-                            description={permanentCollection.description ?? ""}
-                        />
+                        <Header title={data.name} description={data.description ?? ""} />
                     </div>
                 )}
 
                 <InfiniteScroll
                     dataLength={shows.length}
-                    next={fetchMoreData}
+                    next={loadMore}
                     hasMore={
-                        !!permanentCollection?.shows &&
-                        !!permanentCollection?.shows.page &&
-                        !!permanentCollection?.shows.totalPages &&
-                        permanentCollection.shows.page < permanentCollection.shows.totalPages
+                        !isLoading &&
+                        Boolean(data?.shows.page && data?.shows.page < data?.shows.totalPages)
                     }
                     loader={<Spinner />}
-                    endMessage={
-                        <div className={styles.endMessage}>
-                            <p>Yay! You have seen it all</p>
-                        </div>
-                    }
                 >
                     <div className={styles.grid}>
                         {shows.map((show: LeanShowType) => (

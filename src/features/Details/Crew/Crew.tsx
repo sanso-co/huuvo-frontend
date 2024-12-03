@@ -29,7 +29,7 @@ export const Crew = ({ id }: Props) => {
                 {credits?.map((crew) => {
                     const name = formatUrl(crew.name ?? "");
                     return (
-                        <Link to={`/credit/${name}/${crew.id}`} key={crew.id}>
+                        <Link to={`/crew/${name}/${crew.id}`} key={crew.id}>
                             <List.Item title={crew.job} value={crew.name} />
                         </Link>
                     );

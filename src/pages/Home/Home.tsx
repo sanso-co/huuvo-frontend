@@ -22,13 +22,11 @@ const Home = () => {
     const { collectionData: upcoming } = usePeriodicCollection(
         collectionId.NEW_UPCOMING || "",
         "latest",
-        "ascending"
+        "descending"
     );
-    const { permanentCollection: highlyRated } = useGetPermanentDetails(
-        collectionId.HIGHLY_RATED || "",
-        1,
-        { forceLimit: 10 }
-    );
+    const { data: highlyRated } = useGetPermanentDetails(collectionId.HIGHLY_RATED || "", 1, {
+        forceLimit: 10,
+    });
 
     return (
         <>
@@ -44,7 +42,7 @@ const Home = () => {
                             <ShowCard show={show} key={show.id} />
                         ))}
                     </CardSlider>
-                    <CardSlider title="New and Upcoming">
+                    <CardSlider title="Newly Released">
                         {upcoming?.shows.map((show) => (
                             <ShowCard show={show} key={show.id} />
                         ))}
@@ -54,7 +52,7 @@ const Home = () => {
                         linkLabel="View All"
                         linkTo="/collection/highly-rated"
                     >
-                        {highlyRated?.shows?.result.map((show) => (
+                        {highlyRated?.shows?.results.map((show) => (
                             <ShowCard show={show} key={show.id} />
                         ))}
                     </CardSlider>
