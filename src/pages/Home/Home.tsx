@@ -3,6 +3,7 @@ import { usePeriodicCollection } from "@/hooks/api/collection/usePeriodicCollect
 import { useGetPermanentDetails } from "@/hooks/api/collection/usePermanentCollection";
 import { formatDate } from "@/helpers/date";
 import { collectionId } from "@/helpers/constants/collectionId";
+import { LeanShowType } from "@/types/show";
 
 import { SEO } from "@/components/global/SEO";
 import { Hero } from "@/features/Home/Hero";
@@ -52,7 +53,7 @@ const Home = () => {
                         linkLabel="View All"
                         linkTo="/collection/highly-rated"
                     >
-                        {highlyRated?.shows?.results.map((show) => (
+                        {highlyRated?.shows?.results.map((show: LeanShowType) => (
                             <ShowCard show={show} key={show.id} />
                         ))}
                     </CardSlider>
