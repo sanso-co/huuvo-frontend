@@ -190,7 +190,7 @@ class ApiService {
 
     async getPersonDetails(personId: string, page: number, limit: number) {
         try {
-            const response = await this.api.get(`person/${personId}?page=${page}?limit=${limit}`);
+            const response = await this.api.get(`person/${personId}?page=${page}&limit=${limit}`);
             return response.data;
         } catch (error) {
             console.error("Error fetching provider collection details", error);
@@ -209,7 +209,7 @@ class ApiService {
 
     async getCreditDetails(id: string, page: number, limit: number) {
         try {
-            const response = await this.api.get(`credit/detail/${id}?page=${page}?limit=${limit}`);
+            const response = await this.api.get(`credit/detail/${id}?page=${page}&limit=${limit}`);
             return response.data;
         } catch (error) {
             console.error("Error fetching keywords details", error);
