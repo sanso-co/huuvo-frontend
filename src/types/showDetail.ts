@@ -23,12 +23,8 @@ export interface ToneType {
 }
 
 export interface TrailerTypeTMDB {
-    id: string;
     key: string;
-    name: string;
     site: string;
-    size: number;
-    type: string;
 }
 
 export interface TrailerResponseTMDB {
