@@ -42,6 +42,9 @@ export const Hero = ({ heroes }: Props) => {
                                         <span>{item?.tag?.label}</span>
                                     </div>
                                     <h3>{item.title}</h3>
+                                    {item.tagline && (
+                                        <div className={styles.tagline}>{item.tagline}</div>
+                                    )}
                                 </Link>
                                 <div className={styles.slideOverlay}></div>
                                 <img src={item.img || ""} alt={item.title} />
