@@ -58,7 +58,13 @@ const Details = () => {
                     <div className={styles.image}>
                         <ImageContainer
                             src={getImageUrl()}
-                            video={!trailerLoading && !trailerError ? trailer?.results : undefined}
+                            video={
+                                details.trailer?.length > 0
+                                    ? details.trailer
+                                    : !trailerLoading && !trailerError
+                                    ? trailer?.results
+                                    : undefined
+                            }
                         />
                     </div>
                     <div className={styles.details}>
