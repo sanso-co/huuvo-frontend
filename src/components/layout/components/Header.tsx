@@ -43,7 +43,7 @@ export const Header = () => {
     }, [dropdownRef]);
 
     return (
-        <header>
+        <header className={styles.header}>
             <div className={styles.container}>
                 <Link to="/" className={styles.logo}>
                     K

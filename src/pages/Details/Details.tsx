@@ -53,7 +53,7 @@ const Details = () => {
                 description={details?.overview}
                 keywords="korean drama, kdrama recommendations, korean series"
             />
-            <div>
+            <div className={styles.container}>
                 <div className={`${styles.top} ${layout.max}`}>
                     <div className={styles.image}>
                         <ImageContainer
