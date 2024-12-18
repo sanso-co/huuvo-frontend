@@ -1,10 +1,11 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { useCategoryStore } from "@/store/categoryStore";
 import { useCategory } from "@/hooks/api/category/useCategory";
 import { formatName } from "@/helpers/formatName";
+import { SortEnum, sortOptions } from "@/helpers/constants/options";
 
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
@@ -16,8 +17,11 @@ import { LeanShowType } from "@/types/show";
 
 import styles from "./category.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
+import { Sort } from "@/features/Category/Sort";
+import { SortType } from "@/types/sort";
 
 const Collection = () => {
+    const [sort, setSort] = useState<SortType>(SortEnum.DateDesc);
     const { categoryType, categoryName, categoryId } = useParams();
     const {
         page,
@@ -33,7 +37,8 @@ const Collection = () => {
     const { data, isLoading, error } = useCategory(
         categoryType as CategoryType,
         categoryId as string,
-        page
+        page,
+        sort
     );
 
     const updateCategory = useCallback(() => {
@@ -77,6 +82,11 @@ const Collection = () => {
         }
     }, [isLoading, data?.shows.hasNextPage, setPage, page]);
 
+    useEffect(() => {
+        resetCategory();
+        setPage(1);
+    }, [sort, resetCategory, setPage]);
+
     if (isLoading && page === 1) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
 
@@ -99,6 +109,9 @@ const Collection = () => {
                                 : `Shows with ${categoryType} ${formatName(categoryName || "")}`
                         }
                     />
+                </div>
+                <div className={styles.sort}>
+                    <Sort options={sortOptions} onSortSelect={(option) => setSort(option)} />
                 </div>
 
                 <InfiniteScroll

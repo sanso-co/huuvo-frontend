@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IconContainer } from "./IconContainer";
-import { Sort } from "@/assets/icons/Sort";
+import { SortIcon } from "@/assets/icons/SortIcon";
 import { Drawer } from "./Drawer";
 
 interface Props {
@@ -22,7 +22,7 @@ export const Filter = ({ onOptionClick }: Props) => {
     return (
         <div>
             <IconContainer onClick={handleDrawer}>
-                <Sort />
+                <SortIcon />
             </IconContainer>
             <Drawer fullWidth hideButton open={overlayOpen} handleClose={handleDrawer}>
                 <ul>

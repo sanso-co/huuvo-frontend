@@ -1,5 +1,6 @@
 import { AuthLogin } from "@/types/auth";
 import { CastType } from "@/types/cast";
+import { SortType } from "@/types/sort";
 import axios, { AxiosInstance, AxiosError } from "axios";
 
 interface ErrorResponse {
@@ -52,10 +53,10 @@ class ApiService {
         }
     }
 
-    async getProviderCollectionDetails(id: string, page: number, limit: number) {
+    async getProviderCollectionDetails(id: string, page: number, limit: number, sort: SortType) {
         try {
             const response = await this.api.get(
-                `provider/detail/${id}?page=${page}&limit=${limit}`
+                `provider/detail/${id}?page=${page}&limit=${limit}&sort=${sort}`
             );
             return response.data;
         } catch (error) {
@@ -64,10 +65,16 @@ class ApiService {
     }
 
     //categories
-    async getCategoryList(category: string, id: string, page: number, limit: number) {
+    async getCategoryList(
+        category: string,
+        id: string,
+        page: number,
+        limit: number,
+        sort: SortType
+    ) {
         try {
             const response = await this.api.get(
-                `show/list/${category}/${id}?page=${page}&limit=${limit}`
+                `show/list/${category}/${id}?page=${page}&limit=${limit}&sort=${sort}`
             );
             return response.data;
         } catch (error) {
@@ -188,9 +195,11 @@ class ApiService {
         }
     }
 
-    async getPersonDetails(personId: string, page: number, limit: number) {
+    async getPersonDetails(personId: string, page: number, limit: number, sort: SortType) {
         try {
-            const response = await this.api.get(`person/${personId}?page=${page}&limit=${limit}`);
+            const response = await this.api.get(
+                `person/${personId}?page=${page}&limit=${limit}&sort=${sort}`
+            );
             return response.data;
         } catch (error) {
             console.error("Error fetching provider collection details", error);
@@ -207,9 +216,11 @@ class ApiService {
         }
     }
 
-    async getCreditDetails(id: string, page: number, limit: number) {
+    async getCreditDetails(id: string, page: number, limit: number, sort: SortType) {
         try {
-            const response = await this.api.get(`credit/detail/${id}?page=${page}&limit=${limit}`);
+            const response = await this.api.get(
+                `credit/detail/${id}?page=${page}&limit=${limit}&sort=${sort}`
+            );
             return response.data;
         } catch (error) {
             console.error("Error fetching keywords details", error);
