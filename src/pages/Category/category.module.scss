@@ -6,6 +6,12 @@
     margin-bottom: 1.5rem;
 }
 
+.sort {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 1rem;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

@@ -3,24 +3,31 @@ import { apiService } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
 
 import { CategoryCollectionResponse, CategoryType } from "@/types/category";
+import { SortType } from "@/types/sort";
 
 type ApiService = (
     category: string | undefined,
     id: string,
-    page: number
+    page: number,
+    sort: string
 ) => Promise<CategoryCollectionResponse>;
 
-export const useCategory = (categoryType: CategoryType, id: string, page: number) => {
+export const useCategory = (
+    categoryType: CategoryType,
+    id: string,
+    page: number,
+    sort: SortType
+) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const limit = isMobile ? 10 : 30;
 
     const fetchMap: Record<CategoryType, ApiService> = {
-        genre: () => apiService.getCategoryList(categoryType, id, page, limit),
-        year: () => apiService.getCategoryList(categoryType, id, page, limit),
-        provider: () => apiService.getProviderCollectionDetails(id, page, limit),
-        keyword: () => apiService.getCategoryList(categoryType, id, page, limit),
-        cast: () => apiService.getPersonDetails(id, page, limit),
-        crew: () => apiService.getCreditDetails(id, page, limit),
+        genre: () => apiService.getCategoryList(categoryType, id, page, limit, sort),
+        year: () => apiService.getCategoryList(categoryType, id, page, limit, sort),
+        provider: () => apiService.getProviderCollectionDetails(id, page, limit, sort),
+        keyword: () => apiService.getCategoryList(categoryType, id, page, limit, sort),
+        cast: () => apiService.getPersonDetails(id, page, limit, sort),
+        crew: () => apiService.getCreditDetails(id, page, limit, sort),
     };
 
     const fetchMethod = fetchMap[categoryType];
@@ -39,8 +46,8 @@ export const useCategory = (categoryType: CategoryType, id: string, page: number
     }, []);
 
     return useQuery({
-        queryKey: [categoryType, id, page],
-        queryFn: () => fetchMethod(categoryType, id, page),
+        queryKey: [categoryType, id, page, sort],
+        queryFn: () => fetchMethod(categoryType, id, page, sort),
         enabled: !!id,
     });
 };
