@@ -2,6 +2,7 @@ import { OptionType } from "@/types/sort";
 
 export enum SortEnum {
     NameAsc = "name_asc",
+    OriginalNameAsc = "original_name_asc",
     DateAsc = "date_asc",
     DateDesc = "date_desc",
 }

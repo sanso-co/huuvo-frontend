@@ -1,93 +1,37 @@
-import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { useCategoryStore } from "@/store/categoryStore";
-import { useCategory } from "@/hooks/api/category/useCategory";
-import { formatName } from "@/helpers/formatName";
-import { SortEnum, sortOptions } from "@/helpers/constants/options";
+import { useCategoryData } from "./hook/useCategoryData";
+import { sortOptions } from "@/helpers/constants/options";
+import { getHeaderDescription, getHeaderTitle } from "@/helpers/getHeader";
 
+import { Sort } from "@/features/Category/Sort";
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
 import { Spinner } from "@/components/global/Spinner";
 import { SEO } from "@/components/global/SEO";
 
-import { CategoryType } from "@/types/category";
 import { LeanShowType } from "@/types/show";
 
 import styles from "./category.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
-import { Sort } from "@/features/Category/Sort";
-import { SortType } from "@/types/sort";
 
 const Collection = () => {
-    const [sort, setSort] = useState<SortType>(SortEnum.DateDesc);
-    const { categoryType, categoryName, categoryId } = useParams();
     const {
-        page,
-        shows,
-        categoryStoreName,
-        setPage,
-        setCategoryStoreName,
-        setShows,
-        appendShows,
-        resetCategory,
-    } = useCategoryStore();
-
-    const { data, isLoading, error } = useCategory(
-        categoryType as CategoryType,
-        categoryId as string,
-        page,
-        sort
-    );
-
-    const updateCategory = useCallback(() => {
-        if (!data) return;
-
-        if (!categoryStoreName || categoryStoreName !== categoryName) {
-            resetCategory();
-            setCategoryStoreName(
-                categoryName === "released" ? categoryId || "" : categoryName || ""
-            );
-            setShows(data.shows.results);
-            return;
-        }
-
-        if (page > 1) {
-            appendShows(data.shows.results);
-        }
-    }, [
         data,
-        categoryStoreName,
+        sort,
+        setSort,
+        shows,
+        isLoading,
+        error,
+        loadMore,
+        hasMore,
+        totalDocs,
         categoryName,
-        page,
-        resetCategory,
-        setCategoryStoreName,
+        categoryType,
         categoryId,
-        setShows,
-        appendShows,
-    ]);
+    } = useCategoryData();
 
-    useEffect(() => {
-        updateCategory();
-    }, [updateCategory]);
-
-    const loadMore = useCallback(() => {
-        if (!isLoading && data?.shows.hasNextPage) {
-            const timer = setTimeout(() => {
-                setPage(page + 1);
-            }, 1000);
-
-            return () => clearTimeout(timer);
-        }
-    }, [isLoading, data?.shows.hasNextPage, setPage, page]);
-
-    useEffect(() => {
-        resetCategory();
-        setPage(1);
-    }, [sort, resetCategory, setPage]);
-
-    if (isLoading && page === 1) return <div>Loading...</div>;
+    if (isLoading && shows.length === 0) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
 
     return (
@@ -102,25 +46,29 @@ const Collection = () => {
             <div className={`${styles.container} ${layout.default} ${layout.max}`}>
                 <div className={styles.header}>
                     <Header
-                        title={formatName(categoryName || "")}
-                        description={
-                            categoryType === "provider"
-                                ? `Shows streaming on ${formatName(categoryName || "")}`
-                                : `Shows with ${categoryType} ${formatName(categoryName || "")}`
-                        }
+                        showProfileImage={categoryType === "cast" || categoryType === "crew"}
+                        profileImageUrl={data?.profile_path}
+                        title={getHeaderTitle(categoryType || "", data, categoryName, categoryId)}
+                        description={getHeaderDescription(
+                            categoryType || "",
+                            data,
+                            categoryName,
+                            categoryId
+                        )}
                     />
                 </div>
                 <div className={styles.sort}>
-                    <Sort options={sortOptions} onSortSelect={(option) => setSort(option)} />
+                    <Sort
+                        options={sortOptions}
+                        selected={sort}
+                        onSortSelect={(option) => setSort(option)}
+                    />
                 </div>
 
                 <InfiniteScroll
-                    dataLength={data?.shows.totalDocs ?? 0}
+                    dataLength={totalDocs}
                     next={loadMore}
-                    hasMore={
-                        !isLoading &&
-                        Boolean(data?.shows.page && data?.shows.page < data?.shows.totalPages)
-                    }
+                    hasMore={hasMore}
                     loader={<Spinner />}
                 >
                     <div className={styles.grid}>
