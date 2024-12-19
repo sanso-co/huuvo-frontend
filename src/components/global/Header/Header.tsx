@@ -1,15 +1,21 @@
+import { ProfileImage } from "@/components/global/ProfileImage";
 import styles from "./header.module.scss";
 
 interface Props {
+    showProfileImage: boolean;
+    profileImageUrl?: string;
     title: string;
     description: string;
 }
 
-export const Header = ({ title, description }: Props) => {
+export const Header = ({ showProfileImage, profileImageUrl, title, description }: Props) => {
     return (
         <div className={styles.container}>
-            <h1>{title}</h1>
-            {description && <p>{description}</p>}
+            {showProfileImage && <ProfileImage url={profileImageUrl} />}
+            <div className={styles.text}>
+                <h1>{title}</h1>
+                {description && <p>{description}</p>}
+            </div>
         </div>
     );
 };
