@@ -20,7 +20,11 @@ const Auth = () => {
     return (
         <div>
             <div className={styles.header}>
-                <Header title="Login" description="Are you an admin? Login below" />
+                <Header
+                    showProfileImage={false}
+                    title="Login"
+                    description="Are you an admin? Login below"
+                />
             </div>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <TextInput

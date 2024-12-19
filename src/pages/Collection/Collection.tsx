@@ -87,7 +87,11 @@ const Collection = () => {
             <div className={`${styles.container} ${layout.default} ${layout.max}`}>
                 {data && (
                     <div className={styles.header}>
-                        <Header title={data.name} description={data.description ?? ""} />
+                        <Header
+                            showProfileImage={false}
+                            title={data.name}
+                            description={data.description ?? ""}
+                        />
                     </div>
                 )}
 

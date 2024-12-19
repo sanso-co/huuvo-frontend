@@ -37,6 +37,7 @@ const Discover = () => {
         <div className={`${layout.default} ${layout.max}`}>
             <div className={styles.header}>
                 <Header
+                    showProfileImage={false}
                     title="Discover Dramas"
                     description="Explore a curated selection of Korean dramas to match your unique preferences. You can filter dramas by genre, tone, and keywords. Whether you’re searching for your next binge-worthy series or looking to explore new themes, this page makes it easy to find dramas that resonate with your mood and interests."
                 />
