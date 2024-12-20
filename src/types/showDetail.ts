@@ -33,6 +33,7 @@ export interface TrailerResponseTMDB {
 }
 
 export interface CreditType {
+    _id: string;
     id: number;
     name: string;
     original_name: string;
