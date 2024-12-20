@@ -2,7 +2,7 @@ import { formatName } from "./formatName";
 
 interface HeaderData {
     name?: string;
-    job?: string;
+    jobs?: string[];
     profile_path?: string;
 }
 
@@ -14,7 +14,7 @@ export const getHeaderTitle = (
 ) => {
     switch (categoryType) {
         case "crew":
-            return `${data?.name || ""} (${data?.job || ""})`;
+            return `${data?.name || ""} ${data?.jobs?.length === 1 ? `(${data.jobs[0]})` : ""}`;
         case "cast":
             return data?.name || "";
         case "year":
