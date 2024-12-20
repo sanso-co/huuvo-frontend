@@ -12,6 +12,10 @@ export const useCategoryData = () => {
     const [sort, setSort] = useState<SortType>(SortEnum.DateDesc);
     const { categoryType, categoryName, categoryId } = useParams();
 
+    const getStoreKey = useCallback(() => {
+        return categoryName === "released" ? categoryId || "" : categoryName || "";
+    }, [categoryName, categoryId]);
+
     const {
         page,
         shows,
@@ -33,11 +37,11 @@ export const useCategoryData = () => {
     const updateCategory = useCallback(() => {
         if (!data) return;
 
-        if (!categoryStoreName || categoryStoreName !== categoryName) {
+        const storeKey = getStoreKey();
+
+        if (!categoryStoreName || categoryStoreName !== storeKey) {
             resetCategory();
-            setCategoryStoreName(
-                categoryName === "released" ? categoryId || "" : categoryName || ""
-            );
+            setCategoryStoreName(storeKey);
             setShows(data.shows.results);
             return;
         }
@@ -48,11 +52,10 @@ export const useCategoryData = () => {
     }, [
         data,
         categoryStoreName,
-        categoryName,
+        getStoreKey,
         page,
         resetCategory,
         setCategoryStoreName,
-        categoryId,
         setShows,
         appendShows,
     ]);
