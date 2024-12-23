@@ -21,7 +21,7 @@ interface Provider {
 
 export const Provider = ({ id }: Props) => {
     const { providers, isLoading, error } = useGetProvidersForShow(Number(id));
-
+    console.log(providers);
     if (isLoading) return <div>Loading providers...</div>;
     if (error) return <div>Failed to load providers</div>;
 
