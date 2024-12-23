@@ -5,6 +5,7 @@ import { formatYear, formatDate } from "@/helpers/date";
 import { HomeIcon } from "@/assets/icons/HomeIcon";
 
 import styles from "./info.module.scss";
+import { getCroppedImageUrl } from "@/services/image-url";
 
 interface Props {
     data: ShowType | undefined;
@@ -61,6 +62,12 @@ export const Info = ({ data }: Props) => {
                         <li className={styles.listItem}>
                             <div className={styles.listTitle}>Episodes</div>
                             <div className={styles.episodes}>{data?.number_of_episodes}</div>
+                        </li>
+                        <li className={styles.listItem}>
+                            <div className={styles.listTitle}>Network</div>
+                            <div className={styles.network}>
+                                <img src={getCroppedImageUrl(data?.networks[0].logo_path)} alt="" />
+                            </div>
                         </li>
                         {data && data.related_seasons && data.related_seasons.length > 0 && (
                             <li className={styles.listItem}>
