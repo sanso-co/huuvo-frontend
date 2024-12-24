@@ -1,0 +1,26 @@
+.searchInput {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    input {
+        font-size: 1rem;
+        border: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.suggestedDefault {
+    margin-top: 1rem;
+}
+
+.suggestedList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 1rem;
+}

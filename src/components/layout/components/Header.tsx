@@ -1,10 +1,18 @@
-import { useGeneralStore } from "@/store/useStore";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import styles from "./header.module.scss";
+import { useGeneralStore } from "@/store/useStore";
+import { MENU } from "@/helpers/constants/menu";
+
 import { Toggle } from "@/components/global/Toggle";
 import { useAuthStore } from "@/store/useAuthStore";
+
+import { Modal } from "@/components/global/Modal";
+import { SearchIcon } from "@/assets/icons/SearchIcon";
+
+import styles from "./header.module.scss";
+
+import { Search } from "@/features/Search";
 
 export const Header = () => {
     const location = useLocation();
@@ -15,6 +23,8 @@ export const Header = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
 
     const handleLanguageToggle = () => {
         const newLanguage = store.language === "en" ? "kr" : "en";
@@ -45,12 +55,34 @@ export const Header = () => {
     return (
         <header className={styles.header}>
             <div className={styles.container}>
-                <Link to="/" className={styles.logo}>
-                    K
-                </Link>
-                <div className={styles.nav}>
-                    <Link to="/discover">Discover</Link>
+                <div className={styles.left}>
+                    <Link to="/" className={styles.logo}>
+                        K
+                    </Link>
+                    <ul className={styles.nav}>
+                        {MENU.map((item) => (
+                            <li key={item.url}>
+                                <Link
+                                    to={item.url}
+                                    className={location.pathname === item.url ? styles.current : ""}
+                                >
+                                    {item.name}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
+                <div className={styles.search}>
+                    <button onClick={() => setIsSearchOpen(true)}>
+                        <SearchIcon width={18} height={18} stroke={2} />
+                        <span className={styles.label}>Search Drama...</span>
+                    </button>
+                </div>
+                {isSearchOpen && (
+                    <Modal open={isSearchOpen} handleClose={() => setIsSearchOpen(false)}>
+                        <Search open={isSearchOpen} setIsSearchOpen={setIsSearchOpen} />
+                    </Modal>
+                )}
                 <div className={styles.right}>
                     {!detailsPage && (
                         <div className="flex gap-05">
