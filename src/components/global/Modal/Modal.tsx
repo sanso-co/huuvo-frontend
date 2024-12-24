@@ -7,7 +7,7 @@ import styles from "./modal.module.scss";
 
 interface Props {
     open: boolean;
-    header: string;
+    header?: string;
     size?: "sm" | "md" | "lg";
     children: React.ReactNode;
     handleClose: () => void;
@@ -40,12 +40,14 @@ export const Modal = ({ open, header, size = "md", children, handleClose }: Prop
                         onClick={handleClose}
                     />
                     <div className={containerClassName}>
-                        <div className={styles.header}>
-                            <h2>{header}</h2>
-                            <button className={styles.closeButton} onClick={handleClose}>
-                                <DismissIcon width={16} height={16} />
-                            </button>
-                        </div>
+                        {header && (
+                            <div className={styles.header}>
+                                <h2>{header}</h2>
+                                <button className={styles.closeButton} onClick={handleClose}>
+                                    <DismissIcon width={16} height={16} />
+                                </button>
+                            </div>
+                        )}
                         <div className={styles.content}>{children}</div>
                     </div>
                 </div>
