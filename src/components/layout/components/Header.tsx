@@ -16,7 +16,6 @@ import { Search } from "@/features/Search";
 
 export const Header = () => {
     const location = useLocation();
-    const detailsPage = location.pathname.includes("details");
 
     const store = useGeneralStore();
     const { user, logout } = useAuthStore();
@@ -84,21 +83,23 @@ export const Header = () => {
                     </Modal>
                 )}
                 <div className={styles.right}>
-                    {!detailsPage && (
-                        <div className="flex gap-05">
-                            <Toggle value={store.language} onChange={handleLanguageToggle} />
+                    <Toggle value={store.language} onChange={handleLanguageToggle} />
+                    <div className={styles.avatar} ref={dropdownRef}>
+                        <div onClick={handleAdminClick} className={styles.user}>
+                            User
                         </div>
-                    )}
-                    {user?.isAdmin && (
-                        <div className={styles.admin} ref={dropdownRef}>
-                            <div onClick={handleAdminClick}>Admin</div>
-                            {isDropdownOpen && (
-                                <div className={styles.dropdown}>
+                        {user?.isAdmin && (
+                            <div
+                                className={`${styles.dropdown} ${
+                                    isDropdownOpen ? styles.dropdownOpen : ""
+                                }`}
+                            >
+                                <div className={styles.menuContent}>
                                     <button onClick={handleLogout}>Logout</button>
                                 </div>
-                            )}
-                        </div>
-                    )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </header>
