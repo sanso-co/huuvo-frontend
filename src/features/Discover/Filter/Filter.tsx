@@ -10,6 +10,7 @@ import { OptionType } from "@/types/filter";
 import styles from "./filter.module.scss";
 import { Button } from "@/components/global/Button";
 import { FilterIcon } from "@/assets/icons/FilterIcon";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface ExpandedState {
     [key: string]: boolean;
@@ -41,37 +42,12 @@ export const Filter = ({
     onReset,
 }: Props) => {
     const [expandedSections, setExpandedSections] = useState<ExpandedState>({});
+    const [showModal, setShowModal] = useState(false);
+    const isMobile = useIsMobile({ breakpoint: 1024 });
 
     const handleExpand = (name: string, expanded: boolean) => {
         setExpandedSections((prev) => ({ ...prev, [name]: expanded }));
     };
-
-    const [showModal, setShowModal] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
-
-    const checkIsMobile = useMemo(
-        () =>
-            debounce(() => {
-                const isMobileView = window.innerWidth < 1024;
-                setIsMobile(isMobileView);
-                if (!isMobileView) {
-                    setShowModal(false);
-                }
-            }, 250),
-        [setIsMobile, setShowModal]
-    );
-
-    useEffect(() => {
-        // Set initial value
-        setIsMobile(window.innerWidth < 1024);
-
-        window.addEventListener("resize", checkIsMobile);
-
-        return () => {
-            checkIsMobile.cancel();
-            window.removeEventListener("resize", checkIsMobile);
-        };
-    }, [checkIsMobile]);
 
     const handleKeywordChange = (newSelected: OptionType[]) => {
         onFilterChange({ keyword: newSelected, genre: selectedGenre, tone: selectedTone });

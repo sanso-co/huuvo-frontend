@@ -69,7 +69,6 @@ export const useCategoryData = () => {
             const timer = setTimeout(() => {
                 setPage(page + 1);
             }, 1000);
-
             return () => clearTimeout(timer);
         }
     }, [isLoading, data?.shows.hasNextPage, setPage, page]);
