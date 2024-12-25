@@ -13,7 +13,7 @@ import { Header } from "@/components/global/Header";
 import { SEO } from "@/components/global/SEO";
 import { Spinner } from "@/components/global/Spinner";
 
-import styles from "./list.module.scss";
+import styles from "./collection.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
 
 const Collection = () => {
@@ -94,22 +94,23 @@ const Collection = () => {
                         />
                     </div>
                 )}
-
-                <InfiniteScroll
-                    dataLength={shows.length}
-                    next={loadMore}
-                    hasMore={
-                        !isLoading &&
-                        Boolean(data?.shows.page && data?.shows.page < data?.shows.totalPages)
-                    }
-                    loader={<Spinner />}
-                >
-                    <div className={styles.grid}>
-                        {shows.map((show: LeanShowType) => (
-                            <ShowCard show={show} key={show.id} />
-                        ))}
-                    </div>
-                </InfiniteScroll>
+                <div className={styles.content}>
+                    <InfiniteScroll
+                        dataLength={shows.length}
+                        next={loadMore}
+                        hasMore={
+                            !isLoading &&
+                            Boolean(data?.shows.page && data?.shows.page < data?.shows.totalPages)
+                        }
+                        loader={<Spinner />}
+                    >
+                        <div className={styles.grid}>
+                            {shows.map((show: LeanShowType) => (
+                                <ShowCard show={show} key={show.id} />
+                            ))}
+                        </div>
+                    </InfiniteScroll>
+                </div>
             </div>
         </>
     );

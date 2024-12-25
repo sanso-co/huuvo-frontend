@@ -1,5 +1,14 @@
+.container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
 .header {
     margin-bottom: 1.5rem;
+}
+
+.content {
+    padding-bottom: 1rem;
 }
 
 .grid {
@@ -7,6 +16,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1.5rem;
     width: 100%;
+    padding-bottom: 1rem;
 
     @media (min-width: 577px) {
         grid-template-columns: repeat(3, 1fr);

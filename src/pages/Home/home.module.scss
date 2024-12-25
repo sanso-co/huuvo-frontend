@@ -2,6 +2,11 @@
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+    margin-bottom: 2rem;
+
+    @media (min-width: 1280px) {
+        margin: 2rem 0;
+    }
 }
 
 .content {

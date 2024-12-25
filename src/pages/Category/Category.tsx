@@ -64,19 +64,20 @@ const Collection = () => {
                         onSortSelect={(option) => setSort(option)}
                     />
                 </div>
-
-                <InfiniteScroll
-                    dataLength={totalDocs}
-                    next={loadMore}
-                    hasMore={hasMore}
-                    loader={<Spinner />}
-                >
-                    <div className={styles.grid}>
-                        {shows.map((show: LeanShowType) => (
-                            <ShowCard show={show} key={show.id} />
-                        ))}
-                    </div>
-                </InfiniteScroll>
+                <div className={styles.content}>
+                    <InfiniteScroll
+                        dataLength={totalDocs}
+                        next={loadMore}
+                        hasMore={hasMore}
+                        loader={<Spinner />}
+                    >
+                        <div className={styles.grid}>
+                            {shows.map((show: LeanShowType) => (
+                                <ShowCard show={show} key={show.id} />
+                            ))}
+                        </div>
+                    </InfiniteScroll>
+                </div>
             </div>
         </>
     );

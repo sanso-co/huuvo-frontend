@@ -53,8 +53,8 @@ const Details = () => {
                 description={details?.overview}
                 keywords="korean drama, kdrama recommendations, korean series"
             />
-            <div className={styles.container}>
-                <div className={`${styles.top} ${layout.max}`}>
+            <>
+                <div className={`${styles.container} ${styles.top} ${layout.max}`}>
                     <div className={styles.image}>
                         <ImageContainer
                             src={getImageUrl()}
@@ -77,7 +77,7 @@ const Details = () => {
                 {id && <Crew id={id} />}
                 {details?.original_story && <OriginalStory data={details?.original_story} />}
                 <Recommendations showId={Number(details?.id)} />
-            </div>
+            </>
         </>
     );
 };

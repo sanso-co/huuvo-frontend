@@ -34,7 +34,7 @@ const Discover = () => {
     };
 
     return (
-        <div className={`${layout.default} ${layout.max}`}>
+        <div className={`${styles.container} ${layout.default} ${layout.max}`}>
             <div className={styles.header}>
                 <Header
                     showProfileImage={false}
