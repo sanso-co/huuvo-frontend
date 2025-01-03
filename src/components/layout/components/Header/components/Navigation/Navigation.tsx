@@ -5,16 +5,16 @@ import styles from "./navigation.module.scss";
 
 interface NavigationProps {
     isMobile: boolean;
-    isMobileMenuOpen: boolean;
-    setIsMobileMenuOpen: (isOpen: boolean) => void;
-    mobileDropdownRef: React.RefObject<HTMLDivElement>;
+    isNavigationOpen: boolean;
+    setIsNavigationOpen: (isOpen: boolean) => void;
+    navigationRef: React.RefObject<HTMLDivElement>;
 }
 
 export const Navigation = ({
     isMobile,
-    isMobileMenuOpen,
-    setIsMobileMenuOpen,
-    mobileDropdownRef,
+    isNavigationOpen,
+    setIsNavigationOpen,
+    navigationRef,
 }: NavigationProps) => {
     const location = useLocation();
 
@@ -42,24 +42,24 @@ export const Navigation = ({
     }
 
     return (
-        <div className={styles.mobile} ref={mobileDropdownRef}>
+        <div className={styles.mobile} ref={navigationRef}>
             <div
                 className={styles.dropdownMenu}
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                onClick={() => setIsNavigationOpen(!isNavigationOpen)}
             >
                 <span>{getCurrentPageName(location.pathname)}</span>
                 <ChevronDownSmIcon width={21} height={21} stroke={2} />
             </div>
 
             <div
-                className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuOpen : ""}`}
+                className={`${styles.mobileMenu} ${isNavigationOpen ? styles.mobileMenuOpen : ""}`}
             >
                 <ul className={styles.mobileNav}>
                     {MENU.map((item) => (
                         <li key={item.url}>
                             <Link
                                 to={item.url}
-                                onClick={() => setIsMobileMenuOpen(false)}
+                                onClick={() => setIsNavigationOpen(false)}
                                 className={location.pathname === item.url ? styles.current : ""}
                             >
                                 {item.name}

@@ -1,13 +1,27 @@
 import { useState } from "react";
 
 import { useGeneralStore } from "@/store/useStore";
-
-import { Modal } from "@/components/global/Modal";
-import { SortIcon } from "@/assets/icons/SortIcon";
+import { SortEnum } from "@/helpers/constants/options";
 import { OptionType, SortType } from "@/types/sort";
 
+import { Dropdown } from "@/components/global/Dropdown";
+import { Modal } from "@/components/global/Modal";
+import { SortIcon } from "@/assets/icons/SortIcon";
+
 import styles from "./sort.module.scss";
-import { SortEnum } from "@/helpers/constants/options";
+
+interface ButtonProps {
+    onClick?: () => void;
+}
+
+const SortButton = ({ onClick }: ButtonProps) => {
+    return (
+        <button onClick={onClick} className={styles.sortButton}>
+            <SortIcon width={20} height={20} stroke={1.5} />
+            <span>Sort</span>
+        </button>
+    );
+};
 
 interface Props {
     selected: SortType;
@@ -30,33 +44,41 @@ export const Sort = ({ selected, options, onSortSelect }: Props) => {
     };
 
     return (
-        <div>
-            <button onClick={() => setShowModal!(true)} className={styles.sortButton}>
-                <SortIcon width={20} height={20} stroke={1.5} />
-                <span>Sort</span>
-            </button>
-            <Modal
-                header="Sort by"
-                open={showModal}
-                size="lg"
-                handleClose={() => {
-                    setShowModal!(false);
-                }}
-            >
-                <ul className={styles.options}>
-                    {options.map((option) => (
-                        <li
-                            key={option.value}
-                            className={`${styles.option} ${
-                                selected === option.value ? styles.selected : ""
-                            }`}
-                            onClick={() => handleSortSelect(option.value)}
-                        >
-                            {option.name}
-                        </li>
-                    ))}
-                </ul>
-            </Modal>
-        </div>
+        <>
+            <div className={styles.desktop}>
+                <Dropdown
+                    selected={selected}
+                    options={options}
+                    position="right"
+                    handleOptionSelect={(value) => handleSortSelect(value as SortType)}
+                >
+                    <SortButton />
+                </Dropdown>
+            </div>
+            <div className={styles.mobile}>
+                <SortButton onClick={() => setShowModal!(true)} />
+                <Modal
+                    header="Sort by"
+                    open={showModal}
+                    handleClose={() => {
+                        setShowModal!(false);
+                    }}
+                >
+                    <ul className={styles.options}>
+                        {options.map((option) => (
+                            <li
+                                key={option.value}
+                                className={`${styles.option} ${
+                                    selected === option.value ? styles.selected : ""
+                                }`}
+                                onClick={() => handleSortSelect(option.value)}
+                            >
+                                {option.name}
+                            </li>
+                        ))}
+                    </ul>
+                </Modal>
+            </div>
+        </>
     );
 };

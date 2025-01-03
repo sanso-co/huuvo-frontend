@@ -16,7 +16,7 @@ interface Props {
 
 export const Hero = ({ heroes }: Props) => {
     return (
-        <div className={`${styles.heroWrapper} ${layout.max}`}>
+        <div className={`${styles.heroWrapper} ${layout.max} hero`}>
             <div className={styles.aspectRatioBox}>
                 <Swiper
                     modules={[Navigation, Pagination, Autoplay]}

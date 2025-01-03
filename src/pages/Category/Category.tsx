@@ -4,6 +4,7 @@ import { useCategoryData } from "./hook/useCategoryData";
 import { sortOptions } from "@/helpers/constants/options";
 import { getHeaderDescription, getHeaderTitle } from "@/helpers/getHeader";
 
+import { Loader } from "@/components/global/Loader";
 import { Sort } from "@/features/Category/Sort";
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
@@ -31,7 +32,12 @@ const Collection = () => {
         categoryId,
     } = useCategoryData();
 
-    if (isLoading && shows.length === 0) return <div>Loading...</div>;
+    if (isLoading && shows.length === 0)
+        return (
+            <div className={`${styles.container} ${layout.default} ${layout.max}`}>
+                <Loader />
+            </div>
+        );
     if (error) return <div>Error: {error.message}</div>;
 
     return (

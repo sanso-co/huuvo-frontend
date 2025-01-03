@@ -24,12 +24,12 @@
     background-color: transparent;
     border: 1px solid var(--primary-purple-faint);
     border-radius: 2rem;
-    padding: 0.25rem 0.75rem;
+    padding: 0.35rem 0.75rem;
 
     span {
+        font-size: 0.875rem;
         margin-left: 0.25rem;
         color: var(-100);
-        font-weight: 500;
     }
 
     &:hover {
