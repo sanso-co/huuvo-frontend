@@ -1,3 +1,17 @@
+.mobile {
+    @media (min-width: 1024px) {
+        display: none;
+    }
+}
+
+.desktop {
+    display: none;
+
+    @media (min-width: 1024px) {
+        display: block;
+    }
+}
+
 .sortButton {
     display: flex;
     justify-content: center;
@@ -5,12 +19,12 @@
     background-color: transparent;
     border: 1px solid var(--primary-purple-faint);
     border-radius: 2rem;
-    padding: 0.25rem 0.75rem;
+    padding: 0.35rem 0.75rem;
 
     span {
+        font-size: 0.875rem;
         margin-left: 0.25rem;
         color: var(-100);
-        font-weight: 500;
     }
 
     &:hover {
@@ -25,7 +39,7 @@
 
 .option {
     color: var(--gray-70);
-    padding-bottom: 0.25rem;
+    padding-bottom: 0.875rem;
     cursor: pointer;
 
     &:hover {

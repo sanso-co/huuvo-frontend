@@ -6,6 +6,7 @@ import styles from "./reco.module.scss";
 import details from "@/assets/styles/details.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
 import { useEffect, useRef } from "react";
+import { Loader } from "@/components/global/Loader";
 
 interface Props {
     showId: number;
@@ -21,8 +22,16 @@ export const Recommendations = ({ showId }: Props) => {
         }
     }, [similar]);
 
-    if (isLoading) return <div>Loading similar shows...</div>;
-    if (error) return <div>Failed to load similar shows</div>;
+    if (isLoading)
+        return (
+            <div className={`${layout.default} ${layout.max}`}>
+                <Loader padding="2rem 0" />
+            </div>
+        );
+    if (error)
+        return (
+            <div className={`${layout.default} ${layout.max}`}>Failed to load similar shows</div>
+        );
     if (!similar || similar.length === 0) return null;
 
     return (

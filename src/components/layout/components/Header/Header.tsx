@@ -11,28 +11,46 @@ import { User } from "./components/User";
 export const Header = () => {
     const isMobile = useIsMobile();
 
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const mobileDropdownRef = useRef<HTMLDivElement | null>(null);
+    const [isNavigationOpen, setIsNavigationOpen] = useState(false);
+    const navigationRef = useRef<HTMLDivElement | null>(null);
 
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement | null>(null);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const userRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsDropdownOpen(false);
+            if (userRef.current && !userRef.current.contains(event.target as Node)) {
+                setIsUserMenuOpen(false);
             }
-            if (
-                mobileDropdownRef.current &&
-                !mobileDropdownRef.current.contains(event.target as Node)
-            ) {
-                setIsMobileMenuOpen(false);
+            if (navigationRef.current && !navigationRef.current.contains(event.target as Node)) {
+                setIsNavigationOpen(false);
+            }
+        };
+
+        const handleHeroClick = () => {
+            if (isNavigationOpen) {
+                setIsNavigationOpen(false);
+            }
+            if (isUserMenuOpen) {
+                setIsUserMenuOpen(false);
             }
         };
 
         document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [dropdownRef, mobileDropdownRef]);
+
+        const heroElement = document.querySelector(".hero");
+        if (heroElement) {
+            heroElement.addEventListener("click", handleHeroClick);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            const heroElement = document.querySelector(".hero");
+            if (heroElement) {
+                heroElement.removeEventListener("click", handleHeroClick);
+            }
+        };
+    }, [navigationRef, userRef, isNavigationOpen, isUserMenuOpen]);
 
     return (
         <header className={styles.header}>
@@ -43,17 +61,17 @@ export const Header = () => {
                     </Link>
                     <Navigation
                         isMobile={isMobile}
-                        isMobileMenuOpen={isMobileMenuOpen}
-                        setIsMobileMenuOpen={setIsMobileMenuOpen}
-                        mobileDropdownRef={mobileDropdownRef}
+                        isNavigationOpen={isNavigationOpen}
+                        setIsNavigationOpen={setIsNavigationOpen}
+                        navigationRef={navigationRef}
                     />
                 </div>
                 <HeaderSearch />
                 <div className={styles.right}>
                     <User
-                        isDropdownOpen={isDropdownOpen}
-                        setIsDropdownOpen={setIsDropdownOpen}
-                        dropdownRef={dropdownRef}
+                        isUserMenuOpen={isUserMenuOpen}
+                        setIsUserMenuOpen={setIsUserMenuOpen}
+                        userRef={userRef}
                     />
                 </div>
             </div>

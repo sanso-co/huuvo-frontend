@@ -7,12 +7,12 @@ import { Toggle } from "@/components/global/Toggle";
 import styles from "./user.module.scss";
 
 interface Props {
-    isDropdownOpen: boolean;
-    setIsDropdownOpen: (isOpen: boolean) => void;
-    dropdownRef: React.RefObject<HTMLDivElement>;
+    isUserMenuOpen: boolean;
+    setIsUserMenuOpen: (isOpen: boolean) => void;
+    userRef: React.RefObject<HTMLDivElement>;
 }
 
-export const User = ({ dropdownRef, isDropdownOpen, setIsDropdownOpen }: Props) => {
+export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
     const store = useGeneralStore();
     const { user, logout } = useAuthStore();
 
@@ -22,25 +22,25 @@ export const User = ({ dropdownRef, isDropdownOpen, setIsDropdownOpen }: Props) 
     };
 
     const handleAdminClick = () => {
-        setIsDropdownOpen(!isDropdownOpen);
+        setIsUserMenuOpen(!isUserMenuOpen);
     };
 
     const handleLogout = () => {
         logout();
-        setIsDropdownOpen(false);
+        setIsUserMenuOpen(false);
     };
 
     return (
         <>
             <Toggle value={store.language} onChange={handleLanguageToggle} />
-            <div className={styles.avatar} ref={dropdownRef}>
+            <div className={styles.avatar} ref={userRef}>
                 <div onClick={handleAdminClick} className={styles.user}>
                     User
                 </div>
                 {user?.isAdmin && (
                     <div
                         className={`${styles.dropdown} ${
-                            isDropdownOpen ? styles.dropdownOpen : ""
+                            isUserMenuOpen ? styles.dropdownOpen : ""
                         }`}
                     >
                         <div className={styles.menuContent}>

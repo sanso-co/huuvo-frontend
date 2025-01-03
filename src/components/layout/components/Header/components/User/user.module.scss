@@ -27,7 +27,7 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     opacity: 0;
     padding: 1rem;
-    z-index: 100;
+    z-index: var(--z-dropdown);
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 

@@ -1,3 +1,9 @@
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .container {
     @media (min-width: 1280px) {
         margin-top: 2rem;
@@ -19,7 +25,7 @@
     height: auto;
 
     @media (min-width: 1280px) {
-        flex: none;
+        width: 450px;
         height: 680px;
         border-radius: 0.5rem;
         overflow: hidden;
@@ -27,6 +33,7 @@
 }
 
 .details {
+    flex: 1;
     padding: 0 var(--mobile-mx);
 
     @media (min-width: 768px) {

@@ -18,6 +18,7 @@ import { Recommendations } from "@/features/Details/Recommendations";
 
 import styles from "./details.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
+import { Loader } from "@/components/global/Loader";
 
 const Details = () => {
     const { id } = useParams<{ id: string }>();
@@ -43,7 +44,12 @@ const Details = () => {
         }
     };
 
-    if (isLoading || !details) return <div>Loading show details...</div>;
+    if (isLoading || !details)
+        return (
+            <div className={`${styles.loaderContainer} ${styles.top} ${layout.max}`}>
+                <Loader />
+            </div>
+        );
     if (error) return <div>Failed to load show details</div>;
 
     return (
