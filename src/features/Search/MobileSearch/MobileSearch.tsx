@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { useSearch } from "@/hooks/api/search/useSearch";
@@ -18,8 +17,6 @@ interface Props {
 }
 
 export const MobileSearch = ({ open, handleClose, handleClick }: Props) => {
-    const navigate = useNavigate();
-
     const inputRef = useRef<HTMLInputElement>(null);
     const [isInputFocused, setIsInputFocused] = useState(false);
     const [interactionBlocked, setInteractionBlocked] = useState(false);
