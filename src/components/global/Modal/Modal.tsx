@@ -1,30 +1,20 @@
 import { createPortal } from "react-dom";
 
-import { useEffect } from "react";
 import { DismissIcon } from "@/assets/icons/DismissIcon";
 
 import styles from "./modal.module.scss";
+import { useScrollLock } from "@/hooks/useScrollLock";
 
 interface Props {
     open: boolean;
     header?: string;
-    size?: "sm" | "md" | "lg";
+    size?: "sm" | "md" | "lg" | "fs";
     children: React.ReactNode;
     handleClose: () => void;
 }
 
 export const Modal = ({ open, header, size = "md", children, handleClose }: Props) => {
-    useEffect(() => {
-        if (open) {
-            document.body.classList.add(styles.noScroll);
-        } else {
-            document.body.classList.remove(styles.noScroll);
-        }
-
-        return () => {
-            document.body.classList.remove(styles.noScroll);
-        };
-    }, [open]);
+    useScrollLock(open);
 
     const mountElement = document.getElementById("portal");
     if (!mountElement) return null;
@@ -44,7 +34,7 @@ export const Modal = ({ open, header, size = "md", children, handleClose }: Prop
                             <div className={styles.header}>
                                 <h2>{header}</h2>
                                 <button className={styles.closeButton} onClick={handleClose}>
-                                    <DismissIcon width={16} height={16} />
+                                    <DismissIcon width={21} height={21} />
                                 </button>
                             </div>
                         )}

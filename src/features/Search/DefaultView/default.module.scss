@@ -1,0 +1,21 @@
+.viewContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 1rem 1rem 5rem;
+
+    @media (min-width: 768px) {
+        padding: 1rem;
+    }
+}
+
+.header {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.035rem;
+    color: var(--gray-90);
+    padding-bottom: 1rem;
+}
