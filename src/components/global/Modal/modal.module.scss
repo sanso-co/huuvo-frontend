@@ -18,14 +18,12 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-
-    // Mobile styles (drawer)
     bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
     min-height: 200px;
-    max-height: 90vh;
+    max-height: 85vh;
     border-radius: 1rem 1rem 0 0;
     animation: slideUp 0.3s ease-out;
 
@@ -41,6 +39,39 @@
     }
 }
 
+.sm {
+    @media (min-width: 768px) {
+        width: 30%;
+    }
+}
+
+.md {
+    @media (min-width: 768px) {
+        width: 60%;
+    }
+}
+
+.lg {
+    height: 85vh;
+
+    @media (min-width: 768px) {
+        width: 100%;
+        max-width: 1200px;
+        height: auto;
+    }
+}
+
+.fs {
+    height: 100vh;
+    border-radius: 0;
+
+    @media (min-width: 768px) {
+        width: 100%;
+        max-width: 1200px;
+        height: auto;
+    }
+}
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -52,49 +83,27 @@
     }
 }
 
-.sm {
-    @media (min-width: 768px) {
-        width: 40%;
-    }
-}
-
-.md {
-    @media (min-width: 768px) {
-        width: 60%;
-    }
-}
-
-.lg {
-    height: 90vh;
-
-    @media (min-width: 768px) {
-        width: 100%;
-        max-width: 1200px;
-        height: auto;
-    }
-}
-
 .closeButton {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem;
-    border-radius: 9999px;
+    border-radius: 100%;
     border: none;
-    background: none;
+    background: var(--gray-2);
+    padding: 0.35rem;
     cursor: pointer;
     transition: background-color 0.2s;
 
     &:hover {
-        background-color: #f3f4f6;
+        background: var(--gray-5);
     }
 }
 
 .content {
-    padding: 1.5rem;
+    padding: 0.875rem 1rem;
     overflow-y: auto;
 }
 
-.noScroll {
+.lockScroll {
     overflow: hidden;
 }

@@ -1,13 +1,23 @@
 import { useState } from "react";
-import { Search } from "@/features/Search";
+import { useNavigate } from "react-router-dom";
+
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 import { SearchIcon } from "@/assets/icons/SearchIcon";
-import { Modal } from "@/components/global/Modal";
+import { MobileSearch } from "@/features/Search/MobileSearch";
 
 import styles from "./search.module.scss";
+import { DesktopSearch } from "@/features/Search/DesktopSearch";
 
 export const HeaderSearch = () => {
+    const navigate = useNavigate();
+    const isMobile = useIsMobile();
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+    const handleClick = (id: number) => {
+        navigate(`/details/${id}`);
+        setIsSearchOpen(false);
+    };
 
     return (
         <>
@@ -17,11 +27,20 @@ export const HeaderSearch = () => {
                     <span className={styles.label}>Search Drama...</span>
                 </button>
             </div>
-            {isSearchOpen && (
-                <Modal open={isSearchOpen} handleClose={() => setIsSearchOpen(false)}>
-                    <Search open={isSearchOpen} setIsSearchOpen={setIsSearchOpen} />
-                </Modal>
-            )}
+            {isSearchOpen &&
+                (isMobile ? (
+                    <MobileSearch
+                        open={isSearchOpen}
+                        handleClick={handleClick}
+                        handleClose={() => setIsSearchOpen(false)}
+                    />
+                ) : (
+                    <DesktopSearch
+                        open={isSearchOpen}
+                        handleClick={handleClick}
+                        handleClose={() => setIsSearchOpen(false)}
+                    />
+                ))}
         </>
     );
 };
