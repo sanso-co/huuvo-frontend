@@ -9,6 +9,7 @@ import { Modal } from "@/components/global/Modal";
 import { SortIcon } from "@/assets/icons/SortIcon";
 
 import styles from "./sort.module.scss";
+import { CheckmarkIcon } from "@/assets/icons/CheckmarkIcon";
 
 interface ButtonProps {
     onClick?: () => void;
@@ -49,7 +50,7 @@ export const Sort = ({ selected, options, onSortSelect }: Props) => {
                 <Dropdown
                     selected={selected}
                     options={options}
-                    position="right"
+                    positionX="right"
                     handleOptionSelect={(value) => handleSortSelect(value as SortType)}
                 >
                     <SortButton />
@@ -73,7 +74,8 @@ export const Sort = ({ selected, options, onSortSelect }: Props) => {
                                 }`}
                                 onClick={() => handleSortSelect(option.value)}
                             >
-                                {option.name}
+                                <span>{option.name}</span>
+                                {selected === option.value && <CheckmarkIcon stroke={1.5} />}
                             </li>
                         ))}
                     </ul>

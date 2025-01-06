@@ -4,6 +4,7 @@
 
 .options {
     position: absolute;
+    top: calc(34px + 0.5rem);
     left: var(--position-left);
     right: var(--position-right);
     min-width: max-content;
@@ -16,7 +17,7 @@
 
 .option {
     font-size: 0.875rem;
-    padding: 0.125rem 0;
+    padding: 0.5rem 0;
     cursor: pointer;
 }
 

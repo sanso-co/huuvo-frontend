@@ -31,12 +31,16 @@ export const Cast = ({ id }: Props) => {
                 <div className={`${details.header} ${layout.default} ${layout.max}`}>
                     <h3>Cast</h3>
                 </div>
-                <div className={styles.cast}>
+                <div className={styles.casts}>
                     <ContentSlider>
                         {cast?.map((cast) => {
                             const name = formatUrl(cast.name ?? "");
                             return (
-                                <Link to={`/cast/${name}/${cast.id}`} key={cast.id}>
+                                <Link
+                                    to={`/cast/${name}/${cast.id}`}
+                                    key={cast.id}
+                                    className={styles.cast}
+                                >
                                     <ProfileImage url={getProfileImage(cast.profile_path)} />
                                 </Link>
                             );

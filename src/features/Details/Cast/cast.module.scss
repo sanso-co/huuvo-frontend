@@ -2,9 +2,13 @@
     padding: 2rem 0;
 }
 
-.cast {
+.casts {
     @media (min-width: 1280px) {
         padding-left: calc((100vw - 1280px) / 2);
         padding-right: 0;
     }
+}
+
+.cast {
+    position: relative;
 }

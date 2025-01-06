@@ -20,21 +20,23 @@ export const Crew = ({ id }: Props) => {
     }
 
     return (
-        <div className={`${details.section} ${layout.default} ${layout.max}`}>
-            <div className={details.header}>
-                <h3>Credits</h3>
-            </div>
+        <div className={`${layout.default} ${layout.max}`}>
+            <div className={details.section}>
+                <div className={details.header}>
+                    <h3>Credits</h3>
+                </div>
 
-            <List>
-                {credits?.map((crew) => {
-                    const name = formatUrl(crew.name ?? "");
-                    return (
-                        <Link to={`/crew/${name}/${crew.id}`} key={crew._id}>
-                            <List.Item title={crew.job} value={crew.name} />
-                        </Link>
-                    );
-                })}
-            </List>
+                <List>
+                    {credits?.map((crew) => {
+                        const name = formatUrl(crew.name ?? "");
+                        return (
+                            <Link to={`/crew/${name}/${crew.id}`} key={crew._id}>
+                                <List.Item title={crew.job} value={crew.name} />
+                            </Link>
+                        );
+                    })}
+                </List>
+            </div>
         </div>
     );
 };

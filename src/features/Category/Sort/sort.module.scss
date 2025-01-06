@@ -28,7 +28,7 @@
     }
 
     &:hover {
-        background-color: var(--primary-purple-faint);
+        background-color: var(--gray-5);
         cursor: pointer;
     }
 }
@@ -38,6 +38,9 @@
 }
 
 .option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     color: var(--gray-70);
     padding-bottom: 0.875rem;
     cursor: pointer;
@@ -48,6 +51,6 @@
 }
 
 .selected {
-    font-weight: 600;
+    font-weight: 700;
     color: #000;
 }
