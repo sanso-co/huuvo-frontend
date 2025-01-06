@@ -52,8 +52,12 @@ const Collection = () => {
             <div className={`${styles.container} ${layout.default} ${layout.max}`}>
                 <div className={styles.header}>
                     <Header
-                        showProfileImage={categoryType === "cast" || categoryType === "crew"}
-                        profileImageUrl={data?.profile_path}
+                        showProfileImage={
+                            categoryType === "cast" ||
+                            categoryType === "crew" ||
+                            categoryType === "provider"
+                        }
+                        profileImageUrl={data?.img_path}
                         title={getHeaderTitle(categoryType || "", data, categoryName, categoryId)}
                         description={getHeaderDescription(
                             categoryType || "",

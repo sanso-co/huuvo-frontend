@@ -20,5 +20,7 @@ export const getKrImageUrl = (url?: string) => {
 export const getProfileImage = (url?: string) => {
     if (!url) return "no-image";
 
+    if (url.startsWith("https")) return url;
+
     return imageBase + url;
 };

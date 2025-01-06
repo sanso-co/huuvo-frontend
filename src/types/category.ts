@@ -6,7 +6,7 @@ export interface CategoryCollectionResponse {
     id: number;
     name: string;
     original_name: string;
-    profile_path?: string;
+    img_path?: string;
     job?: string;
     shows: {
         hasNextPage: boolean;

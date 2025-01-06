@@ -50,7 +50,7 @@ const Home = () => {
                     </CardSlider>
                     <CardSlider
                         title="Highly Rated"
-                        linkLabel="View All"
+                        linkLabel="View all"
                         linkTo="/collection/highly-rated"
                     >
                         {highlyRated?.shows?.results.map((show: LeanShowType) => (

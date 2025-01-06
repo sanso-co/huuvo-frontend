@@ -9,6 +9,7 @@ interface Props {
 }
 
 export const Header = ({ showProfileImage, profileImageUrl, title, description }: Props) => {
+    console.log("here", profileImageUrl);
     return (
         <div className={styles.container}>
             {showProfileImage && <ProfileImage url={profileImageUrl} />}

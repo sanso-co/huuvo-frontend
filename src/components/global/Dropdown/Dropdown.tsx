@@ -8,16 +8,16 @@ interface DropdownOptionType {
 }
 
 interface Props {
-    position?: "left" | "right";
+    positionX?: "left" | "right";
     selected: string;
     options: DropdownOptionType[];
     children: React.ReactNode;
     handleOptionSelect: (value: string) => void;
 }
 
-export const Dropdown = ({ selected, children, options, position, handleOptionSelect }: Props) => {
-    const [isOpen, setIsOpen] = useState(false);
+export const Dropdown = ({ selected, children, options, positionX, handleOptionSelect }: Props) => {
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleTriggerClick = () => {
         setIsOpen(!isOpen);
@@ -40,8 +40,8 @@ export const Dropdown = ({ selected, children, options, position, handleOptionSe
     }, []);
 
     const optionStyle = {
-        "--position-left": position === "left" && 0,
-        "--position-right": position === "right" && 0,
+        "--position-left": positionX === "left" && 0,
+        "--position-right": positionX === "right" && 0,
     } as React.CSSProperties;
 
     return (
