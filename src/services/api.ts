@@ -15,6 +15,9 @@ class ApiService {
 
         this.api = axios.create({
             baseURL: LOCALURL,
+            headers: {
+                "Content-Type": "application/json", // Ensure requests are sent as JSON
+            },
         });
     }
 
@@ -240,9 +243,65 @@ class ApiService {
         }
     }
 
-    async login({ email, password }: AuthLogin) {
+    async login({ username, password }: AuthLogin) {
         try {
-            const response = await this.api.post("auth/login", { email, password });
+            const response = await this.api.post("auth/login", { username, password });
+            return response.data;
+        } catch (error) {
+            console.error("Error loggin in", error);
+            throw error;
+        }
+    }
+
+    async signup({
+        username,
+        email,
+        password,
+    }: {
+        username: string;
+        email: string;
+        password: string;
+    }) {
+        try {
+            const response = await this.api.post("auth/signup", { username, email, password });
+            return response.data;
+        } catch (error) {
+            console.error("Error signing up", error);
+            throw error;
+        }
+    }
+
+    async googleLogin(accessToken: string) {
+        try {
+            const response = await this.api.post(
+                "auth/google",
+                { token: accessToken },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            console.error("Error during Google authentication", error);
+            throw error;
+        }
+    }
+
+    async conpleteProfile(username: string, tempToken: string) {
+        try {
+            const response = await this.api.post(
+                "auth/complete-profile",
+                {
+                    username,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearder ${tempToken}`,
+                    },
+                }
+            );
             return response.data;
         } catch (error) {
             console.error("Error loggin in", error);
