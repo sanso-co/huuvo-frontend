@@ -7,7 +7,7 @@
     font-weight: 400;
     color: var(--gray-90);
     background-color: var(--gray-5);
-    border-radius: 0.35rem;
+    border-radius: 5rem;
     padding: 0.35rem 0.5rem;
     cursor: pointer;
 
@@ -30,7 +30,12 @@
         font-weight: 600;
         background-color: var(--gray-90);
         color: #fff;
-        padding: 0.75rem;
+        padding: 1rem;
+        transition: color, background-color 0.1s ease-in-out;
+
+        &:hover {
+            background-color: var(--gray-100);
+        }
     }
 
     &[data-variant="secondary"] {

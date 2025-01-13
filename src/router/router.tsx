@@ -8,6 +8,10 @@ import Category from "@/pages/Category";
 import Collection from "@/pages/Collection";
 import Discover from "@/pages/Discover";
 import Auth from "@/pages/Auth";
+import Settings from "@/pages/User/Settings";
+import ProtectedRoute from "./protectedRoute";
+import Complete from "@/pages/Auth/Complete";
+import TempProtectedRoute from "./tempProtectedRoute";
 
 export const router = createBrowserRouter([
     {
@@ -20,6 +24,25 @@ export const router = createBrowserRouter([
             { path: "/collection/:collectionName", element: <Collection /> },
             { path: "/discover", element: <Discover /> },
             { path: "/login", element: <Auth /> },
+            { path: "/signup", element: <Auth /> },
         ],
+    },
+    {
+        path: "/",
+        element: (
+            <ProtectedRoute>
+                <Layout />
+            </ProtectedRoute>
+        ),
+        children: [{ path: "/settings", element: <Settings /> }],
+    },
+    {
+        path: "/",
+        element: (
+            <TempProtectedRoute>
+                <Layout />
+            </TempProtectedRoute>
+        ),
+        children: [{ path: "/complete-profile", element: <Complete /> }],
     },
 ]);

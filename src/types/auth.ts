@@ -1,10 +1,10 @@
 export interface AuthLogin {
-    email: string;
+    username: string;
     password: string;
 }
 
 export interface LoginResponse {
-    name: string;
+    username: string;
     email: string;
     isAdmin: boolean;
     token: string;

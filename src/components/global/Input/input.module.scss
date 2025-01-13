@@ -1,0 +1,26 @@
+.container {
+    label {
+        display: block;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+    }
+
+    input {
+        width: 100%;
+        border: 1px solid #e8e8e8;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+
+        &.error {
+            border: 1px solid var(--warning);
+        }
+    }
+}
+
+.errorMessage {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--warning);
+    margin-top: 0.3rem;
+}

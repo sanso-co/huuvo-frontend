@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useGeneralStore } from "@/store/useStore";
 
 import { useAuthStore } from "@/store/useAuthStore";
@@ -5,6 +6,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { Toggle } from "@/components/global/Toggle";
 
 import styles from "./user.module.scss";
+import { UserIcon } from "@/assets/icons/UserIcon";
 
 interface Props {
     isUserMenuOpen: boolean;
@@ -13,6 +15,7 @@ interface Props {
 }
 
 export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
+    const navigate = useNavigate();
     const store = useGeneralStore();
     const { user, logout } = useAuthStore();
 
@@ -25,6 +28,10 @@ export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
         setIsUserMenuOpen(!isUserMenuOpen);
     };
 
+    const goToLogin = () => {
+        navigate("/login");
+    };
+
     const handleLogout = () => {
         logout();
         setIsUserMenuOpen(false);
@@ -34,16 +41,23 @@ export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
         <>
             <Toggle value={store.language} onChange={handleLanguageToggle} />
             <div className={styles.avatar} ref={userRef}>
-                <div onClick={handleAdminClick} className={styles.user}>
-                    User
-                </div>
-                {user?.isAdmin && (
+                {user ? (
+                    <div onClick={handleAdminClick} className={styles.user}>
+                        <UserIcon width={18} height={18} />
+                    </div>
+                ) : (
+                    <div onClick={goToLogin} className={styles.user}>
+                        Login
+                    </div>
+                )}
+                {user && (
                     <div
                         className={`${styles.dropdown} ${
                             isUserMenuOpen ? styles.dropdownOpen : ""
                         }`}
                     >
                         <div className={styles.menuContent}>
+                            <div>{user?.username}</div>
                             <button onClick={handleLogout}>Logout</button>
                         </div>
                     </div>
