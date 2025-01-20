@@ -42,12 +42,12 @@ export const useCategoryData = () => {
         if (!categoryStoreName || categoryStoreName !== storeKey) {
             resetCategory();
             setCategoryStoreName(storeKey);
-            setShows(data.shows.results);
+            setShows(data.results);
             return;
         }
 
         if (page > 1) {
-            appendShows(data.shows.results);
+            appendShows(data.results);
         }
     }, [
         data,
@@ -65,13 +65,13 @@ export const useCategoryData = () => {
     }, [updateCategory]);
 
     const loadMore = useCallback(() => {
-        if (!isLoading && data?.shows.hasNextPage) {
+        if (!isLoading && data?.hasNextPage) {
             const timer = setTimeout(() => {
                 setPage(page + 1);
             }, 1000);
             return () => clearTimeout(timer);
         }
-    }, [isLoading, data?.shows.hasNextPage, setPage, page]);
+    }, [isLoading, data?.hasNextPage, setPage, page]);
 
     useEffect(() => {
         resetCategory();
@@ -86,9 +86,8 @@ export const useCategoryData = () => {
         isLoading,
         error,
         loadMore,
-        hasMore:
-            !isLoading && Boolean(data?.shows.page && data?.shows.page < data?.shows.totalPages),
-        totalDocs: data?.shows.totalDocs ?? 0,
+        hasMore: !isLoading && Boolean(data?.page && data?.page < data?.totalPages),
+        totalDocs: data?.totalDocs ?? 0,
         categoryName,
         categoryType,
         categoryId,

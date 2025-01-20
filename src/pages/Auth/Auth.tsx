@@ -40,7 +40,6 @@ const Auth = () => {
     const onGoogleSubmit = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
             try {
-                // Send the access_token to your backend
                 const isLoggedIn = await googleAuth(tokenResponse.access_token);
                 if (isLoggedIn) {
                     navigate(from, { replace: true });

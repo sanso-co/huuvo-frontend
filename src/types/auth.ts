@@ -4,6 +4,7 @@ export interface AuthLogin {
 }
 
 export interface LoginResponse {
+    _id: string;
     username: string;
     email: string;
     isAdmin: boolean;

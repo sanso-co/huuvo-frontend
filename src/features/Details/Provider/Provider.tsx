@@ -22,7 +22,7 @@ interface Provider {
 export const Provider = ({ id }: Props) => {
     const { providers, isLoading, error } = useGetProvidersForShow(Number(id));
     if (isLoading) return <div>Loading providers...</div>;
-    if (error) return <div>Failed to load providers</div>;
+    if (error) return null;
 
     return (
         <div className={details.section}>

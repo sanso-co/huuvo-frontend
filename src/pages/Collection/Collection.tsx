@@ -40,12 +40,12 @@ const Collection = () => {
         if (!collection || collection !== collectionName) {
             resetCollection();
             setCollection(collectionName || "");
-            setShows(data.shows.results);
+            setShows(data.results);
             return;
         }
 
         if (page > 1) {
-            appendShows(data.shows.results);
+            appendShows(data.results);
         }
     }, [
         data,
@@ -63,14 +63,14 @@ const Collection = () => {
     }, [updateCollection]);
 
     const loadMore = useCallback(() => {
-        if (!isLoading && data?.shows.hasNextPage) {
+        if (!isLoading && data?.hasNextPage) {
             const timer = setTimeout(() => {
                 setPage(page + 1);
             }, 1000);
 
             return () => clearTimeout(timer);
         }
-    }, [isLoading, data?.shows.hasNextPage, setPage, page]);
+    }, [isLoading, data?.hasNextPage, setPage, page]);
 
     if (isLoading && page === 1) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
@@ -98,10 +98,7 @@ const Collection = () => {
                     <InfiniteScroll
                         dataLength={shows.length}
                         next={loadMore}
-                        hasMore={
-                            !isLoading &&
-                            Boolean(data?.shows.page && data?.shows.page < data?.shows.totalPages)
-                        }
+                        hasMore={!isLoading && Boolean(data?.page && data?.page < data?.totalPages)}
                         loader={<Spinner />}
                     >
                         <div className={styles.grid}>

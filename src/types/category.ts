@@ -8,12 +8,10 @@ export interface CategoryCollectionResponse {
     original_name: string;
     img_path?: string;
     job?: string;
-    shows: {
-        hasNextPage: boolean;
-        hasPrevPage: boolean;
-        totalDocs: number;
-        page: number;
-        totalPages: number;
-        results: LeanShowType[];
-    };
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    totalDocs: number;
+    page: number;
+    totalPages: number;
+    results: LeanShowType[];
 }
