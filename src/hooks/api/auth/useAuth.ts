@@ -81,15 +81,12 @@ export const useAuth = () => {
 
                 if (userData.requiresUsername) {
                     sessionStorage.setItem("tempAuthToken", userData.tempToken);
-                    console.log("here");
                     await new Promise((resolve) => setTimeout(resolve, 100));
-                    console.log("attempting navigation...");
                     navigate("/complete-profile");
-                    console.log("navigation called");
                     return;
                 }
-
                 setUser({
+                    _id: userData.user._id,
                     token: userData.token,
                     email: userData.user.email,
                     username: userData.user.username,
@@ -128,6 +125,7 @@ export const useAuth = () => {
                 sessionStorage.removeItem("tempAuthToken");
 
                 setUser({
+                    _id: userData._id,
                     token: userData.token,
                     email: userData.user.email,
                     username: userData.user.username,

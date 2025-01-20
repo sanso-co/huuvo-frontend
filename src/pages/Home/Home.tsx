@@ -53,7 +53,7 @@ const Home = () => {
                         linkLabel="View all"
                         linkTo="/collection/highly-rated"
                     >
-                        {highlyRated?.shows?.results.map((show: LeanShowType) => (
+                        {highlyRated?.results.map((show: LeanShowType) => (
                             <ShowCard show={show} key={show.id} />
                         ))}
                     </CardSlider>
