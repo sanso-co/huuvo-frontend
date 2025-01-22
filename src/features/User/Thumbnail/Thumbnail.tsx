@@ -23,7 +23,7 @@ export const Thumbnail = ({ shows }: Props) => {
     return (
         <div className={styles.thumb}>
             <div className={styles.grid}>
-                {shows.map((show, index) => (
+                {shows.map((show) => (
                     <div key={show._id} className={styles.item}>
                         <img src={getCroppedImageUrl(show?.poster_path.US.path)} />
                     </div>
