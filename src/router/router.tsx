@@ -12,6 +12,8 @@ import Settings from "@/pages/User/Settings";
 import ProtectedRoute from "./protectedRoute";
 import Complete from "@/pages/Auth/Complete";
 import TempProtectedRoute from "./tempProtectedRoute";
+import Profile from "@/pages/User/Profile";
+import Status from "@/pages/User/Status";
 
 export const router = createBrowserRouter([
     {
@@ -25,6 +27,8 @@ export const router = createBrowserRouter([
             { path: "/discover", element: <Discover /> },
             { path: "/login", element: <Auth /> },
             { path: "/signup", element: <Auth /> },
+            { path: "/profile/:id", element: <Profile /> },
+            { path: "/profile/shows/:category", element: <Status /> },
         ],
     },
     {

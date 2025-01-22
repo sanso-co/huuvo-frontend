@@ -19,6 +19,7 @@ import { Recommendations } from "@/features/Details/Recommendations";
 import styles from "./details.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
 import { Loader } from "@/components/global/Loader";
+import { Status } from "@/features/Details/Status";
 
 const Details = () => {
     const { id } = useParams<{ id: string }>();
@@ -75,6 +76,7 @@ const Details = () => {
                     </div>
                     <div className={styles.details}>
                         <Info data={details} />
+                        {id && <Status id={id} />}
                         {id && <Provider id={id} />}
                         <Keyword keywords={details?.keywords} />
                     </div>

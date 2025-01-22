@@ -51,7 +51,6 @@ export const useAuth = () => {
                 setUser(userData);
                 return userData;
             } catch (err) {
-                console.log("err", err);
                 if (axios.isAxiosError(err) && err.response?.data) {
                     const responseData = err.response.data as ErrorType;
                     setError({
@@ -120,7 +119,7 @@ export const useAuth = () => {
                 const tempToken = sessionStorage.getItem("tempAuthToken");
                 if (!tempToken) throw new Error("No temporary token found");
 
-                const userData = await apiService.conpleteProfile(username, tempToken);
+                const userData = await apiService.completeProfile(username, tempToken);
 
                 sessionStorage.removeItem("tempAuthToken");
 

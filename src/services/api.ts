@@ -1,7 +1,9 @@
+import axios, { AxiosInstance, AxiosError } from "axios";
+
 import { AuthLogin } from "@/types/auth";
 import { CastType } from "@/types/cast";
 import { SortType } from "@/types/sort";
-import axios, { AxiosInstance, AxiosError } from "axios";
+import { IUserShowCategory } from "@/types/userShow";
 
 interface ErrorResponse {
     message: string;
@@ -19,6 +21,21 @@ class ApiService {
                 "Content-Type": "application/json", // Ensure requests are sent as JSON
             },
         });
+    }
+
+    private getUserToken(): string {
+        try {
+            const authData = localStorage.getItem("auth");
+            if (authData) {
+                const parsedData = JSON.parse(authData);
+                const token = parsedData?.state?.user?.token;
+                if (token) return token;
+            }
+            return "";
+        } catch (error) {
+            console.error("Error getting user token", error);
+            return "";
+        }
     }
 
     //collections
@@ -289,7 +306,7 @@ class ApiService {
         }
     }
 
-    async conpleteProfile(username: string, tempToken: string) {
+    async completeProfile(username: string, tempToken: string) {
         try {
             const response = await this.api.post(
                 "auth/complete-profile",
@@ -306,6 +323,15 @@ class ApiService {
         } catch (error) {
             console.error("Error loggin in", error);
             throw error;
+        }
+    }
+
+    async getUser(id: string) {
+        try {
+            const response = await this.api.get(`user/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching heroes", error);
         }
     }
 
@@ -339,6 +365,93 @@ class ApiService {
             return response.data;
         } catch (error) {
             console.error("Error fetching shows", error);
+        }
+    }
+
+    // USER SHOW
+    async getUserShowStatus(showId: string) {
+        try {
+            const token = this.getUserToken();
+            const response = await this.api.get(`user-show/status/${showId}`, {
+                headers: {
+                    Authorization: `Bearder ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching heroes", error);
+        }
+    }
+
+    async getUserStatusShows(
+        category: IUserShowCategory,
+        page: number,
+        limit: number,
+        sort: SortType
+    ) {
+        try {
+            const token = this.getUserToken();
+            const response = await this.api.get(
+                `user-show/category/${category}?page=${page}&limit=${limit}&sort=${sort}`,
+                {
+                    headers: {
+                        Authorization: `Bearder ${token}`,
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching heroes", error);
+        }
+    }
+
+    async getUserShowCounts() {
+        try {
+            const token = this.getUserToken();
+            const response = await this.api.get(`user-show/counts`, {
+                headers: {
+                    Authorization: `Bearder ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching heroes", error);
+        }
+    }
+
+    async markUserLike(showId: string) {
+        try {
+            const token = this.getUserToken();
+            const response = await this.api.post(
+                `user-show/liked/${showId}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearder ${token}`,
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching heroes", error);
+        }
+    }
+
+    async markUserBookmark(showId: string) {
+        try {
+            const token = this.getUserToken();
+            const response = await this.api.post(
+                `user-show/bookmarked/${showId}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearder ${token}`,
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching heroes", error);
         }
     }
 }

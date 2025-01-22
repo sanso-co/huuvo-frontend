@@ -1,5 +1,6 @@
 import { useGeneralStore } from "@/store/useStore";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import { LeanShowType } from "@/types/show";
 import { getCroppedImageUrl, getKrImageUrl } from "@/services/image-url";
@@ -8,7 +9,6 @@ import { ratio } from "@/components/token";
 import { Card } from "@/components/global/cards";
 
 import styles from "./showcard.module.scss";
-import { Link } from "react-router-dom";
 
 interface Props {
     show: LeanShowType;
