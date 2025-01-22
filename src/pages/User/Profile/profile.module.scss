@@ -9,22 +9,21 @@
 
 .main {
     display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.group {
+    display: flex;
+    justify-content: space-between;
     gap: 1.5rem;
 }
 
 .section {
-    display: flex;
-    flex-direction: column;
     flex: 1;
-    gap: 1rem;
 
     h2 {
-        margin-bottom: 1.5rem;
-    }
-
-    button {
-        width: fit-content;
-        margin-top: 1rem;
+        margin-bottom: 0.5rem;
     }
 }
 

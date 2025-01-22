@@ -76,7 +76,7 @@ export const Info = ({ data }: Props) => {
                         )}
                         {data && data.related_seasons && data.related_seasons.length > 0 && (
                             <li className={styles.listItem}>
-                                <div className={styles.listTitle}>OTHER SEASONS</div>
+                                <div className={styles.listTitle}>Other Seasons</div>
                                 {data.related_seasons.map((season) => (
                                     <Link key={season.season} to={`/details/${season.show.id}`}>
                                         <div>{season.show.name}</div>
