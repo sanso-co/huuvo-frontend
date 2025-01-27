@@ -4,6 +4,7 @@ export interface IUserShowStatus {
     showId: string;
     liked: boolean;
     disliked: boolean;
+    watched: boolean;
     bookmarked: boolean;
 }
 
@@ -16,7 +17,7 @@ export interface IUserShowCounts {
     };
     disliked: number;
     watched: number;
-    watchlist: {
+    bookmarked: {
         count: number;
         shows: LeanShowType[];
     };

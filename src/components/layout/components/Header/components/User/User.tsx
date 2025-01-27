@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGeneralStore } from "@/store/useStore";
 
 import { useAuthStore } from "@/store/useAuthStore";
@@ -32,6 +32,11 @@ export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
         navigate("/login");
     };
 
+    const goToProfile = () => {
+        navigate(`/profile/${user?.username}`);
+        setIsUserMenuOpen(false);
+    };
+
     const handleLogout = () => {
         logout();
         setIsUserMenuOpen(false);
@@ -58,6 +63,7 @@ export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
                     >
                         <div className={styles.menuContent}>
                             <div>{user?.username}</div>
+                            <div onClick={goToProfile}>Profile</div>
                             <button onClick={handleLogout}>Logout</button>
                         </div>
                     </div>

@@ -67,5 +67,34 @@ export const useUserInteractions = () => {
         [setIsLoading, setError]
     );
 
-    return { likeShow, bookmarkShow, response, isLoading, error };
+    const watchedShow = useCallback(
+        async (showId: string) => {
+            setIsLoading(true);
+            setError(null);
+            try {
+                const userData = await apiService.markUserWatched(showId);
+                setResponse(userData);
+                return userData;
+            } catch (err) {
+                if (axios.isAxiosError(err) && err.response?.data) {
+                    const responseData = err.response.data as ErrorType;
+                    setError({
+                        status: responseData.status,
+                        message: responseData.message,
+                    });
+                } else {
+                    setError({
+                        status: "error",
+                        message: "An unexpected error occurred",
+                    });
+                }
+                throw err;
+            } finally {
+                setIsLoading(false);
+            }
+        },
+        [setIsLoading, setError]
+    );
+
+    return { likeShow, bookmarkShow, watchedShow, response, isLoading, error };
 };

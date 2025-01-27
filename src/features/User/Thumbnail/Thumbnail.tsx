@@ -1,34 +1,38 @@
-import { getCroppedImageUrl } from "@/services/image-url";
-import { LeanShowType } from "@/types/show";
-
+import { ChevronRightIcon } from "@/assets/icons/ChevronRightIcon";
 import styles from "./thumb.module.scss";
+import { Spinner } from "@/components/global/Spinner";
+import { Link } from "react-router-dom";
 
 interface Props {
-    shows: LeanShowType[];
+    isLoading: boolean;
+    link: string;
+    number: number | 0;
+    status: "liked" | "bookmarked" | "watched" | "";
+    children?: React.ReactNode;
 }
 
-export const Thumbnail = ({ shows }: Props) => {
-    if (shows.length < 4) {
-        const randomIndex = Math.floor(Math.random() * shows.length);
-        const show = shows[randomIndex];
-
+export const Thumbnail = ({ isLoading, link, number = 0, status = "", children }: Props) => {
+    if (isLoading)
         return (
-            <div className={styles.thumb}>
-                <img src={getCroppedImageUrl(show?.poster_path.US.path)} />
+            <div className={styles.placeholder}>
+                <Spinner size="sm" />
             </div>
         );
-    }
 
-    // For exactly 4 shows, create a 2x2 grid
     return (
-        <div className={styles.thumb}>
-            <div className={styles.grid}>
-                {shows.map((show) => (
-                    <div key={show._id} className={styles.item}>
-                        <img src={getCroppedImageUrl(show?.poster_path.US.path)} />
-                    </div>
-                ))}
+        <Link to={link}>
+            <div className={styles.thumb}>
+                <div className={styles.icon} data-status={status}>
+                    {children}
+                </div>
+                <div className={styles.content}>
+                    <div className={styles.number}>{number}</div>
+                    <div className={styles.status}>{status}</div>
+                </div>
+                <div className={styles.chevron}>
+                    <ChevronRightIcon />
+                </div>
             </div>
-        </div>
+        </Link>
     );
 };

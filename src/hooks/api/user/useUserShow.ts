@@ -60,9 +60,11 @@ export const useUserShowCounts = () => {
 
     useEffect(() => {
         const fetchCounts = async () => {
+            setIsLoading(true);
+            setError(null);
+
             try {
                 const response = await apiService.getUserShowCounts();
-
                 setDetails(response);
             } catch (error) {
                 setError(error as Error);

@@ -1,0 +1,1 @@
+export { PrivateProfile } from "./PrivateProfile";
