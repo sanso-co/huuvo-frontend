@@ -1,17 +1,30 @@
-import { Link } from "react-router-dom";
-
 import { useAuthStore } from "@/store/useAuthStore";
 
+import { useUserShowCounts } from "@/hooks/api/user/useUserShow";
+
+import { Thumbnail } from "@/features/User/Thumbnail";
 import { Header } from "@/components/global/Header";
+
+import { brand } from "@/components/token";
+import { HeartIcon } from "@/assets/icons/HeartIcon";
+import { BookmarkIcon } from "@/assets/icons/BookmarkIcon";
+import { CheckmarkIcon } from "@/assets/icons/CheckmarkIcon";
 
 import styles from "./profile.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
-import { useUserShowCounts } from "@/hooks/api/user/useUserShow";
-import { Thumbnail } from "@/features/User/Thumbnail";
+import { useParams } from "react-router-dom";
+import { PrivateProfile } from "@/features/User/PrivateProfile";
 
 const Profile = () => {
+    const { id } = useParams();
     const { user } = useAuthStore();
-    const { details } = useUserShowCounts();
+    const { details, isLoading } = useUserShowCounts();
+
+    const isOwnProfile = !id || id === user?.username;
+
+    if (!isOwnProfile) {
+        return <PrivateProfile />;
+    }
 
     return (
         <div className={`${styles.container} ${layout.default} ${layout.max}`}>
@@ -24,34 +37,43 @@ const Profile = () => {
             <div className={styles.main}>
                 <div className={styles.group}>
                     <div className={styles.section}>
-                        <h2>Liked</h2>
-                        <Link to={"/profile/shows/liked"}>
-                            <div>liked: {details?.liked?.count} </div>
-                            <Thumbnail shows={details?.liked.shows || []} />
-                        </Link>
+                        <Thumbnail
+                            status="liked"
+                            link="/profile/shows/liked"
+                            number={details?.liked?.count || 0}
+                            isLoading={isLoading}
+                        >
+                            <HeartIcon width={26} height={26} stroke={0} fill={brand.tomato} />
+                        </Thumbnail>
                     </div>
                     <div className={styles.section}>
-                        <h2>Watch Later</h2>
-                        <Link to={"/profile/shows/watchlist"}>
-                            <div>watchlist: {details?.watchlist.count} </div>
-                            <Thumbnail shows={details?.watchlist.shows || []} />
-                        </Link>
+                        <Thumbnail
+                            status="bookmarked"
+                            number={details?.bookmarked.count || 0}
+                            link="/profile/shows/bookmarked"
+                            isLoading={isLoading}
+                        >
+                            <BookmarkIcon width={26} height={26} stroke={0} fill="#000" />
+                        </Thumbnail>
+                    </div>
+                    <div className={styles.section}>
+                        <Thumbnail
+                            status="watched"
+                            number={details?.watched || 0}
+                            link="/profile/shows/watched"
+                            isLoading={isLoading}
+                        >
+                            <CheckmarkIcon width={26} height={26} stroke={3} />
+                        </Thumbnail>
                     </div>
                 </div>
-                <div className={styles.group}>
-                    <div className={styles.section}>
+
+                {/* <div className={styles.section}>
                         <h2>Disliked</h2>
                         <Link to={"/profile/shows/disliked"}>
                             <div>disliked: {details?.disliked} </div>
                         </Link>
-                    </div>
-                    <div className={styles.section}>
-                        <h2>Already Watched</h2>
-                        <Link to={"/profile/shows/watched"}>
-                            <div>watched: {details?.watched}</div>
-                        </Link>
-                    </div>
-                </div>
+                    </div> */}
             </div>
         </div>
     );

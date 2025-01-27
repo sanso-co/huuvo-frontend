@@ -1,3 +1,5 @@
+@import "@/assets/styles/variables";
+
 .container {
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -15,13 +17,15 @@
 
 .group {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 1.5rem;
+
+    @media (min-width: $tablet) {
+        flex-direction: row;
+    }
 }
 
 .section {
-    flex: 1;
-
     h2 {
         margin-bottom: 0.5rem;
     }

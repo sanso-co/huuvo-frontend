@@ -70,6 +70,13 @@ export const useShowInteractionsData = () => {
         setPage(1);
     }, [sort, category, resetCategory, setPage]);
 
+    useEffect(() => {
+        return () => {
+            resetCategory();
+            setPage(1);
+        };
+    }, [resetCategory, setPage]);
+
     return {
         sort,
         setSort,

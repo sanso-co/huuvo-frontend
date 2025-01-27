@@ -454,6 +454,24 @@ class ApiService {
             console.error("Error fetching heroes", error);
         }
     }
+
+    async markUserWatched(showId: string) {
+        try {
+            const token = this.getUserToken();
+            const response = await this.api.post(
+                `user-show/watched/${showId}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearder ${token}`,
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching heroes", error);
+        }
+    }
 }
 
 export const apiService = new ApiService();
