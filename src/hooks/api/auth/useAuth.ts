@@ -132,14 +132,7 @@ export const useAuth = () => {
 
                 sessionStorage.removeItem("tempAuthToken");
 
-                setUser({
-                    _id: userData._id,
-                    token: userData.token,
-                    email: userData.user.email,
-                    username: userData.user.username,
-                    isAdmin: false,
-                });
-
+                setUser(userData);
                 return userData;
             } catch (err) {
                 if (axios.isAxiosError(err) && err.response?.data) {
