@@ -11,7 +11,6 @@ import { ContentSlider } from "@/components/pattern/ContentSlider";
 import details from "@/assets/styles/details.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
 import styles from "./cast.module.scss";
-import { Button } from "@/components/global/Button";
 import { Modal } from "@/components/global/Modal";
 
 interface Props {
