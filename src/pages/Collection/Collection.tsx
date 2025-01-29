@@ -1,78 +1,23 @@
-import { useCallback, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { LeanShowType } from "@/types/show";
 
-import { useGetPermanentDetails } from "@/hooks/api/collection/usePermanentCollection";
-import { collectionId } from "@/helpers/constants/collectionId";
-import { convertToConstant } from "@/helpers/convertToConstant";
-import { useCollectionStore } from "@/store/collectionStore";
+import { useCollectionData } from "./hook/useCollectionData";
 
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
 import { SEO } from "@/components/global/SEO";
 import { Spinner } from "@/components/global/Spinner";
 
+import { LeanShowType } from "@/types/show";
+
 import styles from "./collection.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
+import { Sort } from "@/features/Category/Sort";
+import { sortOptions } from "@/helpers/constants/options";
 
 const Collection = () => {
-    const { collectionName } = useParams();
-    const collectionConstant = convertToConstant(collectionName || "");
-    const collectionIdValue = collectionId[collectionConstant as keyof typeof collectionId];
+    const { data, sort, isLoading, shows, error, loadMore, setSort } = useCollectionData();
 
-    const {
-        page,
-        shows,
-        collection,
-        setPage,
-        setCollection,
-        setShows,
-        appendShows,
-        resetCollection,
-    } = useCollectionStore();
-
-    const { data, isLoading, error } = useGetPermanentDetails(collectionIdValue, page);
-
-    const updateCollection = useCallback(() => {
-        if (!data) return;
-
-        if (!collection || collection !== collectionName) {
-            resetCollection();
-            setCollection(collectionName || "");
-            setShows(data.results);
-            return;
-        }
-
-        if (page > 1) {
-            appendShows(data.results);
-        }
-    }, [
-        data,
-        collection,
-        collectionName,
-        page,
-        resetCollection,
-        setCollection,
-        setShows,
-        appendShows,
-    ]);
-
-    useEffect(() => {
-        updateCollection();
-    }, [updateCollection]);
-
-    const loadMore = useCallback(() => {
-        if (!isLoading && data?.hasNextPage) {
-            const timer = setTimeout(() => {
-                setPage(page + 1);
-            }, 1000);
-
-            return () => clearTimeout(timer);
-        }
-    }, [isLoading, data?.hasNextPage, setPage, page]);
-
-    if (isLoading && page === 1) return <div>Loading...</div>;
+    if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
 
     return (
@@ -94,6 +39,13 @@ const Collection = () => {
                         />
                     </div>
                 )}
+                <div className={styles.sort}>
+                    <Sort
+                        options={sortOptions}
+                        selected={sort}
+                        onSortSelect={(option) => setSort(option)}
+                    />
+                </div>
                 <div className={styles.content}>
                     <InfiniteScroll
                         dataLength={shows.length}

@@ -37,6 +37,12 @@
     }
 }
 
+.sort {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 1rem;
+}
+
 .endMessage {
     display: flex;
     justify-content: center;

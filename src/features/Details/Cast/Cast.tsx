@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { getProfileImage } from "@/services/image-url";
@@ -10,6 +11,8 @@ import { ContentSlider } from "@/components/pattern/ContentSlider";
 import details from "@/assets/styles/details.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
 import styles from "./cast.module.scss";
+import { Button } from "@/components/global/Button";
+import { Modal } from "@/components/global/Modal";
 
 interface Props {
     id: string;
@@ -17,6 +20,7 @@ interface Props {
 
 export const Cast = ({ id }: Props) => {
     const { cast, isLoading, error } = useGetCast(Number(id));
+    const [modalOpen, setModalOpen] = useState(false);
 
     if (!cast?.length) {
         return null;
@@ -28,8 +32,29 @@ export const Cast = ({ id }: Props) => {
     return (
         <>
             <div className={styles.container}>
-                <div className={`${details.header} ${layout.default} ${layout.max}`}>
+                <div className={`${styles.header} ${layout.default} ${layout.max}`}>
                     <h3>Cast</h3>
+                    <button onClick={() => setModalOpen(true)}>Details</button>
+                    <Modal open={modalOpen} handleClose={() => setModalOpen(false)}>
+                        <div className={styles.details}>
+                            {cast?.map((cast) => {
+                                const name = formatUrl(cast.name ?? "");
+                                return (
+                                    <Link
+                                        to={`/cast/${name}/${cast.id}`}
+                                        key={cast.id}
+                                        className={styles.detailCast}
+                                    >
+                                        <ProfileImage url={getProfileImage(cast.profile_path)} />
+                                        <div>
+                                            <div className={styles.role}>{cast.role}</div>
+                                            <div className={styles.name}>{cast.name}</div>
+                                        </div>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    </Modal>
                 </div>
                 <div className={styles.casts}>
                     <ContentSlider>

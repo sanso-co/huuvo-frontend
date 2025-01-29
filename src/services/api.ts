@@ -1,7 +1,9 @@
 import axios, { AxiosInstance, AxiosError } from "axios";
 
+import { useAuthStore } from "@/store/useAuthStore";
+import { navigationService } from "./navigation";
+
 import { AuthLogin } from "@/types/auth";
-import { CastType } from "@/types/cast";
 import { SortType } from "@/types/sort";
 import { IUserShowCategory } from "@/types/userShow";
 
@@ -18,23 +20,94 @@ class ApiService {
         this.api = axios.create({
             baseURL: LOCALURL,
             headers: {
-                "Content-Type": "application/json", // Ensure requests are sent as JSON
+                "Content-Type": "application/json",
             },
         });
+
+        // Refresh token interceptor
+        this.api.interceptors.response.use(
+            (response) => response,
+            async (error) => {
+                const originalRequest = error.config;
+
+                const requiresAuth = originalRequest?.headers?.["requires-auth"] === "true";
+
+                if (
+                    error.response?.status === 401 &&
+                    !originalRequest._retry &&
+                    originalRequest.url !== "auth/refresh" &&
+                    requiresAuth
+                ) {
+                    originalRequest._retry = true;
+
+                    try {
+                        const refreshToken = useAuthStore.getState().refreshToken;
+
+                        if (!refreshToken) {
+                            useAuthStore.getState().logout();
+                            navigationService.navigate("/login", {
+                                state: { from: window.location.pathname },
+                            });
+                            return Promise.reject(error);
+                        }
+
+                        const response = await axios.post(`${LOCALURL}/auth/refresh`, {
+                            refreshToken,
+                        });
+                        const { accessToken, refreshToken: newRefreshToken } = response.data;
+
+                        useAuthStore.getState().setTokens(accessToken, newRefreshToken);
+                        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+
+                        return this.api(originalRequest);
+                    } catch (refreshError) {
+                        useAuthStore.getState().logout();
+                        navigationService.navigate("/login", {
+                            state: { from: window.location.pathname },
+                        });
+                        return Promise.reject(refreshError);
+                    }
+                }
+                return Promise.reject(error);
+            }
+        );
+
+        // Attach token interceptor
+        this.api.interceptors.request.use(
+            (config) => {
+                // Don't attach token for refresh requests
+                if (config.url === "auth/refresh") {
+                    return config;
+                }
+
+                if (config.headers?.["requires-auth"] === "true") {
+                    const accessToken = useAuthStore.getState().accessToken;
+                    if (accessToken) {
+                        config.headers.Authorization = `Bearer ${accessToken}`;
+                    }
+                }
+                return config;
+            },
+            (error) => Promise.reject(error)
+        );
     }
 
-    private getUserToken(): string {
+    private createAuthConfig() {
+        return {
+            headers: {
+                "requires-auth": "true",
+            },
+        };
+    }
+
+    // SEARCH
+    async searchShows(query: string) {
         try {
-            const authData = localStorage.getItem("auth");
-            if (authData) {
-                const parsedData = JSON.parse(authData);
-                const token = parsedData?.state?.user?.token;
-                if (token) return token;
-            }
-            return "";
+            const response = await this.api.get(`show/search?query=${query}`);
+
+            return response.data;
         } catch (error) {
-            console.error("Error getting user token", error);
-            return "";
+            console.error("Error fetching search results", error);
         }
     }
 
@@ -61,10 +134,10 @@ class ApiService {
         }
     }
 
-    async getPermanentCollectionDetails(id: string, page: number, limit: number) {
+    async getPermanentCollectionDetails(id: string, page: number, limit: number, sort: SortType) {
         try {
             const response = await this.api.get(
-                `permanent-collection/${id}?page=${page}&limit=${limit}`
+                `permanent-collection/${id}?page=${page}&limit=${limit}&sort=${sort}`
             );
 
             return response.data;
@@ -247,19 +320,7 @@ class ApiService {
         }
     }
 
-    //admin
-    async addCastToShow({ showId, mainCast }: { showId: number; mainCast: CastType[] }) {
-        try {
-            const response = await this.api.patch(`cast/add/${showId}`, {
-                mainCast,
-            });
-            return response.data;
-        } catch (error) {
-            console.error("Error adding a show to provider collection", error);
-            throw error;
-        }
-    }
-
+    // AUTH
     async login({ username, password }: AuthLogin) {
         try {
             const response = await this.api.post("auth/login", { username, password });
@@ -344,6 +405,16 @@ class ApiService {
         }
     }
 
+    // SHOW
+    async getShow(page: number, limit: number, sort: SortType) {
+        try {
+            const response = await this.api.get(`show?page=${page}&limit=${limit}&sort=${sort}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching shows", error);
+        }
+    }
+
     // DISCOVER
     async discoverShows(page: number, keyword?: string, genre?: string, tone?: string) {
         try {
@@ -371,15 +442,20 @@ class ApiService {
     // USER SHOW
     async getUserShowStatus(showId: string) {
         try {
-            const token = this.getUserToken();
-            const response = await this.api.get(`user-show/status/${showId}`, {
-                headers: {
-                    Authorization: `Bearder ${token}`,
-                },
-            });
+            const accessToken = useAuthStore.getState().accessToken;
+            const config = accessToken ? this.createAuthConfig() : undefined;
+
+            const response = await this.api.get(`user-show/status/${showId}`, config);
             return response.data;
         } catch (error) {
-            console.error("Error fetching heroes", error);
+            if ((error as AxiosError).response?.status === 401) {
+                return {
+                    liked: false,
+                    bookmarked: false,
+                    watched: false,
+                };
+            }
+            throw error;
         }
     }
 
@@ -390,14 +466,9 @@ class ApiService {
         sort: SortType
     ) {
         try {
-            const token = this.getUserToken();
             const response = await this.api.get(
                 `user-show/category/${category}?page=${page}&limit=${limit}&sort=${sort}`,
-                {
-                    headers: {
-                        Authorization: `Bearder ${token}`,
-                    },
-                }
+                this.createAuthConfig()
             );
             return response.data;
         } catch (error) {
@@ -407,12 +478,7 @@ class ApiService {
 
     async getUserShowCounts() {
         try {
-            const token = this.getUserToken();
-            const response = await this.api.get(`user-show/counts`, {
-                headers: {
-                    Authorization: `Bearder ${token}`,
-                },
-            });
+            const response = await this.api.get(`user-show/counts`, this.createAuthConfig());
             return response.data;
         } catch (error) {
             console.error("Error fetching heroes", error);
@@ -421,15 +487,10 @@ class ApiService {
 
     async markUserLike(showId: string) {
         try {
-            const token = this.getUserToken();
             const response = await this.api.post(
                 `user-show/liked/${showId}`,
                 {},
-                {
-                    headers: {
-                        Authorization: `Bearder ${token}`,
-                    },
-                }
+                this.createAuthConfig()
             );
             return response.data;
         } catch (error) {
@@ -439,15 +500,10 @@ class ApiService {
 
     async markUserBookmark(showId: string) {
         try {
-            const token = this.getUserToken();
             const response = await this.api.post(
                 `user-show/bookmarked/${showId}`,
                 {},
-                {
-                    headers: {
-                        Authorization: `Bearder ${token}`,
-                    },
-                }
+                this.createAuthConfig()
             );
             return response.data;
         } catch (error) {
@@ -457,15 +513,10 @@ class ApiService {
 
     async markUserWatched(showId: string) {
         try {
-            const token = this.getUserToken();
             const response = await this.api.post(
                 `user-show/watched/${showId}`,
                 {},
-                {
-                    headers: {
-                        Authorization: `Bearder ${token}`,
-                    },
-                }
+                this.createAuthConfig()
             );
             return response.data;
         } catch (error) {

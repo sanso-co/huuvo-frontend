@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { apiService } from "@/services/api";
+import { SortType } from "@/types/sort";
 
 interface UseGetPermanentDetailsOptions {
     forceLimit?: number;
@@ -9,7 +10,8 @@ interface UseGetPermanentDetailsOptions {
 export const useGetPermanentDetails = (
     id: string,
     page: number,
-    options: UseGetPermanentDetailsOptions = {}
+    options: UseGetPermanentDetailsOptions = {},
+    sort: SortType = "date_desc"
 ) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const limit = options.forceLimit ?? (isMobile ? 10 : 30);
@@ -24,8 +26,8 @@ export const useGetPermanentDetails = (
     }, []);
 
     return useQuery({
-        queryKey: ["collection", id, page],
-        queryFn: () => apiService.getPermanentCollectionDetails(id, page, limit),
+        queryKey: [id, page, limit, sort],
+        queryFn: () => apiService.getPermanentCollectionDetails(id, page, limit, sort),
         enabled: !!id,
     });
 };

@@ -1,12 +1,10 @@
-import { useGetHeroes } from "@/hooks/api/marketing/useHero";
-import { usePeriodicCollection } from "@/hooks/api/collection/usePeriodicCollection";
-import { useGetPermanentDetails } from "@/hooks/api/collection/usePermanentCollection";
+import useHomeData from "./hook/useHomeData";
+
 import { formatDate } from "@/helpers/date";
-import { collectionId } from "@/helpers/constants/collectionId";
 import { LeanShowType } from "@/types/show";
 
-import { SEO } from "@/components/global/SEO";
 import { Hero } from "@/features/Home/Hero";
+import { SEO } from "@/components/global/SEO";
 import { CardSlider } from "@/components/pattern/CardSlider";
 import { ShowCard } from "@/components/feature/ShowCard";
 
@@ -14,20 +12,7 @@ import styles from "./home.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
 
 const Home = () => {
-    const { heroes } = useGetHeroes();
-
-    const { collectionData: trending } = usePeriodicCollection(
-        collectionId.TRENDING_NOW || "",
-        "latest"
-    );
-    const { collectionData: upcoming } = usePeriodicCollection(
-        collectionId.NEW_UPCOMING || "",
-        "latest",
-        "descending"
-    );
-    const { data: highlyRated } = useGetPermanentDetails(collectionId.HIGHLY_RATED || "", 1, {
-        forceLimit: 10,
-    });
+    const { heroes, isHeroLoading, heroError, trending, upcoming, highlyRated } = useHomeData();
 
     return (
         <>
@@ -36,15 +21,15 @@ const Home = () => {
                 description="Discover and track Korean dramas with K-lama. Get personalized recommendations based on your watching history and connect with other K-drama fans."
             />
             <div className={styles.home}>
-                <Hero heroes={heroes} />
+                <Hero heroes={heroes} isLoading={isHeroLoading} error={heroError} />
                 <div className={`${styles.sliders} ${layout.max}`}>
                     <CardSlider title="Trending" helper={formatDate(trending?.releaseDate)}>
-                        {trending?.shows?.map((show) => (
+                        {trending?.shows?.map((show: LeanShowType) => (
                             <ShowCard show={show} key={show.id} />
                         ))}
                     </CardSlider>
                     <CardSlider title="Newly Released">
-                        {upcoming?.shows.map((show) => (
+                        {upcoming?.results.map((show: LeanShowType) => (
                             <ShowCard show={show} key={show.id} />
                         ))}
                     </CardSlider>

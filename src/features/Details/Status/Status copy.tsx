@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useGetUserShowRating } from "@/hooks/api/user/useUserShow";
+import { useUserShowRating } from "@/hooks/api/user/useUserShow";
 import { useUserInteractions } from "@/hooks/api/user/useUserInteractions";
 
 import { HeartIcon } from "@/assets/icons/HeartIcon";
@@ -19,7 +19,7 @@ interface Props {
 
 export const Status = ({ id }: Props) => {
     const { id: showId } = useParams();
-    const { status: initialStatus, isLoading, error } = useGetUserShowRating(id);
+    const { status: initialStatus, isLoading, error } = useUserShowRating(id);
     const [status, setStatus] = useState(initialStatus);
     const { likeShow, bookmarkShow, watchedShow } = useUserInteractions();
 

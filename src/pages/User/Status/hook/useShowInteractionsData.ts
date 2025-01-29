@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { SortEnum } from "@/helpers/constants/options";
+import { SortOrderEnum } from "@/helpers/constants/options";
 import { SortType } from "@/types/sort";
 import { useUserShowStore } from "@/store/userShowStore";
 import { IUserShowCategory } from "@/types/userShow";
@@ -8,7 +8,7 @@ import { useShowInteractions } from "@/hooks/api/user/useUserShow";
 import { useParams } from "react-router-dom";
 
 export const useShowInteractionsData = () => {
-    const [sort, setSort] = useState<SortType>(SortEnum.DateDesc);
+    const [sort, setSort] = useState<SortType>(SortOrderEnum.Newest);
     const { category } = useParams();
 
     const {

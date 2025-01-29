@@ -1,21 +1,19 @@
 import { LeanShowType } from "./show";
 
 export interface IUserShowStatus {
-    showId: string;
+    showId: string | null;
     liked: boolean;
-    disliked: boolean;
     watched: boolean;
     bookmarked: boolean;
 }
 
-export type IUserShowCategory = "liked" | "disliked" | "watched" | "bookmarked";
+export type IUserShowCategory = "liked" | "watched" | "bookmarked";
 
 export interface IUserShowCounts {
     liked: {
         count: number;
         shows: LeanShowType[];
     };
-    disliked: number;
     watched: number;
     bookmarked: {
         count: number;

@@ -9,6 +9,7 @@ import { SearchCard } from "@/components/feature/SearchCard";
 import { SearchIcon } from "@/assets/icons/SearchIcon";
 
 import styles from "./desktopsearch.module.scss";
+import { LeanShowType } from "@/types/show";
 
 interface Props {
     open: boolean;
@@ -45,7 +46,7 @@ export const DesktopSearch = ({ open, handleClose, handleClick }: Props) => {
             </div>
             {suggestions.length > 0 ? (
                 <div className={styles.viewContainer}>
-                    {suggestions.map((drama) => (
+                    {suggestions.map((drama: LeanShowType) => (
                         <SearchCard
                             show={drama}
                             key={drama.id}

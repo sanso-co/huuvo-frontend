@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { AxiosError } from "axios";
 import { useQuery } from "@tanstack/react-query";
 
 import { apiService } from "@/services/api";
 import { IUserShowCategory, IUserShowCounts, IUserShowStatus } from "@/types/userShow";
 import { SortType } from "@/types/sort";
 
-export const useUserShowRating = (id: string) => {
+export const useGetUserShowRating = (id: string) => {
     const [status, setStatus] = useState<IUserShowStatus>();
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -17,7 +18,16 @@ export const useUserShowRating = (id: string) => {
 
                 setStatus(response);
             } catch (error) {
-                setError(error as Error);
+                if ((error as AxiosError).response?.status === 401) {
+                    setStatus({
+                        showId: null,
+                        liked: false,
+                        bookmarked: false,
+                        watched: false,
+                    });
+                } else {
+                    setError(error as Error);
+                }
             } finally {
                 setIsLoading(false);
             }

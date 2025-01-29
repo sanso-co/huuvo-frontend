@@ -2,6 +2,40 @@
     padding: 2rem 0;
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+    }
+
+    p {
+        font-size: 0.75rem;
+    }
+
+    button {
+        position: relative;
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+
+        &:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -2px;
+            height: 1px;
+            background-color: #000;
+        }
+    }
+}
+
 .casts {
     @media (min-width: 1280px) {
         padding-left: calc((100vw - 1280px) / 2);
@@ -11,4 +45,26 @@
 
 .cast {
     position: relative;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.detailCast {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.role {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.name {
+    font-size: 0.75rem;
 }

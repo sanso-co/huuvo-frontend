@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useGeneralStore } from "@/store/useStore";
-import { SortEnum } from "@/helpers/constants/options";
+import { SortOrderEnum } from "@/helpers/constants/options";
 import { OptionType, SortType } from "@/types/sort";
 
 import { Dropdown } from "@/components/global/Dropdown";
@@ -35,8 +35,9 @@ export const Sort = ({ selected, options, onSortSelect }: Props) => {
     const language = useGeneralStore((state) => state.language);
 
     const handleSortSelect = (value: SortType) => {
-        if (value === SortEnum.NameAsc) {
-            const sortValue = language === "kr" ? SortEnum.OriginalNameAsc : SortEnum.NameAsc;
+        if (value === SortOrderEnum.Alphabetical) {
+            const sortValue =
+                language === "kr" ? SortOrderEnum.KoreanAlphabetical : SortOrderEnum.Alphabetical;
             onSortSelect(sortValue);
         } else {
             onSortSelect(value);

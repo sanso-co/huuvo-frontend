@@ -7,10 +7,12 @@ import { useTrailerVideo } from "@/hooks/api/details/useTrailerVideo";
 import { getCroppedImageUrl, getKrImageUrl } from "@/services/image-url";
 
 import { SEO } from "@/components/global/SEO";
+import { Loader } from "@/components/global/Loader";
 import { ImageContainer } from "@/components/global/ImageContainerNatural";
 import { Info } from "@/features/Details/Info";
 import { Cast } from "@/features/Details/Cast";
 import { Crew } from "@/features/Details/Crew";
+import { Status } from "@/features/Details/Status";
 import { Keyword } from "@/features/Details/Keyword";
 import { Provider } from "@/features/Details/Provider";
 import { OriginalStory } from "@/features/Details/OriginalStory";
@@ -18,8 +20,6 @@ import { Recommendations } from "@/features/Details/Recommendations";
 
 import styles from "./details.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
-import { Loader } from "@/components/global/Loader";
-import { Status } from "@/features/Details/Status";
 
 const Details = () => {
     const { id } = useParams<{ id: string }>();
