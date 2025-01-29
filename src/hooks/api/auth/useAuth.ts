@@ -7,7 +7,7 @@ import { ErrorType } from "@/types/error";
 
 export const useAuth = () => {
     const navigate = useNavigate();
-    const { setUser, setIsLoading } = useAuthStore();
+    const { setUser, setTokens, setIsLoading } = useAuthStore();
     const [error, setError] = useState<ErrorType | null>(null);
 
     const login = useCallback(
@@ -15,10 +15,15 @@ export const useAuth = () => {
             setIsLoading(true);
             setError(null);
             try {
-                const userData = await apiService.login({
+                const {
+                    accessToken: resAccessToken,
+                    refreshToken: resRefreshToken,
+                    ...userData
+                } = await apiService.login({
                     username,
                     password,
                 });
+                setTokens(resAccessToken, resRefreshToken);
                 setUser(userData);
                 return userData;
             } catch (err) {
@@ -39,7 +44,7 @@ export const useAuth = () => {
                 setIsLoading(false);
             }
         },
-        [setIsLoading, setError, setUser]
+        [setIsLoading, setTokens, setUser]
     );
 
     const signup = useCallback(
@@ -47,7 +52,12 @@ export const useAuth = () => {
             setIsLoading(true);
             setError(null);
             try {
-                const userData = await apiService.signup(data);
+                const {
+                    accessToken: resAccessToken,
+                    refreshToken: resRefreshToken,
+                    ...userData
+                } = await apiService.signup(data);
+                setTokens(resAccessToken, resRefreshToken);
                 setUser(userData);
                 return userData;
             } catch (err) {
@@ -68,7 +78,7 @@ export const useAuth = () => {
                 setIsLoading(false);
             }
         },
-        [setIsLoading, setError, setUser]
+        [setIsLoading, setTokens, setUser]
     );
 
     const googleAuth = useCallback(
@@ -76,7 +86,11 @@ export const useAuth = () => {
             setIsLoading(true);
             setError(null);
             try {
-                const userData = await apiService.googleLogin(accessToken);
+                const {
+                    accessToken: resAccessToken,
+                    refreshToken: resRefreshToken,
+                    ...userData
+                } = await apiService.googleLogin(accessToken);
 
                 if (userData.requiresUsername) {
                     sessionStorage.setItem("tempAuthToken", userData.tempToken);
@@ -84,13 +98,8 @@ export const useAuth = () => {
                     navigate("/complete-profile");
                     return;
                 }
-                setUser({
-                    _id: userData.user._id,
-                    token: userData.token,
-                    email: userData.user.email,
-                    username: userData.user.username,
-                    isAdmin: false,
-                });
+                setTokens(resAccessToken, resRefreshToken);
+                setUser(userData);
                 return userData;
             } catch (err) {
                 if (axios.isAxiosError(err) && err.response?.data) {
@@ -110,7 +119,7 @@ export const useAuth = () => {
                 setIsLoading(false);
             }
         },
-        [setIsLoading, setError, setUser, navigate]
+        [setIsLoading, setTokens, setUser, navigate]
     );
 
     const completeProfile = useCallback(

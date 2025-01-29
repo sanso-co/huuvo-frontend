@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-import styles from "./header.module.scss";
-
 import { useIsMobile } from "@/hooks/useIsMobile";
+
 import { Navigation } from "./components/Navigation";
 import { HeaderSearch } from "./components/Search";
 import { User } from "./components/User";
+
+import styles from "./header.module.scss";
 
 export const Header = () => {
     const isMobile = useIsMobile();

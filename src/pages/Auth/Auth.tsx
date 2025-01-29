@@ -12,6 +12,7 @@ import { Button } from "@/components/global/Button";
 
 import styles from "./auth.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
+import { useMemo } from "react";
 
 interface FormValues {
     username: string;
@@ -23,7 +24,7 @@ const Auth = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const isSignup = location.pathname && location.pathname === "/signup";
-    const from = location.state?.from?.pathname || "/";
+    const from = useMemo(() => location.state?.from || "/", [location]);
 
     const defaultValues = {
         username: "",
@@ -62,8 +63,8 @@ const Auth = () => {
                     navigate("/settings");
                 }
             } else {
-                const isLoggedIn = await login(data.username, data.password);
-                if (isLoggedIn) {
+                const userData = await login(data.username, data.password);
+                if (userData) {
                     navigate(from, { replace: true });
                 }
             }

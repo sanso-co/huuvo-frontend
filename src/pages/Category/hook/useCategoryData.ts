@@ -4,12 +4,12 @@ import { useParams } from "react-router-dom";
 import { useCategoryStore } from "@/store/categoryStore";
 import { useCategory } from "@/hooks/api/category/useCategory";
 
-import { SortEnum } from "@/helpers/constants/options";
+import { SortOrderEnum } from "@/helpers/constants/options";
 import { CategoryType } from "@/types/category";
 import { SortType } from "@/types/sort";
 
 export const useCategoryData = () => {
-    const [sort, setSort] = useState<SortType>(SortEnum.DateDesc);
+    const [sort, setSort] = useState<SortType>(SortOrderEnum.Newest);
     const { categoryType, categoryName, categoryId } = useParams();
 
     const getStoreKey = useCallback(() => {

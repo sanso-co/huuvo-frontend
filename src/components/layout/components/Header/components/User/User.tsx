@@ -1,12 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useGeneralStore } from "@/store/useStore";
+import { useLocation, useNavigate } from "react-router-dom";
 
+import { useGeneralStore } from "@/store/useStore";
 import { useAuthStore } from "@/store/useAuthStore";
 
 import { Toggle } from "@/components/global/Toggle";
+import { UserIcon } from "@/assets/icons/UserIcon";
 
 import styles from "./user.module.scss";
-import { UserIcon } from "@/assets/icons/UserIcon";
+import { UserCircleIcon } from "@/assets/icons/UserCircleIcon";
+import { SettingIcon } from "@/assets/icons/SettingIcon";
+import { LogoutIcon } from "@/assets/icons/LogoutIcon";
 
 interface Props {
     isUserMenuOpen: boolean;
@@ -16,6 +19,7 @@ interface Props {
 
 export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const store = useGeneralStore();
     const { user, logout } = useAuthStore();
 
@@ -29,7 +33,7 @@ export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
     };
 
     const goToLogin = () => {
-        navigate("/login");
+        navigate("/login", { state: { from: location } });
     };
 
     const goToProfile = () => {
@@ -38,8 +42,12 @@ export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
     };
 
     const handleLogout = () => {
+        const currentLocation = window.location.pathname;
+
         logout();
         setIsUserMenuOpen(false);
+
+        window.location.href = currentLocation;
     };
 
     return (
@@ -48,12 +56,16 @@ export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
             <div className={styles.avatar} ref={userRef}>
                 {user ? (
                     <div onClick={handleAdminClick} className={styles.user}>
-                        <UserIcon width={18} height={18} />
+                        {user.avatar ? (
+                            <img src={user.avatar || ""} alt="" />
+                        ) : (
+                            <UserIcon width={18} height={18} />
+                        )}
                     </div>
                 ) : (
-                    <div onClick={goToLogin} className={styles.user}>
+                    <button onClick={goToLogin} className={styles.login}>
                         Login
-                    </div>
+                    </button>
                 )}
                 {user && (
                     <div
@@ -62,9 +74,23 @@ export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
                         }`}
                     >
                         <div className={styles.menuContent}>
-                            <div>{user?.username}</div>
-                            <div onClick={goToProfile}>Profile</div>
-                            <button onClick={handleLogout}>Logout</button>
+                            <div className={styles.info}>
+                                <div>{user.username}</div>
+                            </div>
+                            <div className={styles.menu}>
+                                <div className={styles.menuItem} onClick={goToProfile}>
+                                    <UserCircleIcon stroke={1.5} />
+                                    <span>Profile</span>
+                                </div>
+                                <div className={styles.menuItem} onClick={goToProfile}>
+                                    <SettingIcon stroke={1.5} />
+                                    <span>Settings</span>
+                                </div>
+                                <div className={styles.menuItem} onClick={handleLogout}>
+                                    <LogoutIcon stroke={1.5} />
+                                    <span>Logout</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}

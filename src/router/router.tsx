@@ -14,6 +14,7 @@ import Complete from "@/pages/Auth/Complete";
 import TempProtectedRoute from "./tempProtectedRoute";
 import Profile from "@/pages/User/Profile";
 import Status from "@/pages/User/Status";
+import { navigationService } from "@/services/navigation";
 
 export const router = createBrowserRouter([
     {
@@ -50,3 +51,5 @@ export const router = createBrowserRouter([
         children: [{ path: "/complete-profile", element: <Complete /> }],
     },
 ]);
+
+navigationService.setRouter(router);

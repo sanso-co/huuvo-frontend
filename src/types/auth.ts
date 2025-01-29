@@ -8,5 +8,5 @@ export interface LoginResponse {
     username: string;
     email: string;
     isAdmin: boolean;
-    token: string;
+    avatar: string | null;
 }

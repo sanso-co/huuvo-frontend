@@ -22,6 +22,7 @@ export const PrivateProfile = () => {
             <div className={styles.section}>
                 <p>Looking for your own profile?</p>
                 <Button variant="primary" label="View My Profile" onClick={handleClick} />
+                <div>not logged in? Login first</div>
             </div>
         </div>
     );

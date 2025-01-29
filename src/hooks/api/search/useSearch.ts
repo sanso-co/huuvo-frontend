@@ -1,32 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { debounce } from "lodash";
-import axios from "axios";
 
 import { LeanShowType } from "@/types/show";
+import { apiService } from "@/services/api";
 
 export const useSearch = () => {
     const [query, setQuery] = useState("");
     const [suggestions, setSuggestions] = useState<LeanShowType[]>([]);
 
-    const debouncedSearch = debounce(async (searchQuery) => {
-        if (searchQuery.length > 1) {
-            try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/show/search?query=${searchQuery}`
-                );
-                setSuggestions(response.data);
-            } catch (error) {
-                console.error("Error fetching suggestions:", error);
+    const debouncedSearch = useCallback((searchQuery: string) => {
+        const search = debounce(async (value: string) => {
+            if (value.length > 1) {
+                try {
+                    const results = await apiService.searchShows(value);
+                    setSuggestions(results);
+                } catch (error) {
+                    console.error("Error fetching suggestions:", error);
+                }
+            } else {
+                setSuggestions([]);
             }
-        } else {
-            setSuggestions([]);
-        }
-    }, 300);
+        }, 300);
+
+        search(searchQuery);
+        return () => search.cancel();
+    }, []);
 
     useEffect(() => {
-        debouncedSearch(query);
-        return () => debouncedSearch.cancel();
-    }, [debouncedSearch, query]);
+        const cancelSearch = debouncedSearch(query);
+        return cancelSearch;
+    }, [query, debouncedSearch]);
 
     return { query, setQuery, suggestions, setSuggestions };
 };

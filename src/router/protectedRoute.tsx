@@ -6,10 +6,10 @@ interface Props {
 }
 
 const ProtectedRoute = ({ children }: Props) => {
-    const { user } = useAuthStore();
+    const { accessToken, refreshToken } = useAuthStore();
     const location = useLocation();
 
-    if (!user?.token) {
+    if (!accessToken && !refreshToken) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 

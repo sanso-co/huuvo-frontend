@@ -1,23 +1,23 @@
 import { OptionType } from "@/types/sort";
 
-export enum SortEnum {
-    NameAsc = "name_asc",
-    OriginalNameAsc = "original_name_asc",
-    DateAsc = "date_asc",
-    DateDesc = "date_desc",
+export enum SortOrderEnum {
+    Alphabetical = "name_asc",
+    KoreanAlphabetical = "original_name_asc",
+    Oldest = "date_asc",
+    Newest = "date_desc",
 }
 
 export const sortOptions: OptionType[] = [
     {
-        value: SortEnum.DateDesc,
+        value: SortOrderEnum.Newest,
         name: "Release Date (Newest)",
     },
     {
-        value: SortEnum.DateAsc,
+        value: SortOrderEnum.Oldest,
         name: "Release Date (Oldest)",
     },
     {
-        value: SortEnum.NameAsc,
+        value: SortOrderEnum.Alphabetical,
         name: "Alphabetical",
     },
 ];
