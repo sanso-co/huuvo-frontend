@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /profile/
+Allow: /
+Sitemap: https://k-lama.com/sitemap.xml
