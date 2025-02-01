@@ -14,8 +14,11 @@ const useHomeData = () => {
     const { data: highlyRated } = useGetPermanentDetails(collectionId.HIGHLY_RATED || "", 1, {
         forceLimit: 10,
     });
+    const { data: genreFiction } = useGetPermanentDetails(collectionId.GENRE_FICTION || "", 1, {
+        forceLimit: 10,
+    });
 
-    return { heroes, isHeroLoading, heroError, trending, upcoming, highlyRated };
+    return { heroes, isHeroLoading, heroError, trending, upcoming, highlyRated, genreFiction };
 };
 
 export default useHomeData;
