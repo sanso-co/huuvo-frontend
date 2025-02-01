@@ -12,7 +12,8 @@ import styles from "./home.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
 
 const Home = () => {
-    const { heroes, isHeroLoading, heroError, trending, upcoming, highlyRated } = useHomeData();
+    const { heroes, isHeroLoading, heroError, trending, upcoming, highlyRated, genreFiction } =
+        useHomeData();
 
     return (
         <>
@@ -39,6 +40,15 @@ const Home = () => {
                         linkTo="/collection/highly-rated"
                     >
                         {highlyRated?.results.map((show: LeanShowType) => (
+                            <ShowCard show={show} key={show.id} />
+                        ))}
+                    </CardSlider>
+                    <CardSlider
+                        title="Genre Fiction"
+                        linkLabel="View all"
+                        linkTo="/collection/genre-fiction"
+                    >
+                        {genreFiction?.results.map((show: LeanShowType) => (
                             <ShowCard show={show} key={show.id} />
                         ))}
                     </CardSlider>
