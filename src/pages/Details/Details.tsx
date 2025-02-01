@@ -57,8 +57,9 @@ const Details = () => {
         <>
             <SEO
                 title={details?.name}
-                description={details?.overview}
-                keywords="korean drama, kdrama recommendations, korean series"
+                keywords={details?.keywords}
+                image={getImageUrl()}
+                id={details?.id}
             />
             <>
                 <div className={`${styles.container} ${styles.top} ${layout.max}`}>
