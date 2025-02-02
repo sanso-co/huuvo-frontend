@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const SEO = ({ pageType, name, dramas, keywords, image, id }: Props) => {
-    const { providers } = useGetProvidersForShow(id);
+    const { providers } = useGetProvidersForShow(typeof id === "string" ? parseInt(id, 10) : id);
 
     const getPageTitle = () => {
         switch (pageType) {
