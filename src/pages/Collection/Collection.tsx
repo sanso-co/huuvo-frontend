@@ -22,13 +22,7 @@ const Collection = () => {
 
     return (
         <>
-            <SEO
-                title={data?.name || "Collection"}
-                description={
-                    data?.description ||
-                    `Discover ${data?.name || "our collection of"} Korean dramas on K-lama.`
-                }
-            />
+            <SEO pageType="collection" name={data.name ?? ""} dramas={shows.slice(0, 5)} />
             <div className={`${styles.container} ${layout.default} ${layout.max}`}>
                 {data && (
                     <div className={styles.header}>

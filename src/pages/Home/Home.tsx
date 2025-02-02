@@ -17,10 +17,7 @@ const Home = () => {
 
     return (
         <>
-            <SEO
-                title="K-lama | Find Your Next Favorite Korean Drama"
-                description="Discover and track Korean dramas with K-lama. Get personalized recommendations based on your watching history and connect with other K-drama fans."
-            />
+            <SEO pageType="home" dramas={trending?.shows} />
             <div className={styles.home}>
                 <Hero heroes={heroes} isLoading={isHeroLoading} error={heroError} />
                 <div className={`${styles.sliders} ${layout.max}`}>

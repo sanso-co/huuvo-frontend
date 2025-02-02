@@ -43,11 +43,10 @@ const Collection = () => {
     return (
         <>
             <SEO
-                title={categoryName || "Collection"}
-                description={
-                    categoryName ||
-                    `Discover ${categoryName || "our collection of"} Korean dramas on K-lama.`
-                }
+                pageType={categoryType ?? ""}
+                name={categoryType === "year" ? categoryId ?? "" : categoryName ?? ""}
+                id={categoryId}
+                dramas={shows.slice(0, 5)}
             />
             <div className={`${styles.container} ${layout.default} ${layout.max}`}>
                 <div className={styles.header}>
