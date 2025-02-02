@@ -56,10 +56,11 @@ const Details = () => {
     return (
         <>
             <SEO
-                title={details?.name}
+                pageType="details"
+                name={details?.name}
+                id={details?.id}
                 keywords={details?.keywords}
                 image={getImageUrl()}
-                id={details?.id}
             />
             <>
                 <div className={`${styles.container} ${styles.top} ${layout.max}`}>

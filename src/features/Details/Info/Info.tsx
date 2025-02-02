@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import { ShowType } from "@/types/show";
 import { formatYear, formatDate } from "@/helpers/date";
+import { formatUrl } from "@/helpers/formatUrl";
 import { HomeIcon } from "@/assets/icons/HomeIcon";
 
 import styles from "./info.module.scss";
@@ -41,7 +42,7 @@ export const Info = ({ data }: Props) => {
                     <ul className={styles.genres}>
                         {data?.genres?.map((genre) => (
                             <li key={genre.id}>
-                                <Link to={`/genre/${genre.name.toLocaleLowerCase()}/${genre.id}`}>
+                                <Link to={`/genre/${formatUrl(genre.name)}/${genre.id}`}>
                                     {genre.name}
                                 </Link>
                             </li>

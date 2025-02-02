@@ -4,6 +4,7 @@ import { KeywordType } from "@/types/showDetail";
 
 import styles from "./keyword.module.scss";
 import details from "@/assets/styles/details.module.scss";
+import { formatUrl } from "@/helpers/formatUrl";
 
 interface Props {
     keywords: KeywordType[];
@@ -24,7 +25,7 @@ export const Keyword = ({ keywords }: Props) => {
                     <Chip
                         key={keyword.id}
                         label={keyword.name}
-                        url={`/keyword/${keyword.name.toLocaleLowerCase()}/${keyword.id}`}
+                        url={`/keyword/${formatUrl(keyword.name)}/${keyword.id}`}
                     />
                 ))}
             </div>
