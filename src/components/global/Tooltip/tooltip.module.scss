@@ -1,0 +1,47 @@
+.container {
+    position: relative;
+    display: inline-block;
+}
+
+.wrapper {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.tooltip {
+    position: absolute;
+    margin-top: 0.5rem;
+    z-index: 10;
+    min-width: max-content;
+
+    &.tooltipLeft {
+        left: 0;
+        transform-origin: left top;
+    }
+
+    &.tooltipRight {
+        right: -1rem;
+        transform-origin: right top;
+    }
+
+    &.tooltipCenter {
+        left: 50%;
+        transform: translateX(-50%);
+        transform-origin: center top;
+    }
+}
+
+.content {
+    width: fit-content;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    background-color: var(--gray-90);
+    color: #fff;
+    padding: 0.5rem 1rem;
+}
