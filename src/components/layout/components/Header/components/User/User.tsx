@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useGeneralStore } from "@/store/useStore";
 import { useAuthStore } from "@/store/useAuthStore";
 
-import { Toggle } from "@/components/global/Toggle";
+import { LanguageToggle } from "@/components/feature/LanguageToggle";
 import { UserIcon } from "@/assets/icons/UserIcon";
 
 import styles from "./user.module.scss";
@@ -52,7 +52,9 @@ export const User = ({ userRef, isUserMenuOpen, setIsUserMenuOpen }: Props) => {
 
     return (
         <>
-            <Toggle value={store.language} onChange={handleLanguageToggle} />
+            <div className={styles.toggle}>
+                <LanguageToggle value={store.language} onChange={handleLanguageToggle} />
+            </div>
             <div className={styles.avatar} ref={userRef}>
                 {user ? (
                     <div onClick={handleAdminClick} className={styles.user}>
