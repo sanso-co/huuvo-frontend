@@ -11,14 +11,14 @@ const useHomeData = () => {
 
     const { data: trending } = usePeriodicCollection(collectionId.TRENDING_NOW || "", "latest");
     const { data: upcoming } = useGetShow(1, 10, SortOrderEnum.Newest);
-    const { data: highlyRated } = useGetPermanentDetails(collectionId.HIGHLY_RATED || "", 1, {
+    const { data: viewersChoice } = useGetPermanentDetails(collectionId.VIEWERS_CHOICE || "", 1, {
         forceLimit: 10,
     });
     const { data: genreFiction } = useGetPermanentDetails(collectionId.GENRE_FICTION || "", 1, {
         forceLimit: 10,
     });
 
-    return { heroes, isHeroLoading, heroError, trending, upcoming, highlyRated, genreFiction };
+    return { heroes, isHeroLoading, heroError, trending, upcoming, viewersChoice, genreFiction };
 };
 
 export default useHomeData;

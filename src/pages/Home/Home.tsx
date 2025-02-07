@@ -12,7 +12,7 @@ import styles from "./home.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
 
 const Home = () => {
-    const { heroes, isHeroLoading, heroError, trending, upcoming, highlyRated, genreFiction } =
+    const { heroes, isHeroLoading, heroError, trending, upcoming, viewersChoice, genreFiction } =
         useHomeData();
 
     return (
@@ -32,11 +32,11 @@ const Home = () => {
                         ))}
                     </CardSlider>
                     <CardSlider
-                        title="Highly Rated"
+                        title="Viewer's Choice"
                         linkLabel="View all"
-                        linkTo="/collection/highly-rated"
+                        linkTo="/collection/viewers-choice"
                     >
-                        {highlyRated?.results.map((show: LeanShowType) => (
+                        {viewersChoice?.results.map((show: LeanShowType) => (
                             <ShowCard show={show} key={show.id} />
                         ))}
                     </CardSlider>

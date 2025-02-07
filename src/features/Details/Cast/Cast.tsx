@@ -46,8 +46,11 @@ export const Cast = ({ id }: Props) => {
                                     >
                                         <ProfileImage url={getProfileImage(cast.profile_path)} />
                                         <div>
-                                            <div className={styles.role}>{cast.role}</div>
                                             <div className={styles.name}>{cast.name}</div>
+                                            <div>
+                                                <span className={styles.name}>as</span>{" "}
+                                                <span className={styles.role}>{cast.role}</span>
+                                            </div>
                                         </div>
                                     </Link>
                                 );

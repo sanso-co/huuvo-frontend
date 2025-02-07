@@ -2,7 +2,7 @@ export const collectionId = {
     TRENDING_NOW: "66d4cf936b99b0e547a32e77",
     UPCOMING_RELEASE: "66e3bbeadecf46fd5d5a1b19",
     MOST_POPULAR: "66e0cbedc3b4a34f972e7c95",
-    HIGHLY_RATED: "66e0cc67c3b4a34f972e7cb7",
+    VIEWERS_CHOICE: "66e0cc67c3b4a34f972e7cb7",
     GENRE_FICTION: "679d79f9a955e82751787d9f",
     NEW_UPCOMING: "671cfb62f4591491a24fd42a",
     NETFLIX: "66ea48a71e1c5ad8406fbce5",

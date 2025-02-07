@@ -103,11 +103,13 @@
 
 .slideContent {
     position: absolute;
-    z-index: 2;
     bottom: 2rem;
     left: 1.5rem;
+    width: 100%;
     color: #fff;
     text-decoration: none;
+    padding: 2rem 1rem 1rem;
+    z-index: 2;
 
     h3 {
         font-size: 1.25rem;
@@ -133,8 +135,8 @@
     margin-bottom: 0.25rem;
 
     .dot {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
     }
 
