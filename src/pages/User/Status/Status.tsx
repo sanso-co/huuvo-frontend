@@ -4,7 +4,7 @@ import { useShowInteractionsData } from "./hook/useShowInteractionsData";
 import { sortOptions } from "@/helpers/constants/options";
 
 import { Loader } from "@/components/global/Loader";
-import { Sort } from "@/features/Category/Sort";
+import { Sort } from "@/features/Sort";
 import { ShowCard } from "@/components/feature/ShowCard";
 import { Header } from "@/components/global/Header";
 import { Spinner } from "@/components/global/Spinner";

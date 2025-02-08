@@ -1,20 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useCollectionStore } from "@/store/collectionStore";
 import { useGetPermanentDetails } from "@/hooks/api/collection/usePermanentCollection";
+import { useCollectionStore } from "@/store/collectionStore";
 
+import { SortOrderEnum } from "@/helpers/constants/options";
 import { convertToConstant } from "@/helpers/convertToConstant";
 import { collectionId } from "@/helpers/constants/collectionId";
 import { SortType } from "@/types/sort";
-import { SortOrderEnum } from "@/helpers/constants/options";
 
 export const useCollectionData = () => {
-    const [sort, setSort] = useState<SortType>(SortOrderEnum.Newest);
     const { collectionName } = useParams();
     const collectionConstant = convertToConstant(collectionName || "");
-
     const collectionIdValue = collectionId[collectionConstant as keyof typeof collectionId];
+    const [collectionTitle, setCollectionTitle] = useState("");
+    const [collectionDesc, setCollectionDescription] = useState("");
+    const [sort, setSort] = useState<SortType>(SortOrderEnum.Newest);
 
     const {
         page,
@@ -35,6 +36,8 @@ export const useCollectionData = () => {
         if (!collection || collection !== collectionName) {
             resetCollection();
             setCollection(collectionName || "");
+            setCollectionTitle(data.name);
+            setCollectionDescription(data.description);
             setShows(data.results);
             return;
         }
@@ -62,7 +65,6 @@ export const useCollectionData = () => {
             const timer = setTimeout(() => {
                 setPage(page + 1);
             }, 1000);
-
             return () => clearTimeout(timer);
         }
     }, [isLoading, data?.hasNextPage, setPage, page]);
@@ -70,15 +72,19 @@ export const useCollectionData = () => {
     useEffect(() => {
         resetCollection();
         setPage(1);
-    }, [sort, setPage, resetCollection]);
+    }, [sort, resetCollection, setPage]);
 
     return {
-        data,
-        shows,
         sort,
+        setSort,
+        shows,
+        data,
         isLoading,
         error,
         loadMore,
-        setSort,
+        hasMore: !isLoading && Boolean(data?.page && data?.page < data?.totalPages),
+        totalDocs: data?.totalDocs ?? 0,
+        collectionTitle,
+        collectionDesc,
     };
 };
