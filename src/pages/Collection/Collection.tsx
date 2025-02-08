@@ -1,38 +1,52 @@
 import InfiniteScroll from "react-infinite-scroll-component";
-
 import { useCollectionData } from "./hook/useCollectionData";
 
-import { ShowCard } from "@/components/feature/ShowCard";
-import { Header } from "@/components/global/Header";
+import { Sort } from "@/features/Sort";
 import { SEO } from "@/components/global/SEO";
+import { Loader } from "@/components/global/Loader";
+import { Header } from "@/components/global/Header";
+import { ShowCard } from "@/components/feature/ShowCard";
 import { Spinner } from "@/components/global/Spinner";
 
+import { sortOptions } from "@/helpers/constants/options";
 import { LeanShowType } from "@/types/show";
 
 import styles from "./collection.module.scss";
 import layout from "@/assets/styles/layout.module.scss";
-import { Sort } from "@/features/Category/Sort";
-import { sortOptions } from "@/helpers/constants/options";
 
 const Collection = () => {
-    const { data, sort, isLoading, shows, error, loadMore, setSort } = useCollectionData();
+    const {
+        collectionTitle,
+        collectionDesc,
+        sort,
+        setSort,
+        shows,
+        isLoading,
+        error,
+        loadMore,
+        hasMore,
+        totalDocs,
+    } = useCollectionData();
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading && shows.length === 0)
+        return (
+            <div className={`${styles.container} ${layout.default} ${layout.max}`}>
+                <Loader />
+            </div>
+        );
     if (error) return <div>Error: {error.message}</div>;
 
     return (
         <>
-            <SEO pageType="collection" name={data.name ?? ""} dramas={shows.slice(0, 5)} />
+            <SEO pageType="collection" name={collectionTitle} dramas={shows.slice(0, 5)} />
             <div className={`${styles.container} ${layout.default} ${layout.max}`}>
-                {data && (
-                    <div className={styles.header}>
-                        <Header
-                            showProfileImage={false}
-                            title={data.name}
-                            description={data.description ?? ""}
-                        />
-                    </div>
-                )}
+                <div className={styles.header}>
+                    <Header
+                        showProfileImage={false}
+                        title={collectionTitle}
+                        description={collectionDesc}
+                    />
+                </div>
                 <div className={styles.sort}>
                     <Sort
                         options={sortOptions}
@@ -42,9 +56,9 @@ const Collection = () => {
                 </div>
                 <div className={styles.content}>
                     <InfiniteScroll
-                        dataLength={shows.length}
+                        dataLength={totalDocs}
                         next={loadMore}
-                        hasMore={!isLoading && Boolean(data?.page && data?.page < data?.totalPages)}
+                        hasMore={hasMore}
                         loader={<Spinner />}
                     >
                         <div className={styles.grid}>

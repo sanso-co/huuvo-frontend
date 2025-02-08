@@ -1,6 +1,6 @@
-import { LeanShowType } from "@/types/show";
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { devtools } from "zustand/middleware";
+import { LeanShowType } from "@/types/show";
 
 interface StateProps {
     collection: string;
@@ -15,23 +15,21 @@ interface StateProps {
 
 export const useCollectionStore = create<StateProps>()(
     devtools(
-        persist(
-            (set) => ({
-                collection: "",
-                shows: [],
-                page: 1,
-                setPage: (page) => set({ page }),
-                setCollection: (collection) => set({ collection }),
-                setShows: (shows) => set({ shows }),
-                appendShows: (newShows) =>
-                    set((state) => ({
-                        shows: [...state.shows, ...newShows],
-                    })),
-                resetCollection: () => set({ collection: "", page: 1, shows: [] }),
-            }),
-            {
-                name: "collection",
-            }
-        )
+        (set) => ({
+            collection: "",
+            shows: [],
+            page: 1,
+            setPage: (page) => set({ page }),
+            setCollection: (collection) => set({ collection }),
+            setShows: (shows) => set({ shows }),
+            appendShows: (newShows) =>
+                set((state) => ({
+                    shows: [...state.shows, ...newShows],
+                })),
+            resetCollection: () => set({ collection: "", shows: [], page: 1 }),
+        }),
+        {
+            name: "collection",
+        }
     )
 );
