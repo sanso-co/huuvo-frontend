@@ -6,7 +6,7 @@
 
 .container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
     max-width: 1816px;
@@ -33,6 +33,15 @@
 
     @media (min-width: 1366px) {
         max-width: 1262px;
+    }
+}
+
+.menu {
+    font-size: 0.6875rem;
+    color: var(--gray-50);
+
+    &:hover {
+        text-decoration: underline;
     }
 }
 
