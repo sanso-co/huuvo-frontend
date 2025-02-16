@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "@/components/layout";
 
 import Home from "@/pages/Home";
+import About from "@/pages/About";
 import Details from "@/pages/Details";
 import Category from "@/pages/Category";
 import Collection from "@/pages/Collection";
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
         element: <Layout />,
         children: [
             { path: "/", element: <Home /> },
+            { path: "/about", element: <About /> },
             { path: "details/:id", element: <Details /> },
             { path: "/:categoryType/:categoryName/:categoryId", element: <Category /> },
             { path: "/collection/:collectionName", element: <Collection /> },

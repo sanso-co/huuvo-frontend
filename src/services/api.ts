@@ -405,6 +405,16 @@ class ApiService {
         }
     }
 
+    // ABOUT
+    async getProfile() {
+        try {
+            const response = await this.api.get("profile");
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching profile", error);
+        }
+    }
+
     // SHOW
     async getShow(page: number, limit: number, sort: SortType) {
         try {
