@@ -212,6 +212,16 @@ class ApiService {
         }
     }
 
+    // ORIGINAL
+    async getOriginalWorkForShow(showId: number) {
+        try {
+            const response = await this.api.get(`original/show/${showId}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching original work", error);
+        }
+    }
+
     // GENRE
     async getAllGenres() {
         try {

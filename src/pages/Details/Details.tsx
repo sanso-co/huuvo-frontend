@@ -85,7 +85,7 @@ const Details = () => {
                 </div>
                 {id && <Cast id={id} />}
                 {id && <Crew id={id} />}
-                {details?.original_story && <OriginalStory data={details?.original_story} />}
+                {id && <OriginalStory id={id} />}
                 <Recommendations showId={Number(details?.id)} />
             </>
         </>
