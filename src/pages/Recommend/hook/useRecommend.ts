@@ -49,6 +49,7 @@ const useRecommend = () => {
         selectedFeeling,
         inputValue,
         isLoading,
+        recommendResults,
         handleFeelingChange,
         handleRefreshSample,
         setInputValue,

@@ -13,9 +13,11 @@ import styles from "./showcard.module.scss";
 interface Props {
     show: LeanShowType;
     liked?: boolean;
+    tag?: string;
+    label?: string;
 }
 
-export const ShowCard = ({ show }: Props) => {
+export const ShowCard = ({ show, tag, label }: Props) => {
     const [title, setTitle] = useState<string>(show.name);
     const language = useGeneralStore((state) => state.language);
 
@@ -38,10 +40,12 @@ export const ShowCard = ({ show }: Props) => {
         <div>
             <Card>
                 <Link to={`/details/${show.id}`}>
+                    {label && <div className={styles.tag}>{label}</div>}
                     <Card.Image src={getImageUrl()} ratio={ratio.portrait_23} rounded="0.75rem" />
                     <div className={styles.details}>
                         <p>{title}</p>
                     </div>
+                    {tag && <div className={styles.helper}>{show.emotional_appeal}</div>}
                 </Link>
             </Card>
         </div>
