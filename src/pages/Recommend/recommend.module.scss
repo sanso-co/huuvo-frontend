@@ -1,3 +1,8 @@
+.container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
 .section {
     padding-bottom: 2.5rem;
     margin-bottom: 2.5rem;
@@ -134,4 +139,29 @@
         grid-template-columns: repeat(5, 1fr);
         grid-gap: 2rem;
     }
+}
+
+.alert {
+    display: flex;
+    gap: 0.75rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--c-alert);
+    background-color: var(--c-alert-tint);
+    padding: 1rem;
+
+    svg {
+        display: inline-flex;
+    }
+}
+
+.alert-text {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--c-alert-deep);
+}
+
+.alert-message {
+    font-weight: 500;
+    margin-top: 0.25rem;
 }
