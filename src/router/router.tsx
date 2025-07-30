@@ -15,6 +15,7 @@ import Complete from "@/pages/Auth/Complete";
 import TempProtectedRoute from "./tempProtectedRoute";
 import Profile from "@/pages/User/Profile";
 import Status from "@/pages/User/Status";
+import Recommend from "@/pages/Recommend";
 import { navigationService } from "@/services/navigation";
 
 export const router = createBrowserRouter([
@@ -32,6 +33,7 @@ export const router = createBrowserRouter([
             { path: "/signup", element: <Auth /> },
             { path: "/profile/:id", element: <Profile /> },
             { path: "/profile/shows/:category", element: <Status /> },
+            { path: "/recommend", element: <Recommend /> },
         ],
     },
     {

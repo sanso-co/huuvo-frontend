@@ -20,6 +20,7 @@ export interface LeanShowType {
     };
     first_air_date: string;
     popularity_score: number;
+    emotional_appeal?: string;
 }
 
 export interface ShowType {
