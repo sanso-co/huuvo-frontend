@@ -6,6 +6,7 @@ export type FeelingKey = keyof typeof feelingSuggestions;
 
 const useRecommend = () => {
     const [selectedFeeling, setSelectedFeeling] = useState<FeelingKey | "">("");
+    const [resultFeeling, setResultFeeling] = useState<FeelingKey | "">("");
     const [sampleIndex, setSampleIndex] = useState(0);
     const [inputValue, setInputValue] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +37,7 @@ const useRecommend = () => {
     const handleSubmit = () => {
         setIsLoading(true);
         setRecommendResults([]);
+        setResultFeeling(selectedFeeling);
 
         // 실제 API call 자리에 setTimeout으로 simulate
         setTimeout(() => {
@@ -47,6 +49,7 @@ const useRecommend = () => {
 
     return {
         selectedFeeling,
+        resultFeeling,
         inputValue,
         isLoading,
         recommendResults,
