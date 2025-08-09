@@ -21,6 +21,7 @@ import layout from "@/assets/styles/layout.module.scss";
 const Recommend = () => {
     const {
         selectedFeeling,
+        resultFeeling,
         inputValue,
         isLoading,
         recommendResults,
@@ -97,8 +98,9 @@ const Recommend = () => {
                         <input
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
-                            placeholder="Describe vibe or type of story you're looking for"
+                            placeholder="Click Suggest to describe vibe or type of story you're looking for"
                             className={styles.input}
+                            disabled //v1
                         />
                         <button className={styles.clear} onClick={() => setInputValue("")}>
                             <DismissIcon />
@@ -120,10 +122,10 @@ const Recommend = () => {
                 </div>
             </div>
             {recommendResults.length > 0 && (
-                <div className={styles.recommended} ref={resultsRef}>
+                <div className={layout.default} ref={resultsRef}>
                     <div className={styles["section-header"]}>
                         <h2>We've curated these dramas based on your current mood</h2>
-                        <p>{getFeelingDescription(selectedFeeling)}</p>
+                        <p>{getFeelingDescription(resultFeeling)}</p>
                     </div>
                     <div className={styles.grid}>
                         {recommendResults.map((show) => (
@@ -131,7 +133,7 @@ const Recommend = () => {
                                 show={show}
                                 key={show.id}
                                 tag={show.name}
-                                label={getFeelingLabel(selectedFeeling)}
+                                label={getFeelingLabel(resultFeeling)}
                             />
                         ))}
                     </div>
