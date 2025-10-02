@@ -76,10 +76,11 @@ const Settings = () => {
                         />
                         <Button
                             type="submit"
-                            label="Save Changes"
                             variant="primary"
                             disabled={!personalInfoMethods.formState.isValid}
-                        />
+                        >
+                            Save Changes
+                        </Button>
                     </form>
                 </FormProvider>
 

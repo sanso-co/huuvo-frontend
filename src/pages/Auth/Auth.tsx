@@ -109,13 +109,9 @@ const Auth = () => {
                         type="password"
                         validation={validationRules.password}
                     />
-                    <Button
-                        type="submit"
-                        label={isSignup ? "Create Account" : "Log in"}
-                        variant="primary"
-                        width="full"
-                        disabled={!isValid}
-                    />
+                    <Button type="submit" variant="primary" width="full" disabled={!isValid}>
+                        {isSignup ? "Create Account" : "Log in"}
+                    </Button>
                 </form>
             </FormProvider>
         </div>

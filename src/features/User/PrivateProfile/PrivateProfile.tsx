@@ -21,7 +21,9 @@ export const PrivateProfile = () => {
             <p>This profile is private and can only be viewed by its owner</p>
             <div className={styles.section}>
                 <p>Looking for your own profile?</p>
-                <Button variant="primary" label="View My Profile" onClick={handleClick} />
+                <Button variant="primary" onClick={handleClick}>
+                    View My Profile
+                </Button>
                 <div>not logged in? Login first</div>
             </div>
         </div>
