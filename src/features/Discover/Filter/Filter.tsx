@@ -92,13 +92,14 @@ export const Filter = ({
             </div>
             {hasAnySelection && (
                 <Button
-                    label="Reset All Filters"
                     variant="secondary"
                     onClick={() => {
                         onReset();
                         setExpandedSections({});
                     }}
-                />
+                >
+                    Reset All Filters
+                </Button>
             )}
         </div>
     );

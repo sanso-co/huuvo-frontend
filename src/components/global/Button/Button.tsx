@@ -6,7 +6,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: string;
     size?: "sm";
     width?: string;
-    disabled: boolean;
+    disabled?: boolean;
 }
 
 export const Button = ({ children, disabled, variant, size, width, onClick, ...rest }: Props) => {

@@ -46,7 +46,9 @@ const Complete = () => {
             <FormProvider {...methods}>
                 <form className={styles.form} onSubmit={methods.handleSubmit(onSubmit)}>
                     <Input label="Username" name="username" />
-                    <Button type="submit" label="Submit" variant="primary" width="full" />
+                    <Button type="submit" variant="primary" width="full">
+                        Submit
+                    </Button>
                 </form>
             </FormProvider>
         </div>
