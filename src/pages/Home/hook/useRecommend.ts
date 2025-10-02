@@ -1,18 +1,18 @@
 import { useState } from "react";
-import { feelingSuggestions, mockApiResponse } from "@/helpers/sampleData/feelingSuggestions";
+import { feelingSuggestions } from "@/helpers/sampleData/feelingSuggestions";
 import { LeanShowType } from "@/types/show";
-
-export type FeelingKey = keyof typeof feelingSuggestions;
+import { apiService } from "@/services/api";
 
 const useRecommend = () => {
-    const [selectedFeeling, setSelectedFeeling] = useState<FeelingKey | "">("");
-    const [resultFeeling, setResultFeeling] = useState<FeelingKey | "">("");
+    const [selectedFeeling, setSelectedFeeling] = useState<string | "">("");
+    const [resultFeeling, setResultFeeling] = useState<string | "">("");
+    const [resultIntent, setResultIntent] = useState<string | "">("");
     const [sampleIndex, setSampleIndex] = useState(0);
     const [inputValue, setInputValue] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [recommendResults, setRecommendResults] = useState<LeanShowType[]>([]);
 
-    const updateInputFromIndex = (feeling: FeelingKey, index: number) => {
+    const updateInputFromIndex = (feeling: string, index: number) => {
         const suggestions = feelingSuggestions[feeling];
         if (suggestions && suggestions.length > 0) {
             const nextSentence = suggestions[index % suggestions.length];
@@ -20,10 +20,9 @@ const useRecommend = () => {
         }
     };
 
-    const handleFeelingChange = (value: FeelingKey) => {
+    const handleFeelingChange = (value: string) => {
         setSelectedFeeling(value);
         setSampleIndex(0);
-        // updateInputFromIndex(value, 0);
         setInputValue("");
     };
 
@@ -34,17 +33,26 @@ const useRecommend = () => {
         updateInputFromIndex(selectedFeeling, nextIndex);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setIsLoading(true);
         setRecommendResults([]);
         setResultFeeling(selectedFeeling);
-
-        // 실제 API call 자리에 setTimeout으로 simulate
-        setTimeout(() => {
-            setRecommendResults(mockApiResponse);
+        console.log({
+            feeling: selectedFeeling,
+            question: inputValue,
+        });
+        try {
+            const results = await apiService.submitUserEmotions({
+                feeling: selectedFeeling,
+                question: inputValue,
+            });
+            setRecommendResults(results.items);
+            setResultIntent(results.intent);
+        } catch (error) {
+            console.error(error);
+        } finally {
             setIsLoading(false);
-            // 나중에 결과 처리 로직 추가 예정
-        }, 2000); // 2초간 로딩
+        }
     };
 
     return {
@@ -53,10 +61,12 @@ const useRecommend = () => {
         inputValue,
         isLoading,
         recommendResults,
+        resultIntent,
         handleFeelingChange,
         handleRefreshSample,
         setInputValue,
         handleSubmit,
+        setResultIntent,
     };
 };
 
