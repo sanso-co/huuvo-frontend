@@ -113,10 +113,11 @@ const Settings = () => {
                         />
                         <Button
                             type="submit"
-                            label="Update Password"
                             variant="primary"
                             disabled={!passwordMethods.formState.isValid}
-                        />
+                        >
+                            Submit
+                        </Button>
                     </form>
                 </FormProvider>
             </div>
