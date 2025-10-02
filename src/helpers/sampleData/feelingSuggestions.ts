@@ -1,5 +1,10 @@
 export const feelings = [
     {
+        value: "feeling-love",
+        label: "Feeling love",
+        emoji: "😍",
+    },
+    {
         value: "feeling-down",
         label: "Feeling down",
         emoji: "😔",
@@ -9,11 +14,7 @@ export const feelings = [
         label: "Tired & drained",
         emoji: "😴",
     },
-    {
-        value: "feeling-love",
-        label: "Feeling love",
-        emoji: "😍",
-    },
+
     {
         value: "emotionless",
         label: "Emotionless",
@@ -25,8 +26,8 @@ export const feelings = [
         emoji: "🤯",
     },
     {
-        value: "need-pick-me-up",
-        label: "Need a pick-me-up",
+        value: "need-a-boost",
+        label: "Need a boost",
         emoji: "😊",
     },
 ];
@@ -37,7 +38,7 @@ export const feelingDescriptions = {
     "feeling-love": "Love stories perfect for butterflies and romance",
     emotionless: "Compelling stories perfect for reigniting your emotions",
     "stressed-out": "Calming stories perfect for unwinding and peace",
-    "need-pick-me-up": "Feel-good stories perfect for a laugh and some healing",
+    "need-a-boost": "Feel-good stories perfect for a laugh and some healing",
 };
 
 // export const feelingSuggestions: { [key: string]: string[] } = {
@@ -92,53 +93,35 @@ export const feelingDescriptions = {
 // };
 
 export const feelingSuggestions: { [key: string]: string[] } = {
-    "feeling-down": [
-        "I need something comforting.",
-        "I want something calm and emotional.",
-        "Anything that helps when I feel low?",
-        "I think a good cry might help.",
-        "I want to release some emotions.",
-        "I need something to quietly sink into.",
+    "feeling-love": [
+        "Any dramas with sweet moments that make your heart race?",
+        "I’m craving a dramatic romance that’s emotional, heartbreaking, yet deeply moving.",
+        "Got any mature romances with grown-up communication?",
+    ],
+    "need-a-boost": [
+        "I’m looking for a feel-good series to brighten my mood.",
+        "I want a story about becoming confident and independent.",
     ],
     "tired-drained": [
-        "I’m looking for something easy to watch.",
-        "Any healing stories for when I’m drained?",
-        "Recommend something I don’t have to think about.",
-        "I’m too tired. Just want something light.",
-        "I like slow, everyday kind of dramas.",
-        "I want to unwind with something simple and bright.",
+        "Feeling drained and want something wholesome and healing.",
+        "Any dramas that feel like a peaceful retreat at the end of the day?",
+        "I want slow, everyday kind of dramas.",
+        "Can you recommend a drama that feels like a warm hug?",
     ],
-    "feeling-love": [
-        "I’m in the mood for a sweet romance.",
-        "Recommend something with heart-fluttering moments.",
-        "Love stories really lift my mood these days.",
-        "I like slow-burning, gentle relationships.",
-        "I’d love something with soft, sweet emotions.",
-        "I want to get lost in a romantic mood.",
+    "feeling-down": [
+        "I think a good cry might help me right now.",
+        "I’m craving a drama that feels wholesome and heartwarming, with warm and lovable moments.",
+        "I need something comforting",
     ],
     emotionless: [
-        "I feel emotionally numb.",
-        "I want to escape from reality.",
-        "I need a drama I can just fall into.",
-        "Any drama that fits a hollow kind of mood?",
-        "I want something that stirs me out of this numbness.",
-        "Looking for a drama that awakens emotions.",
+        "I’m looking for something powerful, raw, and intense enough to shake me out of this fog.",
+        "I want something immersive and character-driven, not light comedy but serious and meaningful.",
+        "Feeling blank but want a gripping show from episode one, full of twists and tension.",
     ],
     "stressed-out": [
-        "I’m so stressed. Anything to escape reality?",
-        "I want something fast-paced to clear my mind.",
-        "A good comedy to laugh the stress away sounds perfect.",
-        "Recommend something to distract me from overthinking.",
-        "A tense thriller might be just what I need.",
-        "I want to lose myself in another world for a while.",
-    ],
-    "need-pick-me-up": [
-        "I want something light to lift my mood.",
-        "I need a drama that makes me laugh.",
-        "Positive, feel-good stories are what I need.",
-        "I want to end the day with something cheerful.",
-        "Any drama that gives me a boost when I’m low?",
-        "Looking for something healing and energizing.",
+        "I just need a fun drama to take my mind off things.",
+        "Can you recommend a drama that’s fast-paced and keeps me hooked the whole time?",
+        "What’s a good drama to help me relax and de-stress after a hard day?",
     ],
 };
 

@@ -33,7 +33,7 @@ const Discover = () => {
     const handlePageChange = (page: number) => {
         setPage(page);
     };
-
+    console.log(toneList);
     return (
         <>
             <SEO pageType="discover" />

@@ -242,6 +242,18 @@ class ApiService {
         }
     }
 
+    async submitUserEmotions({ feeling, question }: { feeling: string; question: string }) {
+        try {
+            const response = await this.api.post("recommend", {
+                feeling,
+                question,
+            });
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching tones", error);
+        }
+    }
+
     //keywords
     async getKeywordsForShow(showId: number) {
         try {
@@ -333,7 +345,10 @@ class ApiService {
     // AUTH
     async login({ username, password }: AuthLogin) {
         try {
-            const response = await this.api.post("auth/login", { username, password });
+            const response = await this.api.post("auth/login", {
+                username,
+                password,
+            });
             return response.data;
         } catch (error) {
             console.error("Error loggin in", error);
@@ -351,7 +366,11 @@ class ApiService {
         password: string;
     }) {
         try {
-            const response = await this.api.post("auth/signup", { username, email, password });
+            const response = await this.api.post("auth/signup", {
+                username,
+                email,
+                password,
+            });
             return response.data;
         } catch (error) {
             console.error("Error signing up", error);
