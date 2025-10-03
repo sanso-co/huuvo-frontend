@@ -22,7 +22,7 @@ export const Markdown = ({ initialValue = "" }: Props) => {
             .replace(/^### (.*$)/gm, `<h3 class="${styles.h3}">$1</h3>`)
             // Paragraphs
             .replace(/^\s*(\n)?([^\n]+)/gm, function (match) {
-                return /\<(\/)?(h1|h2|h3|ul|ol|li|blockquote|code|pre|strong|em)\>/g.test(match)
+                return /<(\/)?(h1|h2|h3|ul|ol|li|blockquote|code|pre|strong|em)>/g.test(match)
                     ? match
                     : `<p class="${styles.paragraph}">` + match + "</p>";
             })
@@ -36,12 +36,12 @@ export const Markdown = ({ initialValue = "" }: Props) => {
                 `<ol class="${styles.orderedList}"><li class="${styles.listItem}">$1</li></ol>`
             )
             // Blockquotes
-            .replace(/^\> (.*$)/gm, `<blockquote class="${styles.blockquote}">$1</blockquote>`)
+            .replace(/^> (.*$)/gm, `<blockquote class="${styles.blockquote}">$1</blockquote>`)
             // Code blocks
             .replace(/`([^`]+)`/g, `<code class="${styles.inlineCode}">$1</code>`)
             .replace(/```([\s\S]*?)```/g, `<pre class="${styles.codeBlock}"><code>$1</code></pre>`)
             // Links
-            .replace(/\[([^\]]+)\]\(([^\)]+)\)/g, `<a class="${styles.link}" href="$2">$1</a>`)
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, `<a class="${styles.link}" href="$2">$1</a>`)
             // Bold
             .replace(/\*\*([^*]+)\*\*/g, `<strong class="${styles.bold}">$1</strong>`)
             // Italic
