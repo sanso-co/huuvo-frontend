@@ -1,17 +1,18 @@
 import { trackPageView } from "@/analytics";
+import type { Router as RemixRouter } from "@remix-run/router";
 
 class NavigationService {
-    private router: any = null;
+    private router: RemixRouter | null = null;
 
-    setRouter(router: any) {
+    setRouter(router: RemixRouter) {
         this.router = router;
 
-        this.router.subscribe(({ location }: { location: Location }) => {
-            trackPageView(location.pathname);
+        this.router.subscribe((state) => {
+            trackPageView(state.location.pathname);
         });
     }
 
-    navigate(path: string, options?: { state?: any }) {
+    navigate(path: string, options?: { state?: unknown }) {
         if (this.router) {
             this.router.navigate(path, options);
             trackPageView(path);

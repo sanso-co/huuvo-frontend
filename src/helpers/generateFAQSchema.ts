@@ -1,3 +1,12 @@
+type FAQItem = {
+    "@type": "Question";
+    name: string;
+    acceptedAnswer: {
+        "@type": "Answer";
+        text: string;
+    };
+};
+
 export const generateFAQSchema = (
     pageType: string,
     streamingProviders?: string[],
@@ -6,7 +15,7 @@ export const generateFAQSchema = (
     name?: string,
     year?: string | number
 ) => {
-    let faq: any[] = [];
+    let faq: FAQItem[] = [];
 
     switch (pageType) {
         case "home":
